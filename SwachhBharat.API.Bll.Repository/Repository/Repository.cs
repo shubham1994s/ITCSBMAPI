@@ -530,6 +530,10 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 var objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
                 var AppDetailURL = objmain.baseImageUrlCMS + objmain.basePath + objmain.UserProfile + "/";
                 var obj = db.UserMasters.Where(c => c.userLoginId == userName & c.userPassword == password & c.isActive == true & c.EmployeeType == null).FirstOrDefault();
+               var objActive = db.UserMasters.Where(c => c.userLoginId == userName & c.userPassword == password & c.EmployeeType == null).FirstOrDefault();
+               
+
+
                 var objEmpMst = db.QrEmployeeMasters.Where(c => c.qrEmpLoginId == userName & c.qrEmpPassword == password & c.isActive == true).FirstOrDefault();
                 if (obj == null)
                 {
@@ -703,6 +707,18 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             user.EmpType = "N";
                             user.gtFeatures = objmain.NewFeatures;
                             user.status = "success"; user.message = "Login Successfully"; user.messageMar = "लॉगिन यशस्वी";
+                        }
+                        else if (objActive.isActive==false)
+                        {
+                            user.userId = 0;
+                            user.userLoginId = "";
+                            user.userPassword = "";
+                            user.status = "error";
+                            user.gtFeatures = false;
+                            user.imiNo = "";
+                            user.EmpType = "";
+                            user.message = "Contact To Administrator.";
+                            user.messageMar = "प्रशासकाशी संपर्क साधा.";
                         }
                         else
                         {
@@ -6359,7 +6375,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             try
                             {
                                 // Update code
-                                var updateappdetails = dbMain.DailyScanCount(AppId.ToString());
+                                //DevSwachhBharatMainEntities dbMain2 = new DevSwachhBharatMainEntities();
+                               // var updateappdetails = dbMain2.DailyScanCount(AppId.ToString());
 
                             }
                             catch(Exception ex)
