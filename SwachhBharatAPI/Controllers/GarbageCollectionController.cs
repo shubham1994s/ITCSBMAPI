@@ -414,7 +414,8 @@ namespace SwachhBharatAPI.Controllers
 
                 objres.Add(new CollectionSyncResult()
                 {
-                    ID = 0,
+                    houseId = gcDetail.houseId,
+                    ID = gcDetail.OfflineID,
                     status = "error",
                     message = "Something is wrong,Try Again.. ",
                     messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
