@@ -708,7 +708,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             user.gtFeatures = objmain.NewFeatures;
                             user.status = "success"; user.message = "Login Successfully"; user.messageMar = "लॉगिन यशस्वी";
                         }
-                        else if (objActive.isActive == false)
+                        else if (objEmpMst.isActive == false)
                         {
                             user.userId = 0;
                             user.userLoginId = "";
