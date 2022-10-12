@@ -28,8 +28,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         }
     
         public virtual DbSet<AD_USER_MST_LIQUID> AD_USER_MST_LIQUID { get; set; }
-        public virtual DbSet<AD_USER_MST_SA> AD_USER_MST_SA { get; set; }
-        public virtual DbSet<AD_USER_MST_STREET> AD_USER_MST_STREET { get; set; }
         public virtual DbSet<AdminContact> AdminContacts { get; set; }
         public virtual DbSet<AEmployeeMaster> AEmployeeMasters { get; set; }
         public virtual DbSet<AppConnection> AppConnections { get; set; }
@@ -55,9 +53,10 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<Sauchalay_feedback> Sauchalay_feedback { get; set; }
         public virtual DbSet<state_districts> state_districts { get; set; }
         public virtual DbSet<Subscription> Subscriptions { get; set; }
-        public virtual DbSet<tehsil> tehsils { get; set; }
         public virtual DbSet<UR_Location> UR_Location { get; set; }
         public virtual DbSet<UserInApp> UserInApps { get; set; }
+        public virtual DbSet<AD_USER_MST_STREET> AD_USER_MST_STREET { get; set; }
+        public virtual DbSet<tehsil> tehsils { get; set; }
         public virtual DbSet<CheckAppD> CheckAppDs { get; set; }
     
         public virtual ObjectResult<Update_Trigger_Result> Update_Trigger()
@@ -84,15 +83,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
                 new ObjectParameter("dLong", typeof(double));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_DistanceCount_Result>("SP_DistanceCount", sLatParameter, sLongParameter, dLatParameter, dLongParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> DailyScanCount(string ulbappid)
-        {
-            var ulbappidParameter = ulbappid != null ?
-                new ObjectParameter("Ulbappid", ulbappid) :
-                new ObjectParameter("Ulbappid", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("DailyScanCount", ulbappidParameter);
         }
     
         public virtual int All_Schedule()
@@ -247,6 +237,15 @@ namespace SwachhBharatAPI.Dal.DataContexts
                 new ObjectParameter("typeId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UserLatLongDetailMain_Result>("SP_UserLatLongDetailMain", useridParameter, typeIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> DailyScanCount(string ulbappid)
+        {
+            var ulbappidParameter = ulbappid != null ?
+                new ObjectParameter("Ulbappid", ulbappid) :
+                new ObjectParameter("Ulbappid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("DailyScanCount", ulbappidParameter);
         }
     }
 }

@@ -61,9 +61,6 @@
     <Compile Include="AD_USER_MST_LIQUID.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
-    <Compile Include="AD_USER_MST_SA.cs">
-      <DependentUpon>MainSwachhBharat.tt</DependentUpon>
-    </Compile>
     <Compile Include="AD_USER_MST_STREET.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
@@ -153,7 +150,7 @@
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="GamePlayerDetail.cs">
-      <DependentUpon>MainSwachhBharat.tt</DependentUpon>
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="Game_AnswerType.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
@@ -265,7 +262,7 @@
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_DistanceCount_Result.cs">
-      <DependentUpon>MainSwachhBharat.tt</DependentUpon>
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_DumpYardDetailsApp_Result.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
@@ -328,7 +325,7 @@
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_UserLatLongDetail_Result.cs">
-      <DependentUpon>MainSwachhBharat.tt</DependentUpon>
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="state_districts.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>

@@ -17,9 +17,8 @@ namespace SwachhBharatAPI.Dal.DataContexts
     
     public partial class DevSwachhBharatNagpurEntities : DbContext
     {
-
         public DevSwachhBharatNagpurEntities(int AppId)
-                     : base(SwachhBharatAppConnection.GetConnectionString(AppId))
+              : base(SwachhBharatAppConnection.GetConnectionString(AppId))
         {
         }
 
@@ -53,14 +52,14 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<Vw_GetStreetNumber> Vw_GetStreetNumber { get; set; }
         public virtual DbSet<StreetSweepingBeat> StreetSweepingBeats { get; set; }
         public virtual DbSet<Vw_BitCount> Vw_BitCount { get; set; }
-        public virtual DbSet<HouseMaster> HouseMasters { get; set; }
-        public virtual DbSet<DumpYardDetail> DumpYardDetails { get; set; }
-        public virtual DbSet<LiquidWasteDetail> LiquidWasteDetails { get; set; }
-        public virtual DbSet<StreetSweepingDetail> StreetSweepingDetails { get; set; }
         public virtual DbSet<SauchalayAddress> SauchalayAddresses { get; set; }
         public virtual DbSet<Daily_Attendance> Daily_Attendance { get; set; }
         public virtual DbSet<Vehical_QR_Master> Vehical_QR_Master { get; set; }
         public virtual DbSet<Vw_MsgNotification> Vw_MsgNotification { get; set; }
+        public virtual DbSet<HouseMaster> HouseMasters { get; set; }
+        public virtual DbSet<DumpYardDetail> DumpYardDetails { get; set; }
+        public virtual DbSet<LiquidWasteDetail> LiquidWasteDetails { get; set; }
+        public virtual DbSet<StreetSweepingDetail> StreetSweepingDetails { get; set; }
     
         public virtual ObjectResult<sp_area_Result> sp_area()
         {
@@ -553,6 +552,36 @@ namespace SwachhBharatAPI.Dal.DataContexts
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAttendenceDetailsTotalDump_Result>("GetAttendenceDetailsTotalDump", userIdParameter, yearParameter, monthParameter);
         }
     
+        public virtual ObjectResult<VehicleList_TypeWise_Result> VehicleList_TypeWise(Nullable<int> vehicleType)
+        {
+            var vehicleTypeParameter = vehicleType.HasValue ?
+                new ObjectParameter("VehicleType", vehicleType) :
+                new ObjectParameter("VehicleType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VehicleList_TypeWise_Result>("VehicleList_TypeWise", vehicleTypeParameter);
+        }
+    
+        public virtual int BunchListAutoupdate(Nullable<int> userid, string refferanceID, Nullable<System.DateTime> gcdate, Nullable<bool> isUpdate)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            var refferanceIDParameter = refferanceID != null ?
+                new ObjectParameter("RefferanceID", refferanceID) :
+                new ObjectParameter("RefferanceID", typeof(string));
+    
+            var gcdateParameter = gcdate.HasValue ?
+                new ObjectParameter("gcdate", gcdate) :
+                new ObjectParameter("gcdate", typeof(System.DateTime));
+    
+            var isUpdateParameter = isUpdate.HasValue ?
+                new ObjectParameter("IsUpdate", isUpdate) :
+                new ObjectParameter("IsUpdate", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BunchListAutoupdate", useridParameter, refferanceIDParameter, gcdateParameter, isUpdateParameter);
+        }
+    
         public virtual ObjectResult<SP_UserLatLongDetail_Result> SP_UserLatLongDetail(Nullable<int> userid, Nullable<int> typeId)
         {
             var useridParameter = userid.HasValue ?
@@ -564,15 +593,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
                 new ObjectParameter("typeId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UserLatLongDetail_Result>("SP_UserLatLongDetail", useridParameter, typeIdParameter);
-        }
-    
-        public virtual ObjectResult<VehicleList_TypeWise_Result> VehicleList_TypeWise(Nullable<int> vehicleType)
-        {
-            var vehicleTypeParameter = vehicleType.HasValue ?
-                new ObjectParameter("VehicleType", vehicleType) :
-                new ObjectParameter("VehicleType", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VehicleList_TypeWise_Result>("VehicleList_TypeWise", vehicleTypeParameter);
         }
     }
 }

@@ -708,7 +708,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             user.gtFeatures = objmain.NewFeatures;
                             user.status = "success"; user.message = "Login Successfully"; user.messageMar = "लॉगिन यशस्वी";
                         }
-                        else if (objActive.isActive == false)
+                        else
+                        if (objEmpMst.isActive == false)
                         {
                             user.userId = 0;
                             user.userLoginId = "";
@@ -2201,7 +2202,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     return result;
                 }
-                catch
+                catch (Exception ex)
                 {
                     throw;
                     List<SyncResult> objres = new List<SyncResult>();
@@ -5862,9 +5863,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
                 string name = "", housemob = "", nameMar = "", addre = "";
-
                 var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
-
+                bool IsExist = false;
                 if (house == null)
                 {
                     result.ID = obj.OfflineID;
@@ -5876,7 +5876,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 else
                 {
 
-                    bool IsExist = false;
+                    //bool IsExist = false;
                     DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
                     DateTime startDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 00, 00, 00, 000);
                     DateTime endDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 23, 59, 59, 999);
@@ -6032,6 +6032,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                                     db.Locations.Add(loc);
                                     db.SaveChanges();
+                                    result.IsExist = true;
 
                                 }
                             }
@@ -6093,6 +6094,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                                 db.Locations.Add(loc);
                                 db.SaveChanges();
+                                
 
                             }
 
@@ -6387,8 +6389,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 try
                                 {
                                     // Update code
-                                    //DevSwachhBharatMainEntities dbMain2 = new DevSwachhBharatMainEntities();
-                                    // var updateappdetails = dbMain2.DailyScanCount(AppId.ToString());
+                                    DevSwachhBharatMainEntities dbMain2 = new DevSwachhBharatMainEntities();
+                                    var updateappdetails = dbMain2.DailyScanCount(AppId.ToString());
 
                                 }
                                 catch (Exception ex)
@@ -8766,6 +8768,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 if (obj.IsLocation == false && obj.EmpType == "N" && result.status == "success")
                 {
                     appdetails.Today_Waste_Status = true;
+                    db.BunchListAutoupdate(obj.userId, obj.houseId, Convert.ToDateTime(obj.gcDate), result.IsExist);
+                    db.SaveChanges();
 
                 }
                 if (obj.IsLocation == false && obj.EmpType == "L" && result.status == "success")
