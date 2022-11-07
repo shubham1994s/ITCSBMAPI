@@ -409,7 +409,7 @@ namespace SwachhBharatAPI.Controllers
                 return objres;
 
             }
-            catch (Exception ee)
+            catch (Exception ex)
             {
 
                 objres.Add(new CollectionSyncResult()
