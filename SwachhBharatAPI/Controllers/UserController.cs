@@ -615,5 +615,102 @@ namespace SwachhBharatAPI.Controllers
             return objDetail;
 
         }
+
+
+        [HttpGet]
+        [Route("ComplaintList")]
+        // Active Employee List For Filter
+        public List<Complaint> GetComplaintList()
+        {
+            objRep = new Repository();
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+            var id = headerValue1.FirstOrDefault();
+            int AppId = int.Parse(id);
+            List<Complaint> objDetail = new List<Complaint>();
+            objDetail = objRep.GetComplaintList(AppId).ToList();
+            return objDetail;
+        }
+
+
+        [Route("AddUpdateComplaintArise")]
+        [HttpPost]
+
+        public List<CollectionSyncResult> AddUpdateComplaintArise(List<EmpComplaintArise> objRaw)
+        {
+            objRep = new Repository();
+            EmpComplaintArise caDetail = new EmpComplaintArise();
+            List<CollectionSyncResult> objres = new List<CollectionSyncResult>();
+            try
+            {
+                IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+                var AppId = Convert.ToInt32(headerValue1.FirstOrDefault());
+
+                IEnumerable<string> headerValue2 = Request.Headers.GetValues("userid");
+                var userid = Convert.ToInt32(headerValue2.FirstOrDefault());
+
+                IEnumerable<string> headerValue3 = Request.Headers.GetValues("IsPause");
+                var type =(headerValue3.FirstOrDefault());
+
+                bool IsPause = bool.Parse(type);
+
+                foreach (var item in objRaw)
+                {
+                    caDetail.ComplaintId = item.ComplaintId;
+                    caDetail.Employeetype = item.Employeetype;
+
+                    CollectionSyncResult detail = objRep.SaveAddUpdateComplaintArise(caDetail, AppId, userid, IsPause);
+                    if (detail.message == "")
+                    {
+                        objres.Add(new CollectionSyncResult()
+                        {
+                            ID = detail.ID,
+                            status = "error",
+                            message = "Record not inserted",
+                            messageMar = "रेकॉर्ड सबमिट केले नाही"
+                        });
+                    }
+
+                    objres.Add(new CollectionSyncResult()
+                    {
+
+                        status = detail.status,
+                        messageMar = detail.messageMar,
+                        message = detail.message
+
+                    });
+
+                    return objres;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                objres.Add(new CollectionSyncResult()
+                {
+                    ID = 0,
+                    status = "error",
+                    message = "Something is wrong,Try Again.. ",
+                    messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
+                });
+                return objres;
+
+            }
+
+            objres.Add(new CollectionSyncResult()
+            {
+                ID = 0,
+                status = "error",
+                message = "Record not inserted",
+                messageMar = "रेकॉर्ड सबमिट केले नाही",
+            });
+
+            return objres;
+
+        }
+
+
     }
 }

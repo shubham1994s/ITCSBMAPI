@@ -18,6 +18,26 @@
           <Property Name="S2" Type="varchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="ComplaintArise">
+          <Key>
+            <PropertyRef Name="CAId" />
+          </Key>
+          <Property Name="CAId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" />
+          <Property Name="Cid" Type="int" />
+          <Property Name="PauseDate" Type="datetime" />
+          <Property Name="ResumeDate" Type="datetime" />
+          <Property Name="EmployeeType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ComplaintMaster">
+          <Key>
+            <PropertyRef Name="Cid" />
+          </Key>
+          <Property Name="Cid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cname" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreationDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Daily_Attendance">
           <Key>
             <PropertyRef Name="daID" />
@@ -699,6 +719,8 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
         </Function>
         <EntityContainer Name="DevSwachhBharatNagpurModelStoreContainer">
           <EntitySet Name="BinLatLong" EntityType="Self.BinLatLong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComplaintArise" EntityType="Self.ComplaintArise" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComplaintMaster" EntityType="Self.ComplaintMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Daily_Attendance" EntityType="Self.Daily_Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeviceDetails" EntityType="Self.DeviceDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DumpYardDetails" EntityType="Self.DumpYardDetails" Schema="dbo" store:Type="Tables" />
@@ -983,6 +1005,8 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="typeId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="ComplaintMasters" EntityType="DevSwachhBharatNagpurModel.ComplaintMaster" />
+          <EntitySet Name="ComplaintArises" EntityType="DevSwachhBharatNagpurModel.ComplaintArise" />
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -1886,6 +1910,26 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Type="String" Name="batteryStatus" Nullable="true" MaxLength="20" />
           <Property Type="Decimal" Name="Distnace" Nullable="true" Precision="6" Scale="2" />
         </ComplexType>
+        <EntityType Name="ComplaintMaster">
+          <Key>
+            <PropertyRef Name="Cid" />
+          </Key>
+          <Property Name="Cid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ComplaintArise">
+          <Key>
+            <PropertyRef Name="CAId" />
+          </Key>
+          <Property Name="CAId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="Cid" Type="Int32" />
+          <Property Name="PauseDate" Type="DateTime" Precision="3" />
+          <Property Name="ResumeDate" Type="DateTime" Precision="3" />
+          <Property Name="EmployeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2955,6 +2999,28 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ComplaintMasters">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.ComplaintMaster">
+              <MappingFragment StoreEntitySet="ComplaintMaster">
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Cname" ColumnName="Cname" />
+                <ScalarProperty Name="Cid" ColumnName="Cid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComplaintArises">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.ComplaintArise">
+              <MappingFragment StoreEntitySet="ComplaintArise">
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="ResumeDate" ColumnName="ResumeDate" />
+                <ScalarProperty Name="PauseDate" ColumnName="PauseDate" />
+                <ScalarProperty Name="Cid" ColumnName="Cid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="CAId" ColumnName="CAId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

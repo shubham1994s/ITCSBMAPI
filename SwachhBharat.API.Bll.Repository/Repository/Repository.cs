@@ -15614,6 +15614,110 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         }
 
 
+        public List<Complaint> GetComplaintList(int appId)
+        {
+            List<Complaint> obj = new List<Complaint>();
+            try
+            {
+                using (var db = new DevSwachhBharatNagpurEntities(appId))
+                {
+                    {
+                        var data = db.ComplaintMasters.Where(c => c.IsActive == true).ToList();
+                        foreach (var x in data)
+                        {
+                            obj.Add(new Complaint()
+                            {
+                                ComplaintName = (x.Cname.ToString()),
+                                ComplaintID = (x.Cid),
+                            });
+                        }
+                    }
+
+                    return obj.OrderBy(c => c.ComplaintName).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                return obj;
+            }
+
+        }
+
+
+        public CollectionSyncResult SaveAddUpdateComplaintArise(EmpComplaintArise obj, int AppId, int Userid, bool type)
+        
+        {
+            CollectionSyncResult result = new CollectionSyncResult();
+            ComplaintArise objdata = new ComplaintArise();
+            using (var db = new DevSwachhBharatNagpurEntities(AppId))
+            {
+                try
+                {
+                    if (type == false)
+                    {
+                        var data = db.ComplaintArises.Where(c => c.userid == Userid && c.ResumeDate == null && EntityFunctions.TruncateTime(c.PauseDate) == EntityFunctions.TruncateTime(DateTime.Now)).FirstOrDefault();
+                        var model = db.ComplaintArises.Where(x => x.CAId == data.CAId).FirstOrDefault();
+                        if (model != null)
+                        {
+                            model.ResumeDate = DateTime.Now;
+                            db.SaveChanges();
+                            result.status = "success";
+                            result.message = "Duty Resume Successfully";
+                            result.messageMar = "ड्युटी रिझ्युम यशस्वीपणे";
+                        }
+                        else
+                        {
+                            result.message = "Something is wrong,Try Again.. ";
+                            result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
+                            result.status = "error";
+                            return result;
+
+                        }
+                    }
+                    else if (type == true)
+                    {
+                        if (Userid != 0)
+                        {
+                            objdata.Cid = obj.ComplaintId;
+                            if (obj.Employeetype == "" || obj.Employeetype == null || obj.Employeetype.ToUpper() == "N")
+                            {
+                                objdata.EmployeeType = null;
+                            }
+                            else
+                            {
+                                objdata.EmployeeType = obj.Employeetype;
+                            }
+                            
+                            objdata.userid = Userid;
+                            objdata.PauseDate = DateTime.Now;
+                            db.ComplaintArises.Add(objdata);
+                            db.SaveChanges();
+                            result.status = "success";
+                            result.message = "Duty Pause Successfully";
+                            result.messageMar = "ड्युटी पॉज यशस्वीपणे";
+                            return result;
+                        }
+                        else
+                        {
+                            result.message = "Something is wrong,Try Again.. ";
+                            result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
+                            result.status = "error";
+                            return result;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result.message = "Something is wrong,Try Again.. ";
+                    result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
+                    result.status = "error";
+                    return result;
+                }
+            }
+            return result;
+        }
+
+
         #region RFID 
         public Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT)
         {
