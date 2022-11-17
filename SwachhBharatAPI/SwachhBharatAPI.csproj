@@ -276,7 +276,6 @@
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
-    <Content Include="bin\ApplicationInsights.config" />
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
     <Content Include="bin\EntityFramework.SqlServer.xml" />
@@ -339,22 +338,17 @@
     <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
     <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
     <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
-    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
-    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
     <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
     <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
     <Content Include="bin\roslyn\vbc.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
-    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="bin\SwachhBharat.API.Bll.Repository.dll" />
     <Content Include="bin\SwachhBharat.API.Bll.Repository.pdb" />
     <Content Include="bin\SwachhBharat.API.Bll.Services.dll" />
     <Content Include="bin\SwachhBharat.API.Bll.Services.pdb" />
     <Content Include="bin\SwachhBharatAPI.Dal.DataContexts.dll" />
-    <Content Include="bin\SwachhBharatAPI.Dal.DataContexts.dll.config" />
     <Content Include="bin\SwachhBharatAPI.Dal.DataContexts.pdb" />
     <Content Include="bin\SwachhBharatAPI.dll" />
-    <Content Include="bin\SwachhBharatAPI.dll.config" />
     <Content Include="bin\SwachhBharatAPI.pdb" />
     <Content Include="bin\SwachhBhart.API.Bll.ViewModels.dll" />
     <Content Include="bin\SwachhBhart.API.Bll.ViewModels.pdb" />
@@ -407,6 +401,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="bin\ApplicationInsights.config" />
+    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="bin\SwachhBharatAPI.Dal.DataContexts.dll.config" />
+    <Content Include="bin\SwachhBharatAPI.dll.config" />
     <None Include="Properties\PublishProfiles\swachhAPP.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
