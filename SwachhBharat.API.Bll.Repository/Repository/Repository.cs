@@ -5884,6 +5884,53 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 db.Database.Connection.Open();
                 using (var scope = db.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
                 {
+                    DumpTripDetail objdump = new DumpTripDetail();
+                    DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
+                    var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
+                    var dumpExist = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
+
+                    int TrpNo = 0;
+                    if (dumpExist == null)
+                    {
+                        TrpNo = 1;
+                    }
+                    else
+                    {
+                        TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
+                    }
+
+                    if (dump == null)
+                    {
+                        objdump.dyId = null;
+                        objdump.startDateTime = Convert.ToDateTime(obj.gcDate);
+                        objdump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                        objdump.userId = obj.userId;
+                        objdump.houseList = obj.houseId;
+                        objdump.tripNo = TrpNo;
+                        objdump.vehicleNumber = obj.vehicleNumber;
+                        Guid guid = Guid.NewGuid();
+                        var gid = guid.ToString();
+                        db.DumpTripDetails.Add(objdump);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        dump.dyId = null;
+
+                        dump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                        dump.userId = obj.userId;
+                        var phl = db.DumpTripDetails.Where(a => a.userId == obj.userId && a.tripNo == TrpNo && a.dyId == null && EntityFunctions.TruncateTime(a.startDateTime) == EntityFunctions.TruncateTime(Dateeee)).Select(a => a.houseList).FirstOrDefault();
+
+                        var tripid = db.DumpTripDetails.OrderByDescending(a => a.tripId).Where(a => a.userId == obj.userId).FirstOrDefault().tripId;
+                        var data = db.DumpTripDetails.Where(a => a.houseList.Contains(obj.houseId) && a.tripId == tripid).FirstOrDefault();
+                        if (data == null)
+                        {
+                            dump.houseList = phl + "," + obj.houseId;
+                        }
+                        dump.vehicleNumber = obj.vehicleNumber;
+                        dump.tripNo = TrpNo;
+                        db.SaveChanges();
+                    }
                     string name = "", housemob = "", nameMar = "", addre = "";
                     var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
                     bool IsExist = false;
@@ -6729,7 +6776,49 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 TimeSpan span = TimeSpan.Zero;
                 var dydetails = db.DumpYardDetails.Where(c => c.ReferanceId == obj.dyId).FirstOrDefault();
                 //var dyId = dydetails.dyId; || tdate.AddMinutes(15) >= gcd.gcDate
+                DumpTripDetail objdump = new DumpTripDetail();
 
+                //var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId).FirstOrDefault();
+                var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
+                var dumpExist = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
+                int TrpNo = 0;
+                string hlist = "", sdate = "";
+                if (dumpExist == null)
+                {
+                    TrpNo = 1;
+                }
+                else
+                {
+                    TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
+                    if (dumpExist.dyId != null)
+                    {
+                        TrpNo = Convert.ToInt32(dumpExist.tripNo);
+
+                        hlist = dumpExist.houseList;
+                    }
+                    if (dump != null)
+                    {
+                        var phl = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(a => a.userId == obj.userId && a.tripNo == TrpNo && a.dyId == null).Select(a => a.houseList).FirstOrDefault();
+                        // dump.houselist = phl + "," + obj.houseId;
+                        hlist = phl;
+                        TrpNo = Convert.ToInt32(dumpExist.tripNo);
+                    }
+                }
+
+
+                if (dump != null)
+                {
+                    dump.dyId = db.DumpYardDetails.Where(a => a.ReferanceId == obj.dyId).Select(a => a.ReferanceId).FirstOrDefault();
+                    dump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                    dump.userId = obj.userId;
+
+
+                    dump.totalDryWeight = obj.totalDryWeight;
+                    dump.totalWetWeight = obj.totalWetWeight;
+                    dump.totalGcWeight = obj.totalGcWeight;
+                    dump.tripNo = TrpNo;
+                    db.SaveChanges();
+                }
                 try
                 {
                     var gcd = db.GarbageCollectionDetails.Where(c => c.userId == obj.userId && c.dyId == dydetails.dyId && EntityFunctions.TruncateTime(c.gcDate) == EntityFunctions.TruncateTime(Dateeee)).OrderByDescending(c => c.gcDate).FirstOrDefault();
@@ -9210,6 +9299,72 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
             }
             return obj;
+
+        }
+
+        public CollectionSyncResult SaveDumpyardTripCollection(DumpTripVM obj)
+        {
+            int AppId = 3098;
+            AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
+            CollectionSyncResult result = new CollectionSyncResult();
+            using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
+            {
+                DumpTripDetailM objdump = new DumpTripDetailM();
+                DateTime Dateeee = Convert.ToDateTime(obj.endDateTime);
+                var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == obj.dyId).FirstOrDefault();
+
+                try
+                {
+                    if (dump == null)
+                    {
+                        objdump.transId = obj.transId;
+                        objdump.dyId = obj.dyId;
+                        objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                        objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                        objdump.userId = obj.userId;
+                        objdump.houseList = obj.houseList;
+                        objdump.tripNo = obj.tripNo;
+                        objdump.vehicleNumber = obj.vehicleNumber;
+                        objdump.totalDryWeight = obj.totalDryWeight;
+                        objdump.totalWetWeight = obj.totalWetWeight;
+                        objdump.totalGcWeight = obj.totalGcWeight;
+                        db.DumpTripDetailMs.Add(objdump);
+                        db.SaveChanges();
+                        result.ID = 1;
+                        result.status = "success";
+                        result.message = "Uploaded successfully";
+                        result.messageMar = "सबमिट यशस्वी";
+                    }
+                    else
+                    {
+                        dump.transId = obj.transId;
+                        dump.dyId = obj.dyId;
+                        dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                        dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                        dump.userId = obj.userId;
+                        dump.houseList = obj.houseList;
+                        dump.tripNo = obj.tripNo;
+                        dump.vehicleNumber = obj.vehicleNumber;
+                        dump.totalDryWeight = obj.totalDryWeight;
+                        dump.totalWetWeight = obj.totalWetWeight;
+                        dump.totalGcWeight = obj.totalGcWeight;
+                        db.SaveChanges();
+                        result.ID = 1;
+                        result.status = "success";
+                        result.message = "Uploaded successfully";
+                        result.messageMar = "सबमिट यशस्वी";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result.isAttendenceOff = true;
+                    result.message = ex.Message;
+                    result.messageMar = ex.Message;
+                    result.status = "Error";
+                    result.ID = 0;
+                }
+            }
+            return result;
 
         }
 
