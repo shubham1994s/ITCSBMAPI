@@ -9304,14 +9304,15 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         public CollectionSyncResult SaveDumpyardTripCollection(DumpTripVM obj)
         {
-            int AppId = 3098;
+            string[] transList = obj.transId.Split('&');
+            int AppId = Convert.ToInt32(transList[0]);
             AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
             CollectionSyncResult result = new CollectionSyncResult();
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
                 DumpTripDetailM objdump = new DumpTripDetailM();
                 DateTime Dateeee = Convert.ToDateTime(obj.endDateTime);
-                var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == obj.dyId).FirstOrDefault();
+                var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.transId == obj.transId).FirstOrDefault();
 
                 try
                 {
