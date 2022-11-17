@@ -228,6 +228,10 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         List<VehicleList> GetVehicleList(int appId, int VehicleTypeId);
 
+        List<Complaint> GetComplaintList(int appId);
+
+        CollectionSyncResult SaveAddUpdateComplaintArise(EmpComplaintArise obj,int AppId,int Userid,bool type);
+
         #region RFID
         Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT);
         #endregion

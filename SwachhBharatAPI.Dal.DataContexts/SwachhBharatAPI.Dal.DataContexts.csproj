@@ -119,6 +119,12 @@
     <Compile Include="CollecctionArea_Result.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
+    <Compile Include="ComplaintArise.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComplaintMaster.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
     <Compile Include="country_states.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
