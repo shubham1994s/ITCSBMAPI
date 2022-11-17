@@ -417,7 +417,7 @@ namespace SwachhBharatAPI.Controllers
                     houseId = gcDetail.houseId,
                     ID = gcDetail.OfflineID,
                     status = "error",
-                    message = "Something is wrong,Try Again.. ",
+                    message = ex.Message,
                     messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
                 });
                 return objres;
