@@ -8,6 +8,7 @@ namespace SwachhBhart.API.Bll.ViewModels
 {
     public class DumpTripVM
     {
+     
         public String transId { get; set; }
         public String startDateTime { get; set; }
         public String endDateTime { get; set; } /// UserTypeID i.e. 0 = Ghanta Gadi, 1 = Scanify , 2 = Waste Management

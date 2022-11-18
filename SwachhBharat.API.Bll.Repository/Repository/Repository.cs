@@ -65,6 +65,22 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 return result;
             }
         }
+
+
+        public string checkNullDump(string str)
+        {
+            string result = "";
+            if (str == null || str == "")
+            {
+                result = "";
+                return result;
+            }
+            else
+            {
+                result = str;
+                return result;
+            }
+        }
         public string ImagePath(string FolderName, string Image, AppDetail objmain)
         {
             string ImageUrl;
@@ -9316,44 +9332,111 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                 try
                 {
-                    if (dump == null)
+
+
+                    if (obj.userId==0 || string.IsNullOrEmpty(obj.transId) || string.IsNullOrEmpty(obj.dyId) || string.IsNullOrEmpty(obj.houseList) || string.IsNullOrEmpty(obj.vehicleNumber) || obj.tripNo==0 || obj.totalDryWeight==0 || obj.totalWetWeight==0 || obj.totalGcWeight==0 || string.IsNullOrEmpty(obj.startDateTime.ToString()) || string.IsNullOrEmpty(obj.endDateTime.ToString()))
                     {
-                        objdump.transId = obj.transId;
-                        objdump.dyId = obj.dyId;
-                        objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
-                        objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
-                        objdump.userId = obj.userId;
-                        objdump.houseList = obj.houseList;
-                        objdump.tripNo = obj.tripNo;
-                        objdump.vehicleNumber = obj.vehicleNumber;
-                        objdump.totalDryWeight = obj.totalDryWeight;
-                        objdump.totalWetWeight = obj.totalWetWeight;
-                        objdump.totalGcWeight = obj.totalGcWeight;
-                        db.DumpTripDetailMs.Add(objdump);
-                        db.SaveChanges();
-                        result.ID = 1;
-                        result.status = "success";
-                        result.message = "Uploaded successfully";
-                        result.messageMar = "सबमिट यशस्वी";
+                        result.isAttendenceOff = true;
+                        if (obj.userId == 0)
+                        {
+                            result.message = "User Id Is Not Null or Empty.";
+                            result.messageMar = "वापरकर्ता आयडी शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.transId))
+                        {
+                            result.message = "transId Is Not Null or Empty.";
+                            result.messageMar = "ट्रान्स आयडी शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.dyId))
+                        {
+                            result.message = "dyId Is Not Null or Empty.";
+                            result.messageMar = "डी वाय आयडी शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.houseList))
+                        {
+                            result.message = "houseList Is Not Null or Empty.";
+                            result.messageMar = "घरांची लिस्ट शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.vehicleNumber))
+                        {
+                            result.message = "vehicleNumber Is Not Null or Empty.";
+                            result.messageMar = "वाहन क्रमांक शून्य किंवा रिक्त नाही.";
+                        }
+                        if (obj.tripNo == 0)
+                        {
+                            result.message = "tripNo Is Not Null or Empty.";
+                            result.messageMar = "ट्रिप क्रमांक शून्य किंवा रिक्त नाही.";
+                        }
+                        if (obj.totalDryWeight == 0)
+                        {
+                            result.message = "totalDryWeight Is Not Null or Empty.";
+                            result.messageMar = "एकूण कोरडे वजन शून्य किंवा रिक्त नाही.";
+                        }
+                        if (obj.totalWetWeight == 0)
+                        {
+                            result.message = "totalWetWeight Is Not Null or Empty.";
+                            result.messageMar = "एकूण ओले वजन शून्य किंवा रिक्त नाही.";
+                        }
+                        if (obj.totalGcWeight == 0)
+                        {
+                            result.message = "totalGcWeight Is Not Null or Empty.";
+                            result.messageMar = "एकूण कचरा संकलन वजन शून्य किंवा रिकामे नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.startDateTime.ToString()))
+                        {
+                            result.message = "startDateTime Is Not Null or Empty.";
+                            result.messageMar = "प्रारंभ तारीख वेळ शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.endDateTime.ToString()))
+                        {
+                            result.message = "endDateTime Is Not Null or Empty.";
+                            result.messageMar = "समाप्ती तारीख वेळ शून्य किंवा रिक्त नाही.";
+                        }
+                        result.status = "Error";
+                        result.ID = 0;
                     }
                     else
                     {
-                        dump.transId = obj.transId;
-                        dump.dyId = obj.dyId;
-                        dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
-                        dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
-                        dump.userId = obj.userId;
-                        dump.houseList = obj.houseList;
-                        dump.tripNo = obj.tripNo;
-                        dump.vehicleNumber = obj.vehicleNumber;
-                        dump.totalDryWeight = obj.totalDryWeight;
-                        dump.totalWetWeight = obj.totalWetWeight;
-                        dump.totalGcWeight = obj.totalGcWeight;
-                        db.SaveChanges();
-                        result.ID = 1;
-                        result.status = "success";
-                        result.message = "Uploaded successfully";
-                        result.messageMar = "सबमिट यशस्वी";
+                        if (dump == null)
+                        {
+                            objdump.transId = obj.transId;
+                            objdump.dyId = checkNullDump(obj.dyId);
+                            objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                            objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                            objdump.userId = obj.userId;
+                            objdump.houseList = obj.houseList;
+                            objdump.tripNo = obj.tripNo;
+                            objdump.vehicleNumber = obj.vehicleNumber;
+                            objdump.totalDryWeight = obj.totalDryWeight;
+                            objdump.totalWetWeight = obj.totalWetWeight;
+                            objdump.totalGcWeight = obj.totalGcWeight;
+                            db.DumpTripDetailMs.Add(objdump);
+                            db.SaveChanges();
+                            result.ID = 1;
+                            result.status = "success";
+                            result.message = "Uploaded successfully";
+                            result.messageMar = "सबमिट यशस्वी";
+                        }
+                        else
+                        {
+                            dump.transId = obj.transId;
+                            dump.dyId = checkNullDump(obj.dyId);
+                            dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                            dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                            dump.userId = obj.userId;
+                            dump.houseList = obj.houseList;
+                            dump.tripNo = obj.tripNo;
+                            dump.vehicleNumber = obj.vehicleNumber;
+                            dump.totalDryWeight = obj.totalDryWeight;
+                            dump.totalWetWeight = obj.totalWetWeight;
+                            dump.totalGcWeight = obj.totalGcWeight;
+                            db.SaveChanges();
+                            result.ID = 1;
+                            result.status = "success";
+                            result.message = "Uploaded successfully";
+                            result.messageMar = "सबमिट यशस्वी";
+                        }
+
                     }
                 }
                 catch (Exception ex)
