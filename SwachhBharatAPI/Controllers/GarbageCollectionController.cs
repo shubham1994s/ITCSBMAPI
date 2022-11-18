@@ -477,7 +477,7 @@ namespace SwachhBharatAPI.Controllers
                 objres.Add(new CollectionSyncResult()
                 {
                     status = "error",
-                    message = "Something is wrong,Try Again.. ",
+                    message=ex.Message,
                     messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
                 });
                 return objres;
