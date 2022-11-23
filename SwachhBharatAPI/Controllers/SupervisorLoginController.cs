@@ -676,5 +676,42 @@ namespace SwachhBharatAPI.Controllers
             return objDetail;
 
         }
+
+        [HttpGet]
+        [Route("GetUserRoleAttendance")]
+        public List<UREmployeeAttendence> UserRoleAttendance()
+        {
+           
+
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("FromDate");
+            IEnumerable<string> headerValue2 = Request.Headers.GetValues("Todate");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("userId");
+
+            var Fdate = headerValue1.FirstOrDefault();
+            DateTime FromDate = Convert.ToDateTime(Fdate);
+
+            var Tdate = headerValue2.FirstOrDefault();
+            DateTime Todate = Convert.ToDateTime(Tdate);
+
+            int userId;
+            var u = headerValue3.FirstOrDefault();
+            if (u == "null" || u == "" || u == null)
+            {
+                userId = 0;
+            }
+            else
+            {
+                userId = int.Parse(u);
+            }
+
+            IEnumerable<string> headerValue4 = Request.Headers.GetValues("IsMobile");
+            var type = (headerValue4.FirstOrDefault());
+            bool IsMobile = bool.Parse(type);
+            objRep = new Repository();
+            List<UREmployeeAttendence> objDetail = new List<UREmployeeAttendence>();
+            objDetail = objRep.UserRoleAttendance(userId, FromDate, Todate, IsMobile).ToList();
+            return objDetail;
+        }
+
     }
 }

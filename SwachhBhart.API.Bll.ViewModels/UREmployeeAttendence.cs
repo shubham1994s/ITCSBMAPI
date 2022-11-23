@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SwachhBhart.API.Bll.ViewModels
 {
-    public class BigVQREmployeeAttendenceVM
+    public class UREmployeeAttendence
     {
         public int qrEmpDaId { get; set; }
         public Nullable<int> qrEmpId { get; set; }
@@ -16,8 +16,8 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string endLong { get; set; }
         public string startTime { get; set; }
         public string endTime { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
+        public string startDate { get; set; }
+        public string endDate { get; set; }
         public string startNote { get; set; }
         public string endNote { get; set; }
         public string batteryStatus { get; set; }
@@ -29,9 +29,6 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string LoginDevice { get; set; }
         public string HostName { get; set; }
 
-        public string startDate1 { get; set; }
-        public string endDate1 { get; set; }
 
     }
-
 }

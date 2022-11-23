@@ -15752,8 +15752,6 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             return result;
         }
 
-
-
         public CollectionSyncResult SaveAddUserRole(UserRoleDetails obj)
         {
             CollectionSyncResult result = new CollectionSyncResult();
@@ -15826,7 +15824,6 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             return result;
         }
 
-
         public List<VehicleList> GetVehicleList(int appId, int VehicleTypeId)
         {
             List<VehicleList> obj = new List<VehicleList>();
@@ -15859,7 +15856,6 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         }
 
-
         public List<Complaint> GetComplaintList(int appId)
         {
             List<Complaint> obj = new List<Complaint>();
@@ -15888,7 +15884,6 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
 
         }
-
 
         public CollectionSyncResult SaveAddUpdateComplaintArise(EmpComplaintArise obj, int AppId, int Userid, bool type)
 
@@ -15963,6 +15958,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             return result;
         }
 
+      
 
         #region RFID 
         public Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT)
@@ -16046,6 +16042,134 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 return result;
             }
 
+        }
+
+      public  IEnumerable<UREmployeeAttendence> UserRoleAttendance(int userid, DateTime FromDate, DateTime Todate, bool type)
+        {
+            List<UREmployeeAttendence> obj = new List<UREmployeeAttendence>();
+            try
+            {
+                if (type == true)
+                {
+                    if (userid == 0)
+                    {
+                        var data = dbMain.HSUR_Daily_Attendance.Where(c => c.startLat != null && c.daDate >= FromDate && c.daDate <= Todate).ToList();
+                        foreach (var x in data)
+                        {
+                            obj.Add(new UREmployeeAttendence()
+                            {
+                                qrEmpDaId = x.daID,
+                                qrEmpId = x.userId,
+                                startLat = x.startLat,
+                                startLong = x.startLong,
+                                endLat = x.endLat,
+                                endLong = x.endLong,
+                                startTime = x.startTime,
+                                endTime = x.endTime,
+                                startDate = x.daDate == null ? null : Convert.ToDateTime(x.daDate).ToString("dd/MM/yyyy"),
+                                endDate = x.daEndDate == null ? null : Convert.ToDateTime(x.daEndDate).ToString("dd/MM/yyyy"),
+                                batteryStatus = x.batteryStatus,
+                                OutbatteryStatus = x.batteryStatus,
+                                EmployeeType = x.EmployeeType,
+                                IpAddress = x.ip_address,
+                                LoginDevice = x.login_device,
+                                HostName = x.HostName,
+                            });
+                        }
+                    }
+                    else
+                    {
+                        var data = dbMain.HSUR_Daily_Attendance.Where(c => c.startLat != null && c.daDate >= FromDate && c.daDate <= Todate && c.userId == userid).ToList();
+                        foreach (var x in data)
+                        {
+                            obj.Add(new UREmployeeAttendence()
+                            {
+                                qrEmpDaId = x.daID,
+                                qrEmpId = x.userId,
+                                startLat = x.startLat,
+                                startLong = x.startLong,
+                                endLat = x.endLat,
+                                endLong = x.endLong,
+                                startTime = x.startTime,
+                                endTime = x.endTime,
+                                startDate = x.daDate == null ? null : Convert.ToDateTime(x.daDate).ToString("dd/MM/yyyy"),
+                                endDate = x.daEndDate == null ? null : Convert.ToDateTime(x.daEndDate).ToString("dd/MM/yyyy"),
+                                batteryStatus = x.batteryStatus,
+                                OutbatteryStatus = x.batteryStatus,
+                                EmployeeType = x.EmployeeType,
+                                IpAddress = x.ip_address,
+                                LoginDevice = x.login_device,
+                                HostName = x.HostName,
+                            });
+                        }
+                    }
+                   
+                }
+                else
+                {
+                    if (userid == 0)
+                    {
+                        var data = dbMain.HSUR_Daily_Attendance.Where(c => c.startLat == null && c.daDate >= FromDate && c.daDate <= Todate).ToList();
+                        foreach (var x in data)
+                        {
+                            obj.Add(new UREmployeeAttendence()
+                            {
+                                qrEmpDaId = x.daID,
+                                qrEmpId = x.userId,
+                                startLat = x.startLat,
+                                startLong = x.startLong,
+                                endLat = x.endLat,
+                                endLong = x.endLong,
+                                startTime = x.startTime,
+                                endTime = x.endTime,
+                                startDate = x.daDate == null ? null : Convert.ToDateTime(x.daDate).ToString("dd/MM/yyyy"),
+                                endDate = x.daEndDate == null ? null : Convert.ToDateTime(x.daEndDate).ToString("dd/MM/yyyy"),
+                                batteryStatus = x.batteryStatus,
+                                OutbatteryStatus = x.batteryStatus,
+                                EmployeeType = x.EmployeeType,
+                                IpAddress = x.ip_address,
+                                LoginDevice = x.login_device,
+                                HostName = x.HostName,
+                            });
+                        }
+                    }
+                    else
+                    {
+                        var data = dbMain.HSUR_Daily_Attendance.Where(c => c.startLat == null && c.daDate >= FromDate && c.daDate <= Todate && c.userId == userid).ToList();
+                        foreach (var x in data)
+                        {
+                            obj.Add(new UREmployeeAttendence()
+                            {
+                                qrEmpDaId = x.daID,
+                                qrEmpId = x.userId,
+                                startLat = x.startLat,
+                                startLong = x.startLong,
+                                endLat = x.endLat,
+                                endLong = x.endLong,
+                                startTime = x.startTime,
+                                endTime = x.endTime,
+                                startDate = x.daDate == null ? null : Convert.ToDateTime(x.daDate).ToString("dd/MM/yyyy"),
+                                endDate = x.daEndDate == null ? null : Convert.ToDateTime(x.daEndDate).ToString("dd/MM/yyyy"),
+                                batteryStatus = x.batteryStatus,
+                                OutbatteryStatus = x.batteryStatus,
+                                EmployeeType = x.EmployeeType,
+                                IpAddress = x.ip_address,
+                                LoginDevice = x.login_device,
+                                HostName = x.HostName,
+                            });
+                        }
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return obj;
+            }
+
+            return obj.OrderByDescending(c => c.qrEmpDaId).ToList();
         }
 
         #endregion

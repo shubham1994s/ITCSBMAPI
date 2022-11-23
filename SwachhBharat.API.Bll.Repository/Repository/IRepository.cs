@@ -234,6 +234,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         CollectionSyncResult SaveAddUpdateComplaintArise(EmpComplaintArise obj,int AppId,int Userid,bool type);
 
+        IEnumerable<UREmployeeAttendence> UserRoleAttendance(int userid, DateTime FromDate, DateTime Todate, bool type);
+
         #region RFID
         Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT);
         #endregion
