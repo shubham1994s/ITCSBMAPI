@@ -35,6 +35,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         CollectionResult SaveGarbageCollection(SBGarbageCollectionView obj, int AppId, int type, string batteryStatus);
         CollectionSyncResult SaveGarbageCollectionOffline(SBGarbageCollectionView obj, int AppId, int type);
         List<SBGarbageCollectionView> GetGarbageCollection(DateTime fdate, int appId);
+
+        CollectionDumpSyncResult SaveDumpyardTripCollection(DumpTripVM obj);
         Result GetVersionUpdate(string version, int AppId);
         Result GetAdminVersionUpdate(string version, int AppId);
         Result GetGameVersionUpdate(string version);

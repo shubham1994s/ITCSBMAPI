@@ -434,5 +434,56 @@ namespace SwachhBharatAPI.Controllers
 
             return objres;
         }
+
+
+        [HttpPost]
+        [Route("Save/DumpyardTrip")]
+        public List<CollectionDumpSyncResult> SaveDumpyardTrip(List<DumpTripVM> objRaw)
+        {
+            _RepositoryApi = new Repository();
+            DumpTripVM gcDetail = new DumpTripVM();
+            List<CollectionDumpSyncResult> objres = new List<CollectionDumpSyncResult>();
+         
+            try
+            {
+                foreach (var item in objRaw)
+                {
+                    DumpTripVM objDetailDump = new DumpTripVM();
+                    gcDetail.transId = item.transId;
+                    gcDetail.dyId = item.dyId;
+                    gcDetail.startDateTime = item.startDateTime;
+                    gcDetail.endDateTime = item.endDateTime;
+                    gcDetail.userId = item.userId;
+                    gcDetail.houseList = item.houseList;
+                    gcDetail.tripNo = item.tripNo;
+                    gcDetail.vehicleNumber = item.vehicleNumber;
+                    gcDetail.totalDryWeight = item.totalDryWeight;
+                    gcDetail.totalWetWeight = item.totalWetWeight;
+                    gcDetail.totalGcWeight = item.totalGcWeight;
+                    CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
+                    objres.Add(new CollectionDumpSyncResult()
+                    {
+                        TransId = detail.TransId,
+                        status = detail.status,
+                        messageMar = detail.messageMar,
+                        message = detail.message,
+                        DumpId = detail.DumpId,
+                        
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                objres.Add(new CollectionDumpSyncResult()
+                {
+                    status = "error",
+                    message=ex.Message,
+                    messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
+
+                });
+                return objres;
+            }
+            return objres;
+        }
     }
 }

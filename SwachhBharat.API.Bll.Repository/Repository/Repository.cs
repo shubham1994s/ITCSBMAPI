@@ -65,6 +65,22 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 return result;
             }
         }
+
+
+        public string checkNullDump(string str)
+        {
+            string result = "";
+            if (str == null || str == "")
+            {
+                result = "";
+                return result;
+            }
+            else
+            {
+                result = str;
+                return result;
+            }
+        }
         public string ImagePath(string FolderName, string Image, AppDetail objmain)
         {
             string ImageUrl;
@@ -5884,6 +5900,53 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 db.Database.Connection.Open();
                 using (var scope = db.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
                 {
+                    DumpTripDetail objdump = new DumpTripDetail();
+                    DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
+                    var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
+                    var dumpExist = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
+
+                    int TrpNo = 0;
+                    if (dumpExist == null)
+                    {
+                        TrpNo = 1;
+                    }
+                    else
+                    {
+                        TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
+                    }
+
+                    if (dump == null)
+                    {
+                        objdump.dyId = null;
+                        objdump.startDateTime = Convert.ToDateTime(obj.gcDate);
+                        objdump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                        objdump.userId = obj.userId;
+                        objdump.houseList = obj.houseId;
+                        objdump.tripNo = TrpNo;
+                        objdump.vehicleNumber = obj.vehicleNumber;
+                        Guid guid = Guid.NewGuid();
+                        var gid = guid.ToString();
+                        db.DumpTripDetails.Add(objdump);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        dump.dyId = null;
+
+                        dump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                        dump.userId = obj.userId;
+                        var phl = db.DumpTripDetails.Where(a => a.userId == obj.userId && a.tripNo == TrpNo && a.dyId == null && EntityFunctions.TruncateTime(a.startDateTime) == EntityFunctions.TruncateTime(Dateeee)).Select(a => a.houseList).FirstOrDefault();
+
+                        var tripid = db.DumpTripDetails.OrderByDescending(a => a.tripId).Where(a => a.userId == obj.userId).FirstOrDefault().tripId;
+                        var data = db.DumpTripDetails.Where(a => a.houseList.Contains(obj.houseId) && a.tripId == tripid).FirstOrDefault();
+                        if (data == null)
+                        {
+                            dump.houseList = phl + "," + obj.houseId;
+                        }
+                        dump.vehicleNumber = obj.vehicleNumber;
+                        dump.tripNo = TrpNo;
+                        db.SaveChanges();
+                    }
                     string name = "", housemob = "", nameMar = "", addre = "";
                     var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
                     bool IsExist = false;
@@ -5899,7 +5962,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     {
 
                         //bool IsExist = false;
-                        DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
+                      
                         DateTime startDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 00, 00, 00, 000);
                         DateTime endDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 23, 59, 59, 999);
                         var IsSameHouseRecord = db.GarbageCollectionDetails.Where(c => c.userId == obj.userId && c.houseId == house.houseId && c.gcDate == Dateeee).FirstOrDefault();
@@ -5973,6 +6036,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                         result.ID = obj.OfflineID;
                                         result.message = "This house id already scanned."; result.messageMar = "हे घर आयडी आधीच स्कॅन केले आहे.";
                                         result.status = "error";
+
                                         return result;
                                     }
                                     if (gcd != null)
@@ -6729,7 +6793,49 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 TimeSpan span = TimeSpan.Zero;
                 var dydetails = db.DumpYardDetails.Where(c => c.ReferanceId == obj.dyId).FirstOrDefault();
                 //var dyId = dydetails.dyId; || tdate.AddMinutes(15) >= gcd.gcDate
+                DumpTripDetail objdump = new DumpTripDetail();
 
+                //var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId).FirstOrDefault();
+                var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
+                var dumpExist = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
+                int TrpNo = 0;
+                string hlist = "", sdate = "";
+                if (dumpExist == null)
+                {
+                    TrpNo = 1;
+                }
+                else
+                {
+                    TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
+                    if (dumpExist.dyId != null)
+                    {
+                        TrpNo = Convert.ToInt32(dumpExist.tripNo);
+
+                        hlist = dumpExist.houseList;
+                    }
+                    if (dump != null)
+                    {
+                        var phl = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(a => a.userId == obj.userId && a.tripNo == TrpNo && a.dyId == null).Select(a => a.houseList).FirstOrDefault();
+                        // dump.houselist = phl + "," + obj.houseId;
+                        hlist = phl;
+                        TrpNo = Convert.ToInt32(dumpExist.tripNo);
+                    }
+                }
+
+
+                if (dump != null)
+                {
+                    dump.dyId = db.DumpYardDetails.Where(a => a.ReferanceId == obj.dyId).Select(a => a.ReferanceId).FirstOrDefault();
+                    dump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                    dump.userId = obj.userId;
+
+
+                    dump.totalDryWeight = obj.totalDryWeight;
+                    dump.totalWetWeight = obj.totalWetWeight;
+                    dump.totalGcWeight = obj.totalGcWeight;
+                    dump.tripNo = TrpNo;
+                    db.SaveChanges();
+                }
                 try
                 {
                     var gcd = db.GarbageCollectionDetails.Where(c => c.userId == obj.userId && c.dyId == dydetails.dyId && EntityFunctions.TruncateTime(c.gcDate) == EntityFunctions.TruncateTime(Dateeee)).OrderByDescending(c => c.gcDate).FirstOrDefault();
@@ -9212,6 +9318,144 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
             }
             return obj;
+
+        }
+
+        public CollectionDumpSyncResult SaveDumpyardTripCollection(DumpTripVM obj)
+        {
+            string[] transList = obj.transId.Split('&');
+            int AppId = Convert.ToInt32(transList[0]);
+            AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
+            CollectionDumpSyncResult result = new CollectionDumpSyncResult();
+            using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
+            {
+                DumpTripDetailM objdump = new DumpTripDetailM();
+                DateTime Dateeee = Convert.ToDateTime(obj.endDateTime);
+                var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.transId == obj.transId).FirstOrDefault();
+
+                try
+                {
+
+
+                    if (obj.userId==0 || string.IsNullOrEmpty(obj.transId) || string.IsNullOrEmpty(obj.dyId) || string.IsNullOrEmpty(obj.houseList) || string.IsNullOrEmpty(obj.vehicleNumber) || obj.tripNo==0 || obj.totalDryWeight==0 || obj.totalWetWeight==0 || obj.totalGcWeight==0 || string.IsNullOrEmpty(obj.startDateTime.ToString()) || string.IsNullOrEmpty(obj.endDateTime.ToString()))
+                    {
+                        
+                        if (obj.userId == 0)
+                        {
+                            result.message = "User Id Is Not Null or Empty.";
+                            result.messageMar = "वापरकर्ता आयडी शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.transId))
+                        {
+                            result.message = "transId Is Not Null or Empty.";
+                            result.messageMar = "ट्रान्स आयडी शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.dyId))
+                        {
+                            result.message = "dyId Is Not Null or Empty.";
+                            result.messageMar = "डी वाय आयडी शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.houseList))
+                        {
+                            result.message = "houseList Is Not Null or Empty.";
+                            result.messageMar = "घरांची लिस्ट शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.vehicleNumber))
+                        {
+                            result.message = "vehicleNumber Is Not Null or Empty.";
+                            result.messageMar = "वाहन क्रमांक शून्य किंवा रिक्त नाही.";
+                        }
+                        if (obj.tripNo == 0)
+                        {
+                            result.message = "tripNo Is Not Null or Empty.";
+                            result.messageMar = "ट्रिप क्रमांक शून्य किंवा रिक्त नाही.";
+                        }
+                        if (obj.totalDryWeight == 0)
+                        {
+                            result.message = "totalDryWeight Is Not Null or Empty.";
+                            result.messageMar = "एकूण कोरडे वजन शून्य किंवा रिक्त नाही.";
+                        }
+                        if (obj.totalWetWeight == 0)
+                        {
+                            result.message = "totalWetWeight Is Not Null or Empty.";
+                            result.messageMar = "एकूण ओले वजन शून्य किंवा रिक्त नाही.";
+                        }
+                        if (obj.totalGcWeight == 0)
+                        {
+                            result.message = "totalGcWeight Is Not Null or Empty.";
+                            result.messageMar = "एकूण कचरा संकलन वजन शून्य किंवा रिकामे नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.startDateTime.ToString()))
+                        {
+                            result.message = "startDateTime Is Not Null or Empty.";
+                            result.messageMar = "प्रारंभ तारीख वेळ शून्य किंवा रिक्त नाही.";
+                        }
+                        if (string.IsNullOrEmpty(obj.endDateTime.ToString()))
+                        {
+                            result.message = "endDateTime Is Not Null or Empty.";
+                            result.messageMar = "समाप्ती तारीख वेळ शून्य किंवा रिक्त नाही.";
+                        }
+                        result.status = "Error";
+                        result.DumpId = obj.dyId;
+                        result.TransId = obj.transId;
+                    }
+                    else
+                    {
+                        if (dump == null)
+                        {
+                            objdump.transId = obj.transId;
+                            objdump.dyId = checkNullDump(obj.dyId);
+                            objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                            objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                            objdump.userId = obj.userId;
+                            objdump.houseList = obj.houseList;
+                            objdump.tripNo = obj.tripNo;
+                            objdump.vehicleNumber = obj.vehicleNumber;
+                            objdump.totalDryWeight = obj.totalDryWeight;
+                            objdump.totalWetWeight = obj.totalWetWeight;
+                            objdump.totalGcWeight = obj.totalGcWeight;
+                            db.DumpTripDetailMs.Add(objdump);
+                            db.SaveChanges();
+                            result.DumpId = obj.dyId;
+                            result.TransId = obj.transId;
+                            result.status = "success";
+                            result.message = "Uploaded successfully";
+                            result.messageMar = "सबमिट यशस्वी";
+                        }
+                        else
+                        {
+                            dump.transId = obj.transId;
+                            dump.dyId = checkNullDump(obj.dyId);
+                            dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                            dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                            dump.userId = obj.userId;
+                            dump.houseList = obj.houseList;
+                            dump.tripNo = obj.tripNo;
+                            dump.vehicleNumber = obj.vehicleNumber;
+                            dump.totalDryWeight = obj.totalDryWeight;
+                            dump.totalWetWeight = obj.totalWetWeight;
+                            dump.totalGcWeight = obj.totalGcWeight;
+                            db.SaveChanges();
+                            result.DumpId = obj.dyId;
+                            result.TransId = obj.transId;
+                            result.status = "success";
+                            result.message = "Uploaded successfully";
+                            result.messageMar = "सबमिट यशस्वी";
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result.message = ex.Message;
+                    result.messageMar = ex.Message;
+                    result.status = "Error";
+                    result.DumpId = obj.dyId;
+                    result.TransId = obj.transId;
+
+                }
+            }
+            return result;
 
         }
 
