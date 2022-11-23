@@ -26,8 +26,16 @@ namespace SwachhBhart.API.Bll.ViewModels
         public bool isAttendenceOff { get; set; }
         public string houseId { get; set; }
         public bool IsExist { get; set; }
+    }
 
+    public class CollectionDumpSyncResult
+    {
+        public string TransId { get; set; }         
+        public string DumpId { get; set; }
 
+        public string status { get; set; }
+        public string message { get; set; }
+        public string messageMar { get; set; }
 
     }
 

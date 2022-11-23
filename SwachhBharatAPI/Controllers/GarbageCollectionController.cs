@@ -438,12 +438,12 @@ namespace SwachhBharatAPI.Controllers
 
         [HttpPost]
         [Route("Save/DumpyardTrip")]
-        public List<CollectionSyncResult> SaveDumpyardTrip(List<DumpTripVM> objRaw)
+        public List<CollectionDumpSyncResult> SaveDumpyardTrip(List<DumpTripVM> objRaw)
         {
             _RepositoryApi = new Repository();
             DumpTripVM gcDetail = new DumpTripVM();
-            List<CollectionSyncResult> objres = new List<CollectionSyncResult>();
-            List<CollectionSyncResult> objDetail = new List<CollectionSyncResult>();
+            List<CollectionDumpSyncResult> objres = new List<CollectionDumpSyncResult>();
+         
             try
             {
                 foreach (var item in objRaw)
@@ -460,25 +460,26 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.totalDryWeight = item.totalDryWeight;
                     gcDetail.totalWetWeight = item.totalWetWeight;
                     gcDetail.totalGcWeight = item.totalGcWeight;
-                    CollectionSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
-                    objres.Add(new CollectionSyncResult()
+                    CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
+                    objres.Add(new CollectionDumpSyncResult()
                     {
-                        ID = detail.ID,
+                        TransId = detail.TransId,
                         status = detail.status,
                         messageMar = detail.messageMar,
                         message = detail.message,
-                        isAttendenceOff = detail.isAttendenceOff,
-
+                        DumpId = detail.DumpId,
+                        
                     });
                 }
             }
             catch (Exception ex)
             {
-                objres.Add(new CollectionSyncResult()
+                objres.Add(new CollectionDumpSyncResult()
                 {
                     status = "error",
                     message=ex.Message,
                     messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
+
                 });
                 return objres;
             }

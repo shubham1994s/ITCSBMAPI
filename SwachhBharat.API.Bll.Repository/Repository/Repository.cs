@@ -6036,6 +6036,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                         result.ID = obj.OfflineID;
                                         result.message = "This house id already scanned."; result.messageMar = "हे घर आयडी आधीच स्कॅन केले आहे.";
                                         result.status = "error";
+
                                         return result;
                                     }
                                     if (gcd != null)
@@ -9318,12 +9319,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         }
 
-        public CollectionSyncResult SaveDumpyardTripCollection(DumpTripVM obj)
+        public CollectionDumpSyncResult SaveDumpyardTripCollection(DumpTripVM obj)
         {
             string[] transList = obj.transId.Split('&');
             int AppId = Convert.ToInt32(transList[0]);
             AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
-            CollectionSyncResult result = new CollectionSyncResult();
+            CollectionDumpSyncResult result = new CollectionDumpSyncResult();
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
                 DumpTripDetailM objdump = new DumpTripDetailM();
@@ -9336,7 +9337,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                     if (obj.userId==0 || string.IsNullOrEmpty(obj.transId) || string.IsNullOrEmpty(obj.dyId) || string.IsNullOrEmpty(obj.houseList) || string.IsNullOrEmpty(obj.vehicleNumber) || obj.tripNo==0 || obj.totalDryWeight==0 || obj.totalWetWeight==0 || obj.totalGcWeight==0 || string.IsNullOrEmpty(obj.startDateTime.ToString()) || string.IsNullOrEmpty(obj.endDateTime.ToString()))
                     {
-                        result.isAttendenceOff = true;
+                        
                         if (obj.userId == 0)
                         {
                             result.message = "User Id Is Not Null or Empty.";
@@ -9393,7 +9394,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             result.messageMar = "समाप्ती तारीख वेळ शून्य किंवा रिक्त नाही.";
                         }
                         result.status = "Error";
-                        result.ID = 0;
+                        result.DumpId = obj.dyId;
+                        result.TransId = obj.transId;
                     }
                     else
                     {
@@ -9412,7 +9414,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             objdump.totalGcWeight = obj.totalGcWeight;
                             db.DumpTripDetailMs.Add(objdump);
                             db.SaveChanges();
-                            result.ID = 1;
+                            result.DumpId = obj.dyId;
+                            result.TransId = obj.transId;
                             result.status = "success";
                             result.message = "Uploaded successfully";
                             result.messageMar = "सबमिट यशस्वी";
@@ -9431,7 +9434,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             dump.totalWetWeight = obj.totalWetWeight;
                             dump.totalGcWeight = obj.totalGcWeight;
                             db.SaveChanges();
-                            result.ID = 1;
+                            result.DumpId = obj.dyId;
+                            result.TransId = obj.transId;
                             result.status = "success";
                             result.message = "Uploaded successfully";
                             result.messageMar = "सबमिट यशस्वी";
@@ -9441,11 +9445,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 }
                 catch (Exception ex)
                 {
-                    result.isAttendenceOff = true;
                     result.message = ex.Message;
                     result.messageMar = ex.Message;
                     result.status = "Error";
-                    result.ID = 0;
+                    result.DumpId = obj.dyId;
+                    result.TransId = obj.transId;
+
                 }
             }
             return result;
