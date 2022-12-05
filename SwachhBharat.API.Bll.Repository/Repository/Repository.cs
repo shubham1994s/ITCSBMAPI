@@ -16074,7 +16074,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 IpAddress = x.ip_address,
                                 LoginDevice = x.login_device,
                                 HostName = x.HostName,
-                            });
+                                EmployeeName = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.EmpName).FirstOrDefault(),
+                            }); ;
                         }
                     }
                     else
@@ -16100,6 +16101,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 IpAddress = x.ip_address,
                                 LoginDevice = x.login_device,
                                 HostName = x.HostName,
+                                EmployeeName = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.EmpName).FirstOrDefault(),
                             });
                         }
                     }
@@ -16130,6 +16132,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 IpAddress = x.ip_address,
                                 LoginDevice = x.login_device,
                                 HostName = x.HostName,
+                                EmployeeName = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.EmpName).FirstOrDefault(),
                             });
                         }
                     }
@@ -16156,6 +16159,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 IpAddress = x.ip_address,
                                 LoginDevice = x.login_device,
                                 HostName = x.HostName,
+                                EmployeeName = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.EmpName).FirstOrDefault(),
                             });
                         }
                     }
