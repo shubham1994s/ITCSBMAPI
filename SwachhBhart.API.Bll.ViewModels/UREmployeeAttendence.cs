@@ -29,6 +29,7 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string LoginDevice { get; set; }
         public string HostName { get; set; }
         public string EmployeeName { get; set; }
+        public bool? Status { get; set; } 
 
 
     }
