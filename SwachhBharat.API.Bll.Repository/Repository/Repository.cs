@@ -16108,7 +16108,9 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 IpAddress = x.ip_address,
                                 LoginDevice = x.login_device,
                                 HostName = x.HostName,
-                            });
+                                EmployeeName = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.EmpName).FirstOrDefault(),
+                                Status= dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.isActive).FirstOrDefault(),
+                            }); ;
                         }
                     }
                     else
@@ -16134,6 +16136,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 IpAddress = x.ip_address,
                                 LoginDevice = x.login_device,
                                 HostName = x.HostName,
+                                EmployeeName = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.EmpName).FirstOrDefault(),
+                                Status = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.isActive).FirstOrDefault(),
                             });
                         }
                     }
@@ -16164,6 +16168,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 IpAddress = x.ip_address,
                                 LoginDevice = x.login_device,
                                 HostName = x.HostName,
+                                EmployeeName = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.EmpName).FirstOrDefault(),
+                                Status = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.isActive).FirstOrDefault(),
                             });
                         }
                     }
@@ -16190,6 +16196,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 IpAddress = x.ip_address,
                                 LoginDevice = x.login_device,
                                 HostName = x.HostName,
+                                EmployeeName = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.EmpName).FirstOrDefault(),
+                                Status = dbMain.EmployeeMasters.Where(c => c.EmpId == x.userId).Select(s => s.isActive).FirstOrDefault(),
                             });
                         }
                     }
