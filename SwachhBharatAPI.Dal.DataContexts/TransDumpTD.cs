@@ -12,9 +12,9 @@ namespace SwachhBharatAPI.Dal.DataContexts
     using System;
     using System.Collections.Generic;
     
-    public partial class DumpTripDetailM
+    public partial class TransDumpTD
     {
-        public int tripId { get; set; }
+        public int TransBcId { get; set; }
         public string transId { get; set; }
         public Nullable<System.DateTime> startDateTime { get; set; }
         public Nullable<System.DateTime> endDateTime { get; set; }

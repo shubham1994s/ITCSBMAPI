@@ -358,6 +358,9 @@
     <Compile Include="TeritoryMaster.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
+    <Compile Include="TransDumpTD.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
     <Compile Include="Update_Trigger_Result.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
