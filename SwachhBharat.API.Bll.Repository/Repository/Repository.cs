@@ -9333,14 +9333,29 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
                 DumpTripDetailM objdump = new DumpTripDetailM();
+
+                TransDumpTD objTransDumpTD = new TransDumpTD();
                 DateTime Dateeee = Convert.ToDateTime(obj.endDateTime);
+                string hlist = string.Empty;
+                foreach (var item in obj.houseList)
+                {
+                    if(obj.houseList.Length>1)
+                    {
+                        hlist += item + ",";
+                    }
+                  
+                }
+                if (obj.houseList.Length > 1)
+                {
+                    hlist = hlist.Substring(0, hlist.Length - 1);
+                }
                 var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.transId == obj.transId).FirstOrDefault();
 
                 try
                 {
 
 
-                    if (obj.userId==0 || string.IsNullOrEmpty(obj.transId) || string.IsNullOrEmpty(obj.dyId) || string.IsNullOrEmpty(obj.houseList) || string.IsNullOrEmpty(obj.vehicleNumber) || obj.tripNo==0 || obj.totalDryWeight==0 || obj.totalWetWeight==0 || obj.totalGcWeight==0 || string.IsNullOrEmpty(obj.startDateTime.ToString()) || string.IsNullOrEmpty(obj.endDateTime.ToString()))
+                    if (obj.userId==0 || string.IsNullOrEmpty(obj.transId) || string.IsNullOrEmpty(obj.dyId) || string.IsNullOrEmpty(obj.houseList.ToString()) || string.IsNullOrEmpty(obj.vehicleNumber) || obj.tripNo==0 || obj.totalDryWeight==0 || obj.totalWetWeight==0 || obj.totalGcWeight==0 || string.IsNullOrEmpty(obj.startDateTime.ToString()) || string.IsNullOrEmpty(obj.endDateTime.ToString()))
                     {
                         
                         if (obj.userId == 0)
@@ -9358,7 +9373,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             result.message = "dyId Is Not Null or Empty.";
                             result.messageMar = "डी वाय आयडी शून्य किंवा रिक्त नाही.";
                         }
-                        if (string.IsNullOrEmpty(obj.houseList))
+                        if (string.IsNullOrEmpty(hlist))
                         {
                             result.message = "houseList Is Not Null or Empty.";
                             result.messageMar = "घरांची लिस्ट शून्य किंवा रिक्त नाही.";
@@ -9411,13 +9426,15 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
                             objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
                             objdump.userId = obj.userId;
-                            objdump.houseList = obj.houseList;
+                            objdump.houseList = hlist;
                             objdump.tripNo = obj.tripNo;
                             objdump.vehicleNumber = obj.vehicleNumber;
                             objdump.totalDryWeight = obj.totalDryWeight;
                             objdump.totalWetWeight = obj.totalWetWeight;
                             objdump.totalGcWeight = obj.totalGcWeight;
+                            objdump.bcTransId = obj.bcTransId;
                             db.DumpTripDetailMs.Add(objdump);
+                          
                             db.SaveChanges();
                             result.DumpId = obj.dyId;
                             result.TransId = obj.transId;
@@ -9425,6 +9442,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             result.message = "Uploaded successfully";
                             result.messageMar = "सबमिट यशस्वी";
                         }
+
+
                         else
                         {
                             dump.transId = obj.transId;
@@ -9432,12 +9451,13 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
                             dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
                             dump.userId = obj.userId;
-                            dump.houseList = obj.houseList;
+                            dump.houseList = hlist;
                             dump.tripNo = obj.tripNo;
                             dump.vehicleNumber = obj.vehicleNumber;
                             dump.totalDryWeight = obj.totalDryWeight;
                             dump.totalWetWeight = obj.totalWetWeight;
                             dump.totalGcWeight = obj.totalGcWeight;
+                            dump.bcTransId = obj.bcTransId;
                             db.SaveChanges();
                             result.DumpId = obj.dyId;
                             result.TransId = obj.transId;
@@ -9457,6 +9477,20 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     result.TransId = obj.transId;
 
                 }
+                objTransDumpTD.transId = obj.transId;
+                objTransDumpTD.dyId = checkNullDump(obj.dyId);
+                objTransDumpTD.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                objTransDumpTD.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                objTransDumpTD.userId = obj.userId;
+                objTransDumpTD.houseList = hlist;
+                objTransDumpTD.tripNo = obj.tripNo;
+                objTransDumpTD.vehicleNumber = obj.vehicleNumber;
+                objTransDumpTD.totalDryWeight = obj.totalDryWeight;
+                objTransDumpTD.totalWetWeight = obj.totalWetWeight;
+                objTransDumpTD.totalGcWeight = obj.totalGcWeight;
+                objTransDumpTD.bcTransId = obj.bcTransId;
+                db.TransDumpTDs.Add(objTransDumpTD);
+                db.SaveChanges();
             }
             return result;
 

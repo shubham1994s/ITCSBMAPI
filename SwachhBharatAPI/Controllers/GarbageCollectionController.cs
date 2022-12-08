@@ -13,6 +13,9 @@ using SwachhBharatAPI.Dal.DataContexts;
 using System.Threading.Tasks;
 using SwachhBharatAPI.Models;
 using System.Threading;
+using Newtonsoft.Json;
+
+using System.Net.Http.Headers;
 
 namespace SwachhBharatAPI.Controllers
 {
@@ -446,6 +449,7 @@ namespace SwachhBharatAPI.Controllers
          
             try
             {
+                HttpClient client = new HttpClient();
                 foreach (var item in objRaw)
                 {
                     DumpTripVM objDetailDump = new DumpTripVM();
@@ -460,7 +464,21 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.totalDryWeight = item.totalDryWeight;
                     gcDetail.totalWetWeight = item.totalWetWeight;
                     gcDetail.totalGcWeight = item.totalGcWeight;
+
+                    var json = JsonConvert.SerializeObject(gcDetail, Formatting.Indented);
+                    var stringContent = new StringContent(json);
+                    stringContent.Headers.ContentType.MediaType = "application/json";
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var response = client.PostAsync("http://35.164.93.75/trips/2/tripdata", stringContent);
+                    HttpResponseMessage rs = response.Result;
+                    string responseString = rs.Content.ReadAsStringAsync().Result;
+                    String[] spearator = responseString.Split(',');
+                    string sdsd2 = spearator[2].Remove(0, 8);
+                    var bcTransId = sdsd2.Substring(0, sdsd2.Length - 2);
+                    gcDetail.bcTransId = bcTransId;
                     CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
+
+                    
                     objres.Add(new CollectionDumpSyncResult()
                     {
                         TransId = detail.TransId,
