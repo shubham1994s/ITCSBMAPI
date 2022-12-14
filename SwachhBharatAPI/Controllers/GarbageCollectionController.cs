@@ -478,8 +478,7 @@ namespace SwachhBharatAPI.Controllers
                     AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
                     transList[2] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     gcDetail.transId = string.Join("&", transList);
-                   // string strdate = string.Empty;
-                   // transList[2] = DateTime.ParseExact(strdate, "yyyy-MM-dd HH:mm:ss.SSS", CultureInfo.InvariantCulture).ToString();
+                   
 
                     CollectionDumpSyncResult result = new CollectionDumpSyncResult();
                     using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
