@@ -8893,8 +8893,11 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 }
                 if (obj.IsLocation == false && house == null && appdetails.IsScanNear == true)
                 {
+                    result.ID = obj.OfflineID;
+                    result.houseId = obj.houseId;
                     result.message = "You Are Not In Nearby.";
                     result.messageMar = "आपण जवळपास नाही.";
+                    
 
                 }
 

@@ -406,7 +406,8 @@ namespace SwachhBharatAPI.Controllers
                         status = detail.status,
                         messageMar = detail.messageMar,
                         message = detail.message,
-                        isAttendenceOff= detail.isAttendenceOff
+                        isAttendenceOff= detail.isAttendenceOff,
+                        houseId=detail.houseId
                     });
                 }
 
