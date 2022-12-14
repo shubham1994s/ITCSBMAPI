@@ -22,5 +22,7 @@ namespace SwachhBhart.API.Bll.ViewModels
         public decimal totalWetWeight { get; set; }
 
         public string bcTransId { get; set; }
+
+        public bool TStatus { get; set; }
     }
 }

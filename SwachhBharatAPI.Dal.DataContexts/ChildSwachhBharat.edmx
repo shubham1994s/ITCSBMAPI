@@ -442,6 +442,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="totalDryWeight" Type="decimal" Precision="18" Scale="4" />
           <Property Name="totalWetWeight" Type="decimal" Precision="18" Scale="4" />
           <Property Name="bcTransId" Type="nvarchar" MaxLength="500" />
+          <Property Name="TStatus" Type="bit" />
         </EntityType>
         <EntityType Name="UserMaster">
           <Key>
@@ -2041,6 +2042,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="totalDryWeight" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="totalWetWeight" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="bcTransId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TStatus" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3173,6 +3175,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="TransDumpTDs">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.TransDumpTD">
               <MappingFragment StoreEntitySet="TransDumpTD">
+                <ScalarProperty Name="TStatus" ColumnName="TStatus" />
                 <ScalarProperty Name="bcTransId" ColumnName="bcTransId" />
                 <ScalarProperty Name="totalWetWeight" ColumnName="totalWetWeight" />
                 <ScalarProperty Name="totalDryWeight" ColumnName="totalDryWeight" />

@@ -16,6 +16,7 @@ using System.Threading;
 using Newtonsoft.Json;
 
 using System.Net.Http.Headers;
+using System.Globalization;
 
 namespace SwachhBharatAPI.Controllers
 {
@@ -445,14 +446,16 @@ namespace SwachhBharatAPI.Controllers
         {
             _RepositoryApi = new Repository();
             DumpTripVM gcDetail = new DumpTripVM();
+            TransDumpTD objDetailDump = new TransDumpTD();
             List<CollectionDumpSyncResult> objres = new List<CollectionDumpSyncResult>();
          
             try
             {
                 HttpClient client = new HttpClient();
+                int ptid = 0;
                 foreach (var item in objRaw)
                 {
-                    DumpTripVM objDetailDump = new DumpTripVM();
+                   
                     gcDetail.transId = item.transId;
                     gcDetail.dyId = item.dyId;
                     gcDetail.startDateTime = item.startDateTime;
@@ -464,29 +467,64 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.totalDryWeight = item.totalDryWeight;
                     gcDetail.totalWetWeight = item.totalWetWeight;
                     gcDetail.totalGcWeight = item.totalGcWeight;
-
                     var json = JsonConvert.SerializeObject(gcDetail, Formatting.Indented);
                     var stringContent = new StringContent(json);
                     stringContent.Headers.ContentType.MediaType = "application/json";
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.PostAsync("http://35.164.93.75/trips/2/tripdata", stringContent);
-                    HttpResponseMessage rs = response.Result;
-                    string responseString = rs.Content.ReadAsStringAsync().Result;
-                    String[] spearator = responseString.Split(',');
-                    string sdsd2 = spearator[2].Remove(0, 8);
-                    var bcTransId = sdsd2.Substring(0, sdsd2.Length - 2);
-                    gcDetail.bcTransId = bcTransId;
+
+                    string[] transList = item.transId.Split('&');
+                    int AppId = Convert.ToInt32(transList[0]);
+                    AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
+                    transList[2] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    gcDetail.transId = string.Join("&", transList);
+                   // string strdate = string.Empty;
+                   // transList[2] = DateTime.ParseExact(strdate, "yyyy-MM-dd HH:mm:ss.SSS", CultureInfo.InvariantCulture).ToString();
+
+                    CollectionDumpSyncResult result = new CollectionDumpSyncResult();
+                    using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
+                    {
+                        var ptripid = db.TransDumpTDs.OrderByDescending(c => c.TransBcId).FirstOrDefault().TransBcId;
+                        ptid = Convert.ToInt32(ptripid) + 1;
+                        var response = client.PostAsync("http://35.164.93.75/trips/"+ ptid + "/tripdata", stringContent);
+                        HttpResponseMessage rs = response.Result;
+                        string responseString = rs.Content.ReadAsStringAsync().Result;
+                        String[] spearator = responseString.Split(',');
+                        string sdsd2 = spearator[2].Remove(0, 8);
+                        var bcTransId = sdsd2.Substring(0, sdsd2.Length - 2);
+                        gcDetail.bcTransId = bcTransId;
+
+                         var Getresponse = client.GetAsync("http://35.164.93.75/trips/" + ptid);
+
+                     //   var Getresponse = client.GetAsync("http://35.164.93.75/trips/25");
+                        HttpResponseMessage getrs = Getresponse.Result;
+                        string getresponseString = getrs.Content.ReadAsStringAsync().Result;
+                        String[] getspearator = getresponseString.Split(',');
+                        string getstatus = getspearator[2].Remove(0, 37);
+                        var getstatus2 = getstatus.Substring(0, getstatus.Length - 2);
+                        if(getstatus2== "FAILED: ")
+                        {
+                            gcDetail.TStatus = false;
+                        }
+                        if (getstatus2 == "SUCCESS")
+                        {
+                            gcDetail.TStatus = true;
+                        }
+
+                    }
+                       
+
                     CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
 
                     
                     objres.Add(new CollectionDumpSyncResult()
                     {
-                        TransId = detail.TransId,
+                        tripId=ptid,
+                        transId = detail.transId,
                         status = detail.status,
                         messageMar = detail.messageMar,
                         message = detail.message,
-                        DumpId = detail.DumpId,
-                        
+                        dumpId = detail.dumpId,
+                        bcTransId=detail.bcTransId
                     });
                 }
             }
@@ -503,5 +541,8 @@ namespace SwachhBharatAPI.Controllers
             }
             return objres;
         }
+
+
+      
     }
 }

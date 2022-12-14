@@ -9326,6 +9326,11 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             string[] transList = obj.transId.Split('&');
             int AppId = Convert.ToInt32(transList[0]);
             AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
+
+            obj.transId = string.Join("&", transList);
+            string encryptedString = EnryptString(obj.transId);
+            obj.transId = encryptedString;
+            string decryptedString = DecryptString(encryptedString);
             CollectionDumpSyncResult result = new CollectionDumpSyncResult();
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
@@ -9411,8 +9416,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             result.messageMar = "समाप्ती तारीख वेळ शून्य किंवा रिक्त नाही.";
                         }
                         result.status = "Error";
-                        result.DumpId = obj.dyId;
-                        result.TransId = obj.transId;
+                        result.dumpId = obj.dyId;
+                        result.transId = obj.transId;
                     }
                     else
                     {
@@ -9431,15 +9436,15 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             objdump.totalGcWeight = obj.totalGcWeight;
                             objdump.bcTransId = obj.bcTransId;
                             db.DumpTripDetailMs.Add(objdump);
-                          
+
                             db.SaveChanges();
-                            result.DumpId = obj.dyId;
-                            result.TransId = obj.transId;
+                            result.dumpId = obj.dyId;
+                            result.transId = obj.transId;
                             result.status = "success";
                             result.message = "Uploaded successfully";
                             result.messageMar = "सबमिट यशस्वी";
+                            result.bcTransId = obj.bcTransId;
                         }
-
 
                         else
                         {
@@ -9456,11 +9461,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             dump.totalGcWeight = obj.totalGcWeight;
                             dump.bcTransId = obj.bcTransId;
                             db.SaveChanges();
-                            result.DumpId = obj.dyId;
-                            result.TransId = obj.transId;
+                            result.dumpId = obj.dyId;
+                            result.transId = obj.transId;
                             result.status = "success";
                             result.message = "Uploaded successfully";
                             result.messageMar = "सबमिट यशस्वी";
+                            result.bcTransId = obj.bcTransId;
                         }
 
                     }
@@ -9470,8 +9476,9 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     result.message = ex.Message;
                     result.messageMar = ex.Message;
                     result.status = "Error";
-                    result.DumpId = obj.dyId;
-                    result.TransId = obj.transId;
+                    result.dumpId = obj.dyId;
+                    result.transId = obj.transId;
+                    result.bcTransId = obj.bcTransId;
 
                 }
                 objTransDumpTD.transId = obj.transId;
@@ -9486,11 +9493,35 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 objTransDumpTD.totalWetWeight = obj.totalWetWeight;
                 objTransDumpTD.totalGcWeight = obj.totalGcWeight;
                 objTransDumpTD.bcTransId = obj.bcTransId;
+                objTransDumpTD.TStatus = obj.TStatus;   
                 db.TransDumpTDs.Add(objTransDumpTD);
                 db.SaveChanges();
             }
             return result;
 
+        }
+
+        public string DecryptString(string encrString)
+        {
+            byte[] b;
+            string decrypted;
+            try
+            {
+                b = Convert.FromBase64String(encrString);
+                decrypted = System.Text.ASCIIEncoding.ASCII.GetString(b);
+            }
+            catch (FormatException fe)
+            {
+                decrypted = "";
+            }
+            return decrypted;
+        }
+
+        public string EnryptString(string strEncrypted)
+        {
+            byte[] b = System.Text.ASCIIEncoding.ASCII.GetBytes(strEncrypted);
+            string encrypted = Convert.ToBase64String(b);
+            return encrypted;
         }
 
         public List<SBUserAttendenceView> GetUserAttendence(DateTime fDate, int appId, int userId)
