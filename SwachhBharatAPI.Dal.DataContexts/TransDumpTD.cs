@@ -34,5 +34,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<decimal> bcTotalDryWeight { get; set; }
         public Nullable<decimal> bcTotalWetWeight { get; set; }
         public Nullable<System.TimeSpan> tHr { get; set; }
+        public Nullable<int> tNh { get; set; }
     }
 }
