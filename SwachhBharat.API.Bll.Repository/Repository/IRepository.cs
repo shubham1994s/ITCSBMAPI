@@ -236,6 +236,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         IEnumerable<UREmployeeAttendence> UserRoleAttendance(int userid, DateTime FromDate, DateTime Todate, bool type);
 
+        CollectionSyncResult SaveSurveyDetails(SurveyFormDetails obj, int AppId);
+
         #region RFID
         Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT);
         #endregion
