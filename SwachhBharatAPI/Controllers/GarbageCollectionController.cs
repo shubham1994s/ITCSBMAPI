@@ -577,10 +577,9 @@ namespace SwachhBharatAPI.Controllers
                     svDetail.name = item.name;
                     svDetail.houseLat = item.houseLat;
                     svDetail.houseLong = item.houseLong;
-                    svDetail.houseLong = item.houseLong;
                     svDetail.mobileNumber = item.mobileNumber;
                     svDetail.age = item.age;
-                    svDetail.dateOfBirth = item.houseLong;
+                    svDetail.dateOfBirth = item.dateOfBirth;
                     svDetail.gender = item.gender;
                     svDetail.bloodGroup = item.bloodGroup;
                     svDetail.qualification = item.qualification;
@@ -588,9 +587,15 @@ namespace SwachhBharatAPI.Controllers
                     svDetail.maritalStatus = item.maritalStatus;
                     svDetail.marriageDate = item.marriageDate;
                     svDetail.livingStatus = item.livingStatus;
+
+                    svDetail.totalAdults = item.totalAdults;
+                    svDetail.totalChildren = item.totalChildren;
+                    svDetail.totalSrCitizen = item.totalSrCitizen;
                     svDetail.totalMember = item.totalMember;
 
                     svDetail.willingStart = item.willingStart;
+                    svDetail.resourcesAvailable = item.resourcesAvailable;
+
                     svDetail.memberJobOtherCity = item.memberJobOtherCity;
 
                     svDetail.noOfVehicle = item.noOfVehicle;
@@ -614,6 +619,9 @@ namespace SwachhBharatAPI.Controllers
                     svDetail.createDate = item.createDate;
                     svDetail.updateUserId = item.updateUserId;
                     svDetail.updateDate = item.updateDate;
+
+                    
+
 
                     CollectionSyncResult detail = _RepositoryApi.SaveSurveyDetails(svDetail, AppId);
                     if (detail.message == "")

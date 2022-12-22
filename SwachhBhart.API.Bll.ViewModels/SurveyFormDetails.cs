@@ -16,7 +16,7 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string mobileNumber { get; set; }
         public int age { get; set; }
         public string dateOfBirth { get; set; }
-        public Nullable<bool> gender  { get; set; }
+        public string gender  { get; set; }
         public string bloodGroup { get; set; }
         public string qualification { get; set; }
         public string occupation { get; set; }
@@ -45,5 +45,12 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string createDate { get; set; }
         public int updateUserId { get; set; }
         public string updateDate { get; set; }
+
+        public string resourcesAvailable { get; set; }
+        public int totalAdults { get; set; }
+        public int totalChildren { get; set; }
+        public int totalSrCitizen { get; set; }
+
+
     }
 }

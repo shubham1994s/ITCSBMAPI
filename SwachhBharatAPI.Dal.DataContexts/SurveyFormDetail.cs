@@ -32,6 +32,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public string livingStatus { get; set; }
         public Nullable<int> totalMember { get; set; }
         public Nullable<bool> willingStart { get; set; }
+        public string resourcesAvailable { get; set; }
         public Nullable<bool> memberJobOtherCity { get; set; }
         public Nullable<int> noOfVehicle { get; set; }
         public string vehicleType { get; set; }
@@ -52,5 +53,8 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
+        public Nullable<int> totalAdults { get; set; }
+        public Nullable<int> totalChildren { get; set; }
+        public Nullable<int> totalSrCitizen { get; set; }
     }
 }

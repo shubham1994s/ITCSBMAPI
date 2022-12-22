@@ -16272,6 +16272,57 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             model.houseId = model.houseId;
                             model.name = obj.name;
 
+                            model.houseLat = obj.houseLat;
+                            model.houseLong = obj.houseLong;
+                            model.mobileNumber = obj.mobileNumber;
+                            model.age = obj.age;
+
+                            model.dateOfBirth = Convert.ToDateTime(obj.dateOfBirth);
+                            model.gender = obj.gender;
+
+                            model.bloodGroup = obj.bloodGroup;
+                            model.qualification = obj.qualification;
+                            model.occupation = obj.occupation;
+                            model.maritalStatus = obj.maritalStatus;
+
+                            model.marriageDate = Convert.ToDateTime(obj.marriageDate);
+
+                            model.livingStatus = obj.livingStatus;
+                          
+                            model.totalAdults = obj.totalAdults;
+                            model.totalChildren = obj.totalChildren;
+                            model.totalSrCitizen = obj.totalSrCitizen;
+                            model.totalMember = obj.totalMember;
+                          
+                            model.willingStart = obj.willingStart;
+                            model.resourcesAvailable = obj.resourcesAvailable;
+                            
+                            model.memberJobOtherCity = obj.memberJobOtherCity;
+                        
+                            model.noOfVehicle = obj.noOfVehicle;
+                            model.vehicleType = obj.vehicleType;
+                            model.twoWheelerQty = obj.twoWheelerQty;
+                            //model.threeWheelerQty = obj.threeWheelerQty;
+                            model.fourWheelerQty = obj.fourWheelerQty;
+                            model.noPeopleVote = obj.noPeopleVote;
+                            model.socialMedia = obj.socialMedia;
+                            model.onlineShopping = obj.onlineShopping;
+                            model.paymentModePrefer = obj.paymentModePrefer;
+                            model.onlinePayApp = obj.onlinePayApp;
+                            model.insurance = obj.insurance;
+                       
+                            model.underInsurer = obj.underInsurer;
+                            model.ayushmanBeneficiary = obj.ayushmanBeneficiary;
+                            model.boosterShot = obj.boosterShot;
+                            model.memberDivyang = obj.memberDivyang;
+
+                            //model.createUserId = obj.createUserId;
+                            //model.createDate = DateTime.Now;
+
+                            model.updateUserId = obj.updateUserId;
+                            model.updateDate = DateTime.Now;
+
+
                             db.SaveChanges();
                             result.houseId = obj.ReferanceId;
                             result.status = "success";
@@ -16287,6 +16338,58 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 objdata.ReferanceId = obj.ReferanceId;
                                 objdata.houseId = Housemodel.houseId;
                                 objdata.name = obj.name;
+
+                                objdata.houseLat = obj.houseLat;
+                                objdata.houseLong = obj.houseLong;
+                                objdata.mobileNumber = obj.mobileNumber;
+                                objdata.age = obj.age;
+
+                                objdata.dateOfBirth = Convert.ToDateTime(obj.dateOfBirth);
+                                objdata.gender = obj.gender;
+
+                                objdata.bloodGroup = obj.bloodGroup;
+                                objdata.qualification = obj.qualification;
+                                objdata.occupation = obj.occupation;
+                                objdata.maritalStatus = obj.maritalStatus;
+
+                                objdata.marriageDate = Convert.ToDateTime(obj.marriageDate);
+
+                                objdata.livingStatus = obj.livingStatus;
+
+                                objdata.totalAdults = obj.totalAdults;
+                                objdata.totalChildren = obj.totalChildren;
+                                objdata.totalSrCitizen = obj.totalSrCitizen;
+                                objdata.totalMember = obj.totalMember;
+
+                                objdata.willingStart = obj.willingStart;
+                                objdata.resourcesAvailable = obj.resourcesAvailable;
+
+                                objdata.memberJobOtherCity = obj.memberJobOtherCity;
+
+                                objdata.noOfVehicle = obj.noOfVehicle;
+                                objdata.vehicleType = obj.vehicleType;
+                                objdata.twoWheelerQty = obj.twoWheelerQty;
+                                //objdata.threeWheelerQty = obj.threeWheelerQty;
+                                objdata.fourWheelerQty = obj.fourWheelerQty;
+                                objdata.noPeopleVote = obj.noPeopleVote;
+                                objdata.socialMedia = obj.socialMedia;
+                                objdata.onlineShopping = obj.onlineShopping;
+                                objdata.paymentModePrefer = obj.paymentModePrefer;
+                                objdata.onlinePayApp = obj.onlinePayApp;
+                                objdata.insurance = obj.insurance;
+
+                                objdata.underInsurer = obj.underInsurer;
+                                objdata.ayushmanBeneficiary = obj.ayushmanBeneficiary;
+                                objdata.boosterShot = obj.boosterShot;
+                                objdata.memberDivyang = obj.memberDivyang;
+
+                                objdata.createUserId = obj.createUserId;
+                                objdata.createDate = DateTime.Now;
+
+                                //objdata.updateUserId = obj.updateUserId;
+                                //objdata.updateDate = DateTime.Now;
+
+
                                 db.SurveyFormDetails.Add(objdata);
                                 db.SaveChanges();
 
