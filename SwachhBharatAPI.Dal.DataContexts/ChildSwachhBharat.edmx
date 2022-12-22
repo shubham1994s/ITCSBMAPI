@@ -80,7 +80,7 @@
             <PropertyRef Name="tripId" />
           </Key>
           <Property Name="tripId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="transId" Type="nvarchar" MaxLength="100" />
+          <Property Name="transId" Type="nvarchar" MaxLength="500" />
           <Property Name="startDateTime" Type="datetime" />
           <Property Name="endDateTime" Type="datetime" />
           <Property Name="userId" Type="int" />
@@ -98,7 +98,7 @@
             <PropertyRef Name="tripId" />
           </Key>
           <Property Name="tripId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="transId" Type="nvarchar" MaxLength="100" />
+          <Property Name="transId" Type="nvarchar" MaxLength="500" />
           <Property Name="startDateTime" Type="datetime" />
           <Property Name="endDateTime" Type="datetime" />
           <Property Name="userId" Type="int" />
@@ -416,6 +416,49 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
           <Property Name="DataEntryDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="SurveyFormDetails">
+          <Key>
+            <PropertyRef Name="houseId" />
+          </Key>
+          <Property Name="svId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="houseId" Type="int" Nullable="false" />
+          <Property Name="ReferanceId" Type="nvarchar" MaxLength="250" />
+          <Property Name="houseLat" Type="nvarchar" MaxLength="500" />
+          <Property Name="houseLong" Type="nvarchar" MaxLength="550" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="mobileNumber" Type="nvarchar" MaxLength="250" />
+          <Property Name="age" Type="int" />
+          <Property Name="dateOfBirth" Type="date" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="bloodGroup" Type="nvarchar" MaxLength="50" />
+          <Property Name="qualification" Type="nvarchar" MaxLength="50" />
+          <Property Name="occupation" Type="nvarchar" MaxLength="50" />
+          <Property Name="maritalStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="marriageDate" Type="date" />
+          <Property Name="livingStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="totalMember" Type="int" />
+          <Property Name="willingStart" Type="bit" />
+          <Property Name="memberJobOtherCity" Type="bit" />
+          <Property Name="noOfVehicle" Type="int" />
+          <Property Name="vehicleType" Type="nvarchar" MaxLength="250" />
+          <Property Name="twoWheelerQty" Type="int" />
+          <Property Name="threeWheelerQty" Type="int" />
+          <Property Name="fourWheelerQty" Type="int" />
+          <Property Name="noPeopleVote" Type="int" />
+          <Property Name="socialMedia" Type="nvarchar" MaxLength="250" />
+          <Property Name="onlineShopping" Type="nvarchar" MaxLength="250" />
+          <Property Name="paymentModePrefer" Type="nvarchar" MaxLength="250" />
+          <Property Name="onlinePayApp" Type="nvarchar" MaxLength="250" />
+          <Property Name="insurance" Type="nvarchar" MaxLength="250" />
+          <Property Name="underInsurer" Type="bit" />
+          <Property Name="ayushmanBeneficiary" Type="bit" />
+          <Property Name="boosterShot" Type="bit" />
+          <Property Name="memberDivyang" Type="bit" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="updateUserId" Type="int" />
+          <Property Name="updateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="TeritoryMaster">
           <Key>
             <PropertyRef Name="Id" />
@@ -430,7 +473,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
             <PropertyRef Name="TransBcId" />
           </Key>
           <Property Name="TransBcId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="transId" Type="nvarchar" MaxLength="100" />
+          <Property Name="transId" Type="nvarchar" MaxLength="500" />
           <Property Name="startDateTime" Type="datetime" />
           <Property Name="endDateTime" Type="datetime" />
           <Property Name="userId" Type="int" />
@@ -443,6 +486,12 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="totalWetWeight" Type="decimal" Precision="18" Scale="4" />
           <Property Name="bcTransId" Type="nvarchar" MaxLength="500" />
           <Property Name="TStatus" Type="bit" />
+          <Property Name="bcStartDateTime" Type="bigint" />
+          <Property Name="bcEndDateTime" Type="bigint" />
+          <Property Name="bcTotalGcWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="bcTotalDryWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="bcTotalWetWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="tHr" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="UserMaster">
           <Key>
@@ -792,6 +841,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySet Name="QrEmployeeMaster" EntityType="Self.QrEmployeeMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StreetSweepingBeat" EntityType="Self.StreetSweepingBeat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StreetSweepingDetails" EntityType="Self.StreetSweepingDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyFormDetails" EntityType="Self.SurveyFormDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeritoryMaster" EntityType="Self.TeritoryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransDumpTD" EntityType="Self.TransDumpTD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
@@ -1067,6 +1117,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySet Name="DumpTripDetails" EntityType="DevSwachhBharatNagpurModel.DumpTripDetail" />
           <EntitySet Name="DumpTripDetailMs" EntityType="DevSwachhBharatNagpurModel.DumpTripDetailM" />
           <EntitySet Name="TransDumpTDs" EntityType="DevSwachhBharatNagpurModel.TransDumpTD" />
+          <EntitySet Name="SurveyFormDetails" EntityType="DevSwachhBharatNagpurModel.SurveyFormDetail" />
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -1995,7 +2046,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             <PropertyRef Name="tripId" />
           </Key>
           <Property Name="tripId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="transId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="transId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="startDateTime" Type="DateTime" Precision="3" />
           <Property Name="endDateTime" Type="DateTime" Precision="3" />
           <Property Name="userId" Type="Int32" />
@@ -2012,7 +2063,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             <PropertyRef Name="tripId" />
           </Key>
           <Property Name="tripId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="transId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="transId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="startDateTime" Type="DateTime" Precision="3" />
           <Property Name="endDateTime" Type="DateTime" Precision="3" />
           <Property Name="userId" Type="Int32" />
@@ -2030,7 +2081,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             <PropertyRef Name="TransBcId" />
           </Key>
           <Property Name="TransBcId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="transId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="transId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="startDateTime" Type="DateTime" Precision="3" />
           <Property Name="endDateTime" Type="DateTime" Precision="3" />
           <Property Name="userId" Type="Int32" />
@@ -2043,6 +2094,55 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="totalWetWeight" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="bcTransId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="TStatus" Type="Boolean" />
+          <Property Name="bcStartDateTime" Type="Int64" />
+          <Property Name="bcEndDateTime" Type="Int64" />
+          <Property Name="bcTotalGcWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="bcTotalDryWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="bcTotalWetWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="tHr" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="SurveyFormDetail">
+          <Key>
+            <PropertyRef Name="houseId" />
+          </Key>
+          <Property Name="svId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="houseId" Type="Int32" Nullable="false" />
+          <Property Name="ReferanceId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="houseLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="houseLong" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="mobileNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="dateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="bloodGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="qualification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="maritalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="marriageDate" Type="DateTime" Precision="0" />
+          <Property Name="livingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="totalMember" Type="Int32" />
+          <Property Name="willingStart" Type="Boolean" />
+          <Property Name="memberJobOtherCity" Type="Boolean" />
+          <Property Name="noOfVehicle" Type="Int32" />
+          <Property Name="vehicleType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="twoWheelerQty" Type="Int32" />
+          <Property Name="threeWheelerQty" Type="Int32" />
+          <Property Name="fourWheelerQty" Type="Int32" />
+          <Property Name="noPeopleVote" Type="Int32" />
+          <Property Name="socialMedia" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="onlineShopping" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="paymentModePrefer" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="onlinePayApp" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="insurance" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="underInsurer" Type="Boolean" />
+          <Property Name="ayushmanBeneficiary" Type="Boolean" />
+          <Property Name="boosterShot" Type="Boolean" />
+          <Property Name="memberDivyang" Type="Boolean" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="updateUserId" Type="Int32" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3175,6 +3275,12 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="TransDumpTDs">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.TransDumpTD">
               <MappingFragment StoreEntitySet="TransDumpTD">
+                <ScalarProperty Name="tHr" ColumnName="tHr" />
+                <ScalarProperty Name="bcTotalWetWeight" ColumnName="bcTotalWetWeight" />
+                <ScalarProperty Name="bcTotalDryWeight" ColumnName="bcTotalDryWeight" />
+                <ScalarProperty Name="bcTotalGcWeight" ColumnName="bcTotalGcWeight" />
+                <ScalarProperty Name="bcEndDateTime" ColumnName="bcEndDateTime" />
+                <ScalarProperty Name="bcStartDateTime" ColumnName="bcStartDateTime" />
                 <ScalarProperty Name="TStatus" ColumnName="TStatus" />
                 <ScalarProperty Name="bcTransId" ColumnName="bcTransId" />
                 <ScalarProperty Name="totalWetWeight" ColumnName="totalWetWeight" />
@@ -3189,6 +3295,50 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
                 <ScalarProperty Name="startDateTime" ColumnName="startDateTime" />
                 <ScalarProperty Name="transId" ColumnName="transId" />
                 <ScalarProperty Name="TransBcId" ColumnName="TransBcId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyFormDetails">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.SurveyFormDetail">
+              <MappingFragment StoreEntitySet="SurveyFormDetails">
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="memberDivyang" ColumnName="memberDivyang" />
+                <ScalarProperty Name="boosterShot" ColumnName="boosterShot" />
+                <ScalarProperty Name="ayushmanBeneficiary" ColumnName="ayushmanBeneficiary" />
+                <ScalarProperty Name="underInsurer" ColumnName="underInsurer" />
+                <ScalarProperty Name="insurance" ColumnName="insurance" />
+                <ScalarProperty Name="onlinePayApp" ColumnName="onlinePayApp" />
+                <ScalarProperty Name="paymentModePrefer" ColumnName="paymentModePrefer" />
+                <ScalarProperty Name="onlineShopping" ColumnName="onlineShopping" />
+                <ScalarProperty Name="socialMedia" ColumnName="socialMedia" />
+                <ScalarProperty Name="noPeopleVote" ColumnName="noPeopleVote" />
+                <ScalarProperty Name="fourWheelerQty" ColumnName="fourWheelerQty" />
+                <ScalarProperty Name="threeWheelerQty" ColumnName="threeWheelerQty" />
+                <ScalarProperty Name="twoWheelerQty" ColumnName="twoWheelerQty" />
+                <ScalarProperty Name="vehicleType" ColumnName="vehicleType" />
+                <ScalarProperty Name="noOfVehicle" ColumnName="noOfVehicle" />
+                <ScalarProperty Name="memberJobOtherCity" ColumnName="memberJobOtherCity" />
+                <ScalarProperty Name="willingStart" ColumnName="willingStart" />
+                <ScalarProperty Name="totalMember" ColumnName="totalMember" />
+                <ScalarProperty Name="livingStatus" ColumnName="livingStatus" />
+                <ScalarProperty Name="marriageDate" ColumnName="marriageDate" />
+                <ScalarProperty Name="maritalStatus" ColumnName="maritalStatus" />
+                <ScalarProperty Name="occupation" ColumnName="occupation" />
+                <ScalarProperty Name="qualification" ColumnName="qualification" />
+                <ScalarProperty Name="bloodGroup" ColumnName="bloodGroup" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="mobileNumber" ColumnName="mobileNumber" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="houseLong" ColumnName="houseLong" />
+                <ScalarProperty Name="houseLat" ColumnName="houseLat" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="houseId" ColumnName="houseId" />
+                <ScalarProperty Name="svId" ColumnName="svId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

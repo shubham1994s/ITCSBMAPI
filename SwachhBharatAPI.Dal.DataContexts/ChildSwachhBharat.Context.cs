@@ -22,7 +22,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         {
         }
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -66,6 +65,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<DumpTripDetail> DumpTripDetails { get; set; }
         public virtual DbSet<DumpTripDetailM> DumpTripDetailMs { get; set; }
         public virtual DbSet<TransDumpTD> TransDumpTDs { get; set; }
+        public virtual DbSet<SurveyFormDetail> SurveyFormDetails { get; set; }
     
         public virtual ObjectResult<sp_area_Result> sp_area()
         {

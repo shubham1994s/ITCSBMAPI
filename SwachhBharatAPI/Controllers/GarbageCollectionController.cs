@@ -459,8 +459,7 @@ namespace SwachhBharatAPI.Controllers
                    
                     gcDetail.transId = item.transId;
                     gcDetail.dyId = item.dyId;
-                    gcDetail.startDateTime = item.startDateTime;
-                    gcDetail.endDateTime = item.endDateTime;
+                  
                     gcDetail.userId = item.userId;
                     gcDetail.houseList = item.houseList;
                     gcDetail.tripNo = item.tripNo;
@@ -468,6 +467,16 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.totalDryWeight = item.totalDryWeight;
                     gcDetail.totalWetWeight = item.totalWetWeight;
                     gcDetail.totalGcWeight = item.totalGcWeight;
+                    TimeSpan ts = Convert.ToDateTime(item.endDateTime) - Convert.ToDateTime(item.endDateTime);
+                    gcDetail.tHr = ts;
+                    DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                    TimeSpan diffs = Convert.ToDateTime(item.startDateTime).ToUniversalTime() - origin;
+                    var sd= Math.Floor(diffs.TotalSeconds);
+                    gcDetail.startDateTime = sd.ToString();
+
+                    TimeSpan diffe = Convert.ToDateTime(item.endDateTime).ToUniversalTime() - origin;
+                    var ed = Math.Floor(diffe.TotalSeconds);
+                    gcDetail.endDateTime = ed.ToString();
                     var json = JsonConvert.SerializeObject(gcDetail, Formatting.Indented);
                     var stringContent = new StringContent(json);
                     stringContent.Headers.ContentType.MediaType = "application/json";
@@ -511,8 +520,10 @@ namespace SwachhBharatAPI.Controllers
                         }
 
                     }
-                       
-
+                    gcDetail.startDateTime = item.startDateTime;
+                    gcDetail.endDateTime = item.endDateTime;
+                    gcDetail.bcStartDateTime = Convert.ToInt32(sd);
+                    gcDetail.bcEndDateTime = Convert.ToInt32(ed);
                     CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
 
                     

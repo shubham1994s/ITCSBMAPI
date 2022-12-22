@@ -351,6 +351,9 @@
     <Compile Include="Subscription.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
+    <Compile Include="SurveyFormDetail.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
     <Compile Include="SwachhBharatAppConnection.cs" />
     <Compile Include="tehsil.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>

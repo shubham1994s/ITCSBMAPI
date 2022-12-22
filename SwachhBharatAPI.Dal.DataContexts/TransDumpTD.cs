@@ -28,5 +28,11 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<decimal> totalWetWeight { get; set; }
         public string bcTransId { get; set; }
         public Nullable<bool> TStatus { get; set; }
+        public Nullable<long> bcStartDateTime { get; set; }
+        public Nullable<long> bcEndDateTime { get; set; }
+        public Nullable<decimal> bcTotalGcWeight { get; set; }
+        public Nullable<decimal> bcTotalDryWeight { get; set; }
+        public Nullable<decimal> bcTotalWetWeight { get; set; }
+        public Nullable<System.TimeSpan> tHr { get; set; }
     }
 }

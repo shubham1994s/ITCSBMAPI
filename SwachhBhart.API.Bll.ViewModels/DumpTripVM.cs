@@ -24,5 +24,13 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string bcTransId { get; set; }
 
         public bool TStatus { get; set; }
+
+
+        public Nullable<long> bcStartDateTime { get; set; }
+        public Nullable<long> bcEndDateTime { get; set; }
+        public Nullable<decimal> bcTotalGcWeight { get; set; }
+        public Nullable<decimal> bcTotalDryWeight { get; set; }
+        public Nullable<decimal> bcTotalWetWeight { get; set; }
+        public Nullable<System.TimeSpan> tHr { get; set; }
     }
 }
