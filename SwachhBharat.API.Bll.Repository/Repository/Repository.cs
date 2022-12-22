@@ -9497,6 +9497,13 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 objTransDumpTD.totalGcWeight = obj.totalGcWeight;
                 objTransDumpTD.bcTransId = obj.bcTransId;
                 objTransDumpTD.TStatus = obj.TStatus;
+                objTransDumpTD.bcTotalGcWeight = obj.bcTotalGcWeight;
+                objTransDumpTD.bcTotalWetWeight = obj.bcTotalWetWeight;
+                objTransDumpTD.bcTotalDryWeight = obj.bcTotalDryWeight;
+                objTransDumpTD.bcStartDateTime = obj.bcStartDateTime;
+                objTransDumpTD.bcEndDateTime = obj.bcEndDateTime;
+                objTransDumpTD.tHr = obj.tHr;
+                objTransDumpTD.tNh = obj.tNh;
                 db.TransDumpTDs.Add(objTransDumpTD);
                 db.SaveChanges();
             }
