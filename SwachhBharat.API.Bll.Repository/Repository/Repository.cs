@@ -9502,8 +9502,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 objTransDumpTD.bcTotalDryWeight = obj.bcTotalDryWeight;
                 objTransDumpTD.bcStartDateTime = obj.bcStartDateTime;
                 objTransDumpTD.bcEndDateTime = obj.bcEndDateTime;
-                objTransDumpTD.tHr = obj.tHr;
-                objTransDumpTD.tNh = obj.tNh;
+                objTransDumpTD.tHr = obj.totalHours;
+                objTransDumpTD.tNh = obj.totalNumberOfHouses;
                 objTransDumpTD.bcThr = obj.bcThr;
                 db.TransDumpTDs.Add(objTransDumpTD);
                 db.SaveChanges();
