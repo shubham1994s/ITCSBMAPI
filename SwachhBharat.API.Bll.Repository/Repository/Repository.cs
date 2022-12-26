@@ -9504,6 +9504,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 objTransDumpTD.bcEndDateTime = obj.bcEndDateTime;
                 objTransDumpTD.tHr = obj.tHr;
                 objTransDumpTD.tNh = obj.tNh;
+                objTransDumpTD.bcThr = obj.bcThr;
                 db.TransDumpTDs.Add(objTransDumpTD);
                 db.SaveChanges();
             }

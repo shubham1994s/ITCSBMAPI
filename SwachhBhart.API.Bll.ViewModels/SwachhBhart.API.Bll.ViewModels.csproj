@@ -80,6 +80,7 @@
     <Compile Include="CMSB\CMSBEmpolyeeSummaryGrid.cs" />
     <Compile Include="CollectionResult.cs" />
     <Compile Include="Complaint.cs" />
+    <Compile Include="DumpTripBCVM.cs" />
     <Compile Include="DumpTripVM.cs" />
     <Compile Include="EmpComplaintArise.cs" />
     <Compile Include="DumpYardPointDetailsVM.cs" />

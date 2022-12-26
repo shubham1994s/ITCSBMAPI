@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace SwachhBhart.API.Bll.ViewModels
 {
-    public class DumpTripVM
+  public class DumpTripBCVM
     {
-     
         public String transId { get; set; }
         public string startDateTime { get; set; }
         public string endDateTime { get; set; } /// UserTypeID i.e. 0 = Ghanta Gadi, 1 = Scanify , 2 = Waste Management
         public int userId { get; set; }
         public String dyId { get; set; }
-        public String [] houseList { get; set; }
+        public String[] houseList { get; set; }
         public int tripNo { get; set; }
 
+        public Nullable<System.TimeSpan> totalHours { get; set; }
         public int totalNumberOfHouses { get; set; }
         public string vehicleNumber { get; set; }
         public decimal totalGcWeight { get; set; }
@@ -26,15 +26,5 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string bcTransId { get; set; }
 
         public bool TStatus { get; set; }
-
-
-        public Nullable<long> bcStartDateTime { get; set; }
-        public Nullable<long> bcEndDateTime { get; set; }
-        public Nullable<decimal> bcTotalGcWeight { get; set; }
-        public Nullable<decimal> bcTotalDryWeight { get; set; }
-        public Nullable<decimal> bcTotalWetWeight { get; set; }
-        public Nullable<System.TimeSpan> totalHours { get; set; }
-
-        public Nullable<long> bcThr { get; set; }
     }
 }

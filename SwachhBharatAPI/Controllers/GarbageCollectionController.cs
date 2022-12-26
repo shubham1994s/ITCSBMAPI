@@ -17,6 +17,8 @@ using Newtonsoft.Json;
 
 using System.Net.Http.Headers;
 using System.Globalization;
+using System.Text;
+using Microsoft.Graph;
 
 namespace SwachhBharatAPI.Controllers
 {
@@ -440,13 +442,15 @@ namespace SwachhBharatAPI.Controllers
             return objres;
         }
 
-
+    //    [BasicAuthentication]
         [HttpPost]
         [Route("Save/DumpyardTrip")]
         public List<CollectionDumpSyncResult> SaveDumpyardTrip(List<DumpTripVM> objRaw)
         {
             _RepositoryApi = new Repository();
             DumpTripVM gcDetail = new DumpTripVM();
+
+            DumpTripBCVM gcbcDetail = new DumpTripBCVM();
             TransDumpTD objDetailDump = new TransDumpTD();
             List<CollectionDumpSyncResult> objres = new List<CollectionDumpSyncResult>();
          
@@ -456,59 +460,72 @@ namespace SwachhBharatAPI.Controllers
                 int ptid = 0;
                 foreach (var item in objRaw)
                 {
-                   
-                    gcDetail.transId = item.transId;
-                    gcDetail.dyId = item.dyId;
-                    gcDetail.startDateTime = item.startDateTime;
-                    gcDetail.endDateTime = item.endDateTime;
-                    gcDetail.userId = item.userId;
-                    gcDetail.houseList = item.houseList;
-                    gcDetail.tripNo = item.tripNo;
-                    gcDetail.vehicleNumber = item.vehicleNumber;
-                    gcDetail.totalDryWeight = item.totalDryWeight;
-                    gcDetail.totalWetWeight = item.totalWetWeight;
-                    gcDetail.totalGcWeight = item.totalGcWeight;
-                    gcDetail.tNh = item.houseList.Length;
-                    TimeSpan ts = Convert.ToDateTime(item.endDateTime) - Convert.ToDateTime(item.startDateTime);
-                    gcDetail.tHr = ts;
-                    DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                    TimeSpan diffs = Convert.ToDateTime(item.startDateTime).ToUniversalTime() - origin;
-                    var sd = Math.Floor(diffs.TotalSeconds);
-                    gcDetail.startDateTime = Convert.ToString(sd);
-
-                    TimeSpan diffe = Convert.ToDateTime(item.endDateTime).ToUniversalTime() - origin;
-                    var ed = Math.Floor(diffe.TotalSeconds);
-                    gcDetail.endDateTime = Convert.ToString(ed);
-                    var json = JsonConvert.SerializeObject(gcDetail, Formatting.Indented);
-                    var stringContent = new StringContent(json);
-                    stringContent.Headers.ContentType.MediaType = "application/json";
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     string[] transList = item.transId.Split('&');
                     int AppId = Convert.ToInt32(transList[0]);
                     AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
                     transList[2] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                    gcDetail.transId = string.Join("&", transList);
-                   
+                    gcbcDetail.transId = string.Join("&", transList);
+                    gcbcDetail.dyId = item.dyId;
+                    gcbcDetail.startDateTime = item.startDateTime;
+                    gcbcDetail.endDateTime = item.endDateTime;
+                    gcbcDetail.userId = item.userId;
+                    gcbcDetail.houseList = item.houseList;
+                    gcbcDetail.tripNo = item.tripNo;
+                    gcbcDetail.vehicleNumber = item.vehicleNumber;
+                    gcbcDetail.totalDryWeight = item.totalDryWeight;
+                    gcbcDetail.totalWetWeight = item.totalWetWeight;
+                    gcbcDetail.totalGcWeight = item.totalGcWeight;
+                    gcbcDetail.totalNumberOfHouses = item.houseList.Length;
+                    TimeSpan ts = Convert.ToDateTime(item.endDateTime) - Convert.ToDateTime(item.startDateTime);
+                    gcbcDetail.totalHours = ts;
+                    DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                    TimeSpan diffs = Convert.ToDateTime(item.startDateTime).ToUniversalTime() - origin;
+                    var sd = Math.Floor(diffs.TotalSeconds);
+                    gcbcDetail.startDateTime = Convert.ToString(sd);
+
+                    TimeSpan diffe = Convert.ToDateTime(item.endDateTime).ToUniversalTime() - origin;
+                    var ed = Math.Floor(diffe.TotalSeconds);
+                    gcbcDetail.endDateTime = Convert.ToString(ed);
+                    var json = JsonConvert.SerializeObject(gcbcDetail, Formatting.Indented);
+                    var stringContent = new StringContent(json);
+                    stringContent.Headers.ContentType.MediaType = "application/json";
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    gcDetail.transId = gcbcDetail.transId;
+
 
                     CollectionDumpSyncResult result = new CollectionDumpSyncResult();
                     using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
                     {
                         var ptripid = db.TransDumpTDs.OrderByDescending(c => c.TransBcId).FirstOrDefault().TransBcId;
                         ptid = Convert.ToInt32(ptripid) + 1;
-                        var response = client.PostAsync("http://35.164.93.75/trips/"+ ptid + "/tripdata", stringContent);
+                        var response = client.PostAsync("http://35.164.93.75/trips/tripdata", stringContent);
                         HttpResponseMessage rs = response.Result;
                         string responseString = rs.Content.ReadAsStringAsync().Result;
                         String[] spearator = responseString.Split(',');
                         string sdsd2 = spearator[2].Remove(0, 8);
                         var bcTransId = sdsd2.Substring(0, sdsd2.Length - 2);
                         gcDetail.bcTransId = bcTransId;
+                        //var jsontrans = JsonConvert.SerializeObject(gcbcDetail.transId, Formatting.Indented);
+                        //var stringContenttrans = new StringContent(jsontrans);
 
-                         var Getresponse = client.GetAsync("http://35.164.93.75/trips/" + ptid);
+                        //HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, ToString());
+                        //requestMessage.Content = JsonContainerAttribute.Create(new { Name = "John Doe", Age = 33 });
+                        //var Getresponse = client.GetAsync("http://35.164.93.75/trips/", requestMessage.Content);
 
-                     //   var Getresponse = client.GetAsync("http://35.164.93.75/trips/25");
-                        HttpResponseMessage getrs = Getresponse.Result;
-                        string getresponseString = getrs.Content.ReadAsStringAsync().Result;
+
+                        var request = new HttpRequestMessage
+                        {
+                            Method = HttpMethod.Get,
+                            RequestUri = new Uri("http://35.164.93.75/trips/"),
+                            Content = new StringContent("body", Encoding.UTF8, gcbcDetail.transId),
+                           
+                        };
+
+                        //   var Getresponse = client.GetAsync("http://35.164.93.75/trips/25");
+                    //    HttpResponseMessage getrs = request.Result;
+                        string getresponseString = request.Content.ReadAsStringAsync().Result;
                         String[] getspearator = getresponseString.Split(',');
                         string getstatus = getspearator[2].Remove(0, 37);
                         var getstatus2 = getstatus.Substring(0, getstatus.Length - 2);
@@ -532,6 +549,7 @@ namespace SwachhBharatAPI.Controllers
 
                     string time = Convert.ToString(gcDetail.tHr);
                     double seconds = TimeSpan.Parse(time).TotalSeconds;
+                    gcDetail.bcThr = Convert.ToInt32(seconds);
                     CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
 
 
