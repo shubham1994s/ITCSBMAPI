@@ -16326,7 +16326,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             db.SaveChanges();
                             result.houseId = obj.ReferanceId;
                             result.status = "success";
-                            result.message = "Survey Details Updated successfully";
+                            result.message = "Survey Details Updated Successfully";
                             result.messageMar = "सर्वेक्षण तपशील यशस्वीरित्या अद्यतनित केले";
 
                         }
@@ -16395,7 +16395,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                                 result.status = "success";
                                 result.houseId = obj.ReferanceId;
-                                result.message = "Survey Details Added successfully";
+                                result.message = "Survey Details Added Successfully";
                                 result.messageMar = "सर्वेक्षण तपशील यशस्वीरित्या जोडले";
                                 return result;
                             }
@@ -16433,6 +16433,64 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
 
             return result;
+        }
+
+        List<SurveyFormDetail> IRepository.GetSurveyDetailsById(int appId, string ReferanceId)
+        {
+            List<SurveyFormDetail> obj = new List<SurveyFormDetail>();
+            using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                var data = db.SurveyFormDetails.Where(c => c.ReferanceId == ReferanceId).ToList();
+                foreach (var x in data)
+                {
+                 
+                    obj.Add(new SurveyFormDetail()
+                    {
+                        ReferanceId = x.ReferanceId,
+                        houseId=x.houseId,
+                        name=x.name,
+                        houseLat=x.houseLat,
+                        houseLong=x.houseLong,
+                        mobileNumber=x.mobileNumber,
+                        dateOfBirth=(x.dateOfBirth),
+                        age=x.age,
+                        gender=x.gender,
+                        bloodGroup=x.bloodGroup,
+                        qualification=x.qualification,
+                        occupation=x.occupation,
+                        maritalStatus=x.maritalStatus,
+                        marriageDate=(x.marriageDate),
+                        livingStatus=x.livingStatus,
+                        totalMember=x.totalMember,
+                        totalAdults=x.totalAdults,
+                        totalChildren=x.totalChildren,
+                        totalSrCitizen=x.totalSrCitizen,
+                        willingStart=x.willingStart,
+                        resourcesAvailable=x.resourcesAvailable,
+                        memberJobOtherCity=x.memberJobOtherCity,
+                        noOfVehicle=x.noOfVehicle,
+                        twoWheelerQty=x.twoWheelerQty,
+                        fourWheelerQty=x.fourWheelerQty,
+                        noPeopleVote=x.noPeopleVote,
+                        socialMedia=x.socialMedia,
+                        onlineShopping=x.onlineShopping,
+                        paymentModePrefer=x.paymentModePrefer,
+                        onlinePayApp=x.onlinePayApp,
+                        insurance=x.insurance,
+                        underInsurer=x.underInsurer,
+                        ayushmanBeneficiary=x.ayushmanBeneficiary,
+                        boosterShot=x.boosterShot,
+                        memberDivyang=x.memberDivyang,
+                        createUserId=x.createUserId,
+                        createDate=x.createDate,
+                        updateUserId=x.updateUserId,
+                        updateDate=x.updateDate,
+                        
+                    });
+                }
+
+            }
+            return obj;
         }
 
         #endregion
