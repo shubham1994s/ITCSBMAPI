@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Globalization;
 using System.Text;
-using Microsoft.Graph;
+
 
 namespace SwachhBharatAPI.Controllers
 {
