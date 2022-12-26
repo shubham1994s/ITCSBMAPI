@@ -238,6 +238,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         CollectionSyncResult SaveSurveyDetails(SurveyFormDetails obj, int AppId);
 
+        List<SurveyFormDetail> GetSurveyDetailsById(int appId ,string ReferanceId);
+
         #region RFID
         Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT);
         #endregion

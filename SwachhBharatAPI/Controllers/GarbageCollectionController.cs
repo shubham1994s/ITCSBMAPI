@@ -641,9 +641,6 @@ namespace SwachhBharatAPI.Controllers
                     svDetail.updateUserId = item.updateUserId;
                     svDetail.updateDate = item.updateDate;
 
-                    
-
-
                     CollectionSyncResult detail = _RepositoryApi.SaveSurveyDetails(svDetail, AppId);
                     if (detail.message == "")
                     {
@@ -695,6 +692,22 @@ namespace SwachhBharatAPI.Controllers
             });
 
             return objres;
+        }
+
+
+        [HttpGet]
+        [Route("Get/SurveyDetails")]
+        public List<SurveyFormDetail> GetSurveyDetails()
+        {
+            _RepositoryApi = new Repository();
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue2 = Request.Headers.GetValues("referanceId");
+            var id = headerValue1.FirstOrDefault();
+            int AppId = int.Parse(id);
+            var ReferanceId= headerValue2.FirstOrDefault();
+            List<SurveyFormDetail> objDetail = new List<SurveyFormDetail>();
+            objDetail = _RepositoryApi.GetSurveyDetailsById(AppId, ReferanceId);
+            return objDetail;
         }
 
 
