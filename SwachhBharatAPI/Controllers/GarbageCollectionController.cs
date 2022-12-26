@@ -547,7 +547,7 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.bcTotalWetWeight = Convert.ToDecimal(Convert.ToInt32(item.totalWetWeight) * 907185.8188);
                     gcDetail.bcTotalGcWeight = Convert.ToDecimal(Convert.ToInt32(item.totalGcWeight) * 907185.8188);
 
-                    string time = Convert.ToString(gcDetail.tHr);
+                    string time = Convert.ToString(gcDetail.totalHours);
                     double seconds = TimeSpan.Parse(time).TotalSeconds;
                     gcDetail.bcThr = Convert.ToInt32(seconds);
                     CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
