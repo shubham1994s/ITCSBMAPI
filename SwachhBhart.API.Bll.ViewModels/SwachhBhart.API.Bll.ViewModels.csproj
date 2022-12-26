@@ -41,6 +41,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\SwachhBharatAPI\obj\Release\Package\PackageTmp\bin\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttendanceGridVM.cs" />
+    <Compile Include="EncriptDecrypt.cs" />
     <Compile Include="BigVQREmployeeAttendenceVM.cs" />
     <Compile Include="BigVQrEmployeeVM.cs" />
     <Compile Include="BigVQRHPDVM.cs" />

@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Globalization;
 using System.Text;
-
+using Microsoft.Graph;
 
 namespace SwachhBharatAPI.Controllers
 {
@@ -442,7 +442,7 @@ namespace SwachhBharatAPI.Controllers
             return objres;
         }
 
-       // [BasicAuthentication]
+    //    [BasicAuthentication]
         [HttpPost]
         [Route("Save/DumpyardTrip")]
         public List<CollectionDumpSyncResult> SaveDumpyardTrip(List<DumpTripVM> objRaw)
@@ -547,7 +547,7 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.bcTotalWetWeight = Convert.ToDecimal(Convert.ToInt32(item.totalWetWeight) * 907185.8188);
                     gcDetail.bcTotalGcWeight = Convert.ToDecimal(Convert.ToInt32(item.totalGcWeight) * 907185.8188);
 
-                    string time = Convert.ToString(gcDetail.totalHours);
+                    string time = Convert.ToString(gcDetail.tHr);
                     double seconds = TimeSpan.Parse(time).TotalSeconds;
                     gcDetail.bcThr = Convert.ToInt32(seconds);
                     CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
