@@ -492,14 +492,30 @@ namespace SwachhBharatAPI.Controllers
                     stringContent.Headers.ContentType.MediaType = "application/json";
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                    var username = "adminUser";
+                    var password = "password";
+                    string encoded = System.Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1")
+                                                   .GetBytes(username + ":" + password));
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
+
                     gcDetail.transId = gcbcDetail.transId;
+
+                    string[] transList1 = gcbcDetail.transId.Split('&');
+                    int AppId1 = Convert.ToInt32(transList1[0]);
+                    AppDetail objmain1 = dbMain.AppDetails.Where(x => x.AppId == AppId1).FirstOrDefault();
+
+                    //item.transId = string.Join("&", transList);
+                    //string encryptedString = EnryptString(item.transId);
+                    //item.transId = encryptedString;
 
 
                     CollectionDumpSyncResult result = new CollectionDumpSyncResult();
                     using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
                     {
-                        var ptripid = db.TransDumpTDs.OrderByDescending(c => c.TransBcId).FirstOrDefault().TransBcId;
-                        ptid = Convert.ToInt32(ptripid) + 1;
+                       
+
+                        //var ptripid = db.TransDumpTDs.OrderByDescending(c => c.TransBcId).FirstOrDefault().TransBcId;
+                        //ptid = Convert.ToInt32(ptripid) + 1;
                         var response = client.PostAsync("http://35.164.93.75/trips/tripdata", stringContent);
                         HttpResponseMessage rs = response.Result;
                         string responseString = rs.Content.ReadAsStringAsync().Result;
@@ -519,7 +535,7 @@ namespace SwachhBharatAPI.Controllers
                         {
                             Method = HttpMethod.Get,
                             RequestUri = new Uri("http://35.164.93.75/trips/"),
-                            Content = new StringContent("body", Encoding.UTF8, gcbcDetail.transId),
+                            Content = new StringContent("body", Encoding.UTF8, item.transId),
                            
                         };
 
@@ -577,6 +593,13 @@ namespace SwachhBharatAPI.Controllers
                 return objres;
             }
             return objres;
+        }
+
+        public string EnryptString(string strEncrypted)
+        {
+            byte[] b = System.Text.ASCIIEncoding.ASCII.GetBytes(strEncrypted);
+            string encrypted = Convert.ToBase64String(b);
+            return encrypted;
         }
 
 
