@@ -468,7 +468,7 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.totalDryWeight = item.totalDryWeight;
                     gcDetail.totalWetWeight = item.totalWetWeight;
                     gcDetail.totalGcWeight = item.totalGcWeight;
-                    gcDetail.tNh = item.tNh;
+                    gcDetail.tNh = item.houseList.Length;
                     TimeSpan ts = Convert.ToDateTime(item.endDateTime) - Convert.ToDateTime(item.startDateTime);
                     gcDetail.tHr = ts;
                     DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
@@ -529,6 +529,9 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.bcTotalDryWeight = Convert.ToDecimal(Convert.ToInt32(item.totalDryWeight) * 907185.8188);
                     gcDetail.bcTotalWetWeight = Convert.ToDecimal(Convert.ToInt32(item.totalWetWeight) * 907185.8188);
                     gcDetail.bcTotalGcWeight = Convert.ToDecimal(Convert.ToInt32(item.totalGcWeight) * 907185.8188);
+
+                    string time = Convert.ToString(gcDetail.tHr);
+                    double seconds = TimeSpan.Parse(time).TotalSeconds;
                     CollectionDumpSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
 
 
