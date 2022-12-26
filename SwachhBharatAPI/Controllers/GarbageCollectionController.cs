@@ -442,7 +442,7 @@ namespace SwachhBharatAPI.Controllers
             return objres;
         }
 
-    //    [BasicAuthentication]
+       // [BasicAuthentication]
         [HttpPost]
         [Route("Save/DumpyardTrip")]
         public List<CollectionDumpSyncResult> SaveDumpyardTrip(List<DumpTripVM> objRaw)
