@@ -8,6 +8,9 @@ namespace SwachhBhart.API.Bll.ViewModels
 {
   public class DumpTripBCVM
     {
+
+        
+        public int tripId { get; set; }
         public String transId { get; set; }
         public string startDateTime { get; set; }
         public string endDateTime { get; set; } /// UserTypeID i.e. 0 = Ghanta Gadi, 1 = Scanify , 2 = Waste Management
@@ -23,8 +26,8 @@ namespace SwachhBhart.API.Bll.ViewModels
         public decimal totalDryWeight { get; set; }
         public decimal totalWetWeight { get; set; }
 
-        public string bcTransId { get; set; }
+       
 
-        public bool TStatus { get; set; }
+        
     }
 }

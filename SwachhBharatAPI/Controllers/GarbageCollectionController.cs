@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Globalization;
 using System.Text;
-using Microsoft.Graph;
+
 
 namespace SwachhBharatAPI.Controllers
 {
@@ -460,12 +460,16 @@ namespace SwachhBharatAPI.Controllers
                 int ptid = 0;
                 foreach (var item in objRaw)
                 {
-
+                    gcbcDetail.tripId = 47;
                     string[] transList = item.transId.Split('&');
                     int AppId = Convert.ToInt32(transList[0]);
                     AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
                     transList[2] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     gcbcDetail.transId = string.Join("&", transList);
+
+                    item.transId = string.Join("&", transList);
+                    string encryptedString = EnryptString(item.transId);
+                    gcbcDetail.transId = encryptedString;
                     gcbcDetail.dyId = item.dyId;
                     gcbcDetail.startDateTime = item.startDateTime;
                     gcbcDetail.endDateTime = item.endDateTime;
@@ -500,13 +504,11 @@ namespace SwachhBharatAPI.Controllers
 
                     gcDetail.transId = gcbcDetail.transId;
 
-                    string[] transList1 = gcbcDetail.transId.Split('&');
+                    string[] transList1 = item.transId.Split('&');
                     int AppId1 = Convert.ToInt32(transList1[0]);
                     AppDetail objmain1 = dbMain.AppDetails.Where(x => x.AppId == AppId1).FirstOrDefault();
 
-                    //item.transId = string.Join("&", transList);
-                    //string encryptedString = EnryptString(item.transId);
-                    //item.transId = encryptedString;
+                   
 
 
                     CollectionDumpSyncResult result = new CollectionDumpSyncResult();
@@ -528,19 +530,18 @@ namespace SwachhBharatAPI.Controllers
 
                         //HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, ToString());
                         //requestMessage.Content = JsonContainerAttribute.Create(new { Name = "John Doe", Age = 33 });
-                        //var Getresponse = client.GetAsync("http://35.164.93.75/trips/", requestMessage.Content);
-
+                        //  var Getresponse = client.GetAsync("http://35.164.93.75/trips/");
 
                         var request = new HttpRequestMessage
                         {
                             Method = HttpMethod.Get,
                             RequestUri = new Uri("http://35.164.93.75/trips/"),
-                            Content = new StringContent("body", Encoding.UTF8, item.transId),
-                           
+                            Content = new StringContent(gcbcDetail.transId, Encoding.Default, "application/json"),
+
                         };
 
                         //   var Getresponse = client.GetAsync("http://35.164.93.75/trips/25");
-                    //    HttpResponseMessage getrs = request.Result;
+                      //  HttpResponseMessage getrs = Getresponse.Result;
                         string getresponseString = request.Content.ReadAsStringAsync().Result;
                         String[] getspearator = getresponseString.Split(',');
                         string getstatus = getspearator[2].Remove(0, 37);
@@ -562,7 +563,7 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.bcTotalDryWeight = Convert.ToDecimal(Convert.ToInt32(item.totalDryWeight) * 907185.8188);
                     gcDetail.bcTotalWetWeight = Convert.ToDecimal(Convert.ToInt32(item.totalWetWeight) * 907185.8188);
                     gcDetail.bcTotalGcWeight = Convert.ToDecimal(Convert.ToInt32(item.totalGcWeight) * 907185.8188);
-
+                    gcDetail.transId = gcbcDetail.transId;
                     string time = Convert.ToString(gcDetail.totalHours);
                     double seconds = TimeSpan.Parse(time).TotalSeconds;
                     gcDetail.bcThr = Convert.ToInt32(seconds);
