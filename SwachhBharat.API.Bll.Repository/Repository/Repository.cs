@@ -5902,51 +5902,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 {
                     DumpTripDetail objdump = new DumpTripDetail();
                     DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
-                    var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
-                    var dumpExist = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
-
-                    int TrpNo = 0;
-                    if (dumpExist == null)
-                    {
-                        TrpNo = 1;
-                    }
-                    else
-                    {
-                        TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
-                    }
-
-                    if (dump == null)
-                    {
-                        objdump.dyId = null;
-                        objdump.startDateTime = Convert.ToDateTime(obj.gcDate);
-                        objdump.endDateTime = Convert.ToDateTime(obj.gcDate);
-                        objdump.userId = obj.userId;
-                        objdump.houseList = obj.houseId;
-                        objdump.tripNo = TrpNo;
-                        objdump.vehicleNumber = obj.vehicleNumber;
-                        Guid guid = Guid.NewGuid();
-                        var gid = guid.ToString();
-                        db.DumpTripDetails.Add(objdump);
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        dump.dyId = null;
-
-                        dump.endDateTime = Convert.ToDateTime(obj.gcDate);
-                        dump.userId = obj.userId;
-                        var phl = db.DumpTripDetails.Where(a => a.userId == obj.userId && a.tripNo == TrpNo && a.dyId == null && EntityFunctions.TruncateTime(a.startDateTime) == EntityFunctions.TruncateTime(Dateeee)).Select(a => a.houseList).FirstOrDefault();
-
-                        var tripid = db.DumpTripDetails.OrderByDescending(a => a.tripId).Where(a => a.userId == obj.userId).FirstOrDefault().tripId;
-                        var data = db.DumpTripDetails.Where(a => a.houseList.Contains(obj.houseId) && a.tripId == tripid).FirstOrDefault();
-                        if (data == null)
-                        {
-                            dump.houseList = phl + "," + obj.houseId;
-                        }
-                        dump.vehicleNumber = obj.vehicleNumber;
-                        dump.tripNo = TrpNo;
-                        db.SaveChanges();
-                    }
+           
                     string name = "", housemob = "", nameMar = "", addre = "";
                     var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
                     bool IsExist = false;
@@ -5960,9 +5916,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     else
                     {
-
                         //bool IsExist = false;
-
                         DateTime startDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 00, 00, 00, 000);
                         DateTime endDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 23, 59, 59, 999);
                         var IsSameHouseRecord = db.GarbageCollectionDetails.Where(c => c.userId == obj.userId && c.houseId == house.houseId && c.gcDate == Dateeee).FirstOrDefault();
