@@ -492,9 +492,9 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="TStatus" Type="bit" />
           <Property Name="bcStartDateTime" Type="bigint" />
           <Property Name="bcEndDateTime" Type="bigint" />
-          <Property Name="bcTotalGcWeight" Type="decimal" Precision="18" Scale="4" />
-          <Property Name="bcTotalDryWeight" Type="decimal" Precision="18" Scale="4" />
-          <Property Name="bcTotalWetWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="bcTotalGcWeight" Type="bigint" />
+          <Property Name="bcTotalDryWeight" Type="bigint" />
+          <Property Name="bcTotalWetWeight" Type="bigint" />
           <Property Name="tHr" Type="time" Precision="7" />
           <Property Name="tNh" Type="int" />
           <Property Name="bcThr" Type="bigint" />
@@ -2149,9 +2149,9 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="TStatus" Type="Boolean" />
           <Property Name="bcStartDateTime" Type="Int64" />
           <Property Name="bcEndDateTime" Type="Int64" />
-          <Property Name="bcTotalGcWeight" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="bcTotalDryWeight" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="bcTotalWetWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="bcTotalGcWeight" Type="Int64" />
+          <Property Name="bcTotalDryWeight" Type="Int64" />
+          <Property Name="bcTotalWetWeight" Type="Int64" />
           <Property Name="tHr" Type="Time" Precision="7" />
           <Property Name="tNh" Type="Int32" />
           <Property Name="bcThr" Type="Int64" />

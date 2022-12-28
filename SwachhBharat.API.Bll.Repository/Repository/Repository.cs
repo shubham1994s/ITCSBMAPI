@@ -9422,57 +9422,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         result.dumpId = obj.dyId;
                         result.transId = obj.transId;
                     }
-                    else
-                    {
-                        if (dump == null)
-                        {
-                            objdump.transId = obj.transId;
-                            objdump.dyId = checkNullDump(obj.dyId);
-                            objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
-                            objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
-                            objdump.userId = obj.userId;
-                            objdump.houseList = hlist;
-                            objdump.tripNo = obj.tripNo;
-                            objdump.vehicleNumber = obj.vehicleNumber;
-                            objdump.totalDryWeight = obj.totalDryWeight;
-                            objdump.totalWetWeight = obj.totalWetWeight;
-                            objdump.totalGcWeight = obj.totalGcWeight;
-                            objdump.bcTransId = obj.bcTransId;
-                            db.DumpTripDetailMs.Add(objdump);
-
-                            db.SaveChanges();
-                            result.dumpId = obj.dyId;
-                            result.transId = obj.transId;
-                            result.status = "success";
-                            result.message = "Uploaded successfully";
-                            result.messageMar = "सबमिट यशस्वी";
-                            result.bcTransId = obj.bcTransId;
-                        }
-
-                        else
-                        {
-                            dump.transId = obj.transId;
-                            dump.dyId = checkNullDump(obj.dyId);
-                            dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
-                            dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
-                            dump.userId = obj.userId;
-                            dump.houseList = hlist;
-                            dump.tripNo = obj.tripNo;
-                            dump.vehicleNumber = obj.vehicleNumber;
-                            dump.totalDryWeight = obj.totalDryWeight;
-                            dump.totalWetWeight = obj.totalWetWeight;
-                            dump.totalGcWeight = obj.totalGcWeight;
-                            dump.bcTransId = obj.bcTransId;
-                            db.SaveChanges();
-                            result.dumpId = obj.dyId;
-                            result.transId = obj.transId;
-                            result.status = "success";
-                            result.message = "Uploaded successfully";
-                            result.messageMar = "सबमिट यशस्वी";
-                            result.bcTransId = obj.bcTransId;
-                        }
-
-                    }
+                    
                 }
                 catch (Exception ex)
                 {
