@@ -442,7 +442,7 @@ namespace SwachhBharatAPI.Controllers
             return objres;
         }
 
-    //    [BasicAuthentication]
+
         [HttpPost]
         [Route("Save/DumpyardTrip")]
         public List<CollectionDumpSyncResult> SaveDumpyardTrip(List<DumpTripVM> objRaw)
@@ -535,8 +535,6 @@ namespace SwachhBharatAPI.Controllers
                         {
                             gcDetail.TStatus = true;
                         }
-
-
                         gcDetail.startDateTime = item.startDateTime;
                         gcDetail.endDateTime = item.endDateTime;
                         gcDetail.bcStartDateTime = Convert.ToInt32(sd);
@@ -544,18 +542,11 @@ namespace SwachhBharatAPI.Controllers
                         gcDetail.totalDryWeight = item.totalDryWeight;
                         gcDetail.totalWetWeight = item.totalWetWeight;
                         gcDetail.totalGcWeight = item.totalGcWeight;
-                       Decimal dec1 = Convert.ToDecimal(907185.8188);
-                        int intValue=32;
-                        byte[] intBytes = BitConverter.GetBytes(intValue);
-                        Array.Reverse(intBytes);
-                        byte[] result1 = intBytes;
-                        //  uint256 bigint1 = 329974300448100608374211110737048701521;
-                        // uint256 i = Convert.ToUInt64(907185.8188);
-                        //     System.Numerics.BigInteger j = Convert.ToUInt64(item.totalGcWeight);
-                        //   gcDetail.bcTotalGcWeight =Convert.ToInt64(i)* Convert.ToInt64(j);
-                        gcDetail.bcTotalDryWeight = (Decimal.ToInt64(item.totalDryWeight)* Decimal.ToInt64(dec1));
-                        gcDetail.bcTotalWetWeight = (Decimal.ToInt64(item.totalWetWeight) * Convert.ToInt64(dec1));
-                        gcDetail.bcTotalGcWeight = (Decimal.ToInt64(item.totalGcWeight) * Convert.ToInt64(dec1));
+                        Int64 dec1 = Convert.ToInt64(9071858188);                   
+                        Int64 a = 100000000;                    
+                        gcDetail.bcTotalDryWeight = (Decimal.ToInt64(item.totalDryWeight * a) * dec1);
+                        gcDetail.bcTotalWetWeight = (Decimal.ToInt64(item.totalWetWeight * a) * dec1);
+                        gcDetail.bcTotalGcWeight = (Decimal.ToInt64(item.totalGcWeight * a) * dec1);
                         gcDetail.transId = item.transId;
                         gcDetail.houseList = item.houseList;
                         gcDetail.tripNo = item.tripNo;
@@ -564,7 +555,7 @@ namespace SwachhBharatAPI.Controllers
                         gcDetail.userId = item.userId;
                         gcDetail.totalNumberOfHouses = item.houseList.Length;
                         gcDetail.totalHours = item.totalHours;
-
+                      
                         string time = Convert.ToString(gcbcDetail.totalHours);
                         double seconds = TimeSpan.Parse(time).TotalSeconds;
                         gcDetail.bcThr = Convert.ToInt32(seconds);
