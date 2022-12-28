@@ -768,7 +768,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 else
                 {
                     var objEmpMst1 = db.QrEmployeeMasters.Where(c => c.qrEmpLoginId == userName & c.qrEmpPassword == password).FirstOrDefault();
-                    var objEmpMst2 = db.UserMasters.Where(c => c.userLoginId == userName & c.userPassword == password).FirstOrDefault();
+                    var objEmpMst2 = db.UserMasters.Where(c => c.userLoginId == userName & c.userPassword == password & c.EmployeeType==null).FirstOrDefault();
                     if (objEmpMst1 != null)
                     {
                         if (objEmpMst1.isActive == false)
