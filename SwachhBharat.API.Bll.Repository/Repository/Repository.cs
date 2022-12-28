@@ -5900,7 +5900,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 db.Database.Connection.Open();
                 using (var scope = db.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
                 {
-                    DumpTripDetail objdump = new DumpTripDetail();
+                  
                     DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
            
                     string name = "", housemob = "", nameMar = "", addre = "";
@@ -6747,49 +6747,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 TimeSpan span = TimeSpan.Zero;
                 var dydetails = db.DumpYardDetails.Where(c => c.ReferanceId == obj.dyId).FirstOrDefault();
                 //var dyId = dydetails.dyId; || tdate.AddMinutes(15) >= gcd.gcDate
-                DumpTripDetail objdump = new DumpTripDetail();
-
-                //var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId).FirstOrDefault();
-                var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
-                var dumpExist = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
-                int TrpNo = 0;
-                string hlist = "", sdate = "";
-                if (dumpExist == null)
-                {
-                    TrpNo = 1;
-                }
-                else
-                {
-                    TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
-                    if (dumpExist.dyId != null)
-                    {
-                        TrpNo = Convert.ToInt32(dumpExist.tripNo);
-
-                        hlist = dumpExist.houseList;
-                    }
-                    if (dump != null)
-                    {
-                        var phl = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(a => a.userId == obj.userId && a.tripNo == TrpNo && a.dyId == null).Select(a => a.houseList).FirstOrDefault();
-                        // dump.houselist = phl + "," + obj.houseId;
-                        hlist = phl;
-                        TrpNo = Convert.ToInt32(dumpExist.tripNo);
-                    }
-                }
-
-
-                if (dump != null)
-                {
-                    dump.dyId = db.DumpYardDetails.Where(a => a.ReferanceId == obj.dyId).Select(a => a.ReferanceId).FirstOrDefault();
-                    dump.endDateTime = Convert.ToDateTime(obj.gcDate);
-                    dump.userId = obj.userId;
-
-
-                    dump.totalDryWeight = obj.totalDryWeight;
-                    dump.totalWetWeight = obj.totalWetWeight;
-                    dump.totalGcWeight = obj.totalGcWeight;
-                    dump.tripNo = TrpNo;
-                    db.SaveChanges();
-                }
+              
                 try
                 {
                     var gcd = db.GarbageCollectionDetails.Where(c => c.userId == obj.userId && c.dyId == dydetails.dyId && EntityFunctions.TruncateTime(c.gcDate) == EntityFunctions.TruncateTime(Dateeee)).OrderByDescending(c => c.gcDate).FirstOrDefault();
@@ -9291,7 +9249,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             CollectionDumpSyncResult result = new CollectionDumpSyncResult();
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
-                DumpTripDetailM objdump = new DumpTripDetailM();
+               
 
                 TransDumpTD objTransDumpTD = new TransDumpTD();
                 DateTime Dateeee = Convert.ToDateTime(obj.endDateTime);
@@ -9308,7 +9266,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 {
                     hlist = hlist.Substring(0, hlist.Length - 1);
                 }
-                var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.transId == obj.transId).FirstOrDefault();
+              
 
                 try
                 {
