@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttendanceGridVM.cs" />
-    <Compile Include="EncriptDecrypt.cs" />
     <Compile Include="BigVQREmployeeAttendenceVM.cs" />
     <Compile Include="BigVQrEmployeeVM.cs" />
     <Compile Include="BigVQRHPDVM.cs" />
