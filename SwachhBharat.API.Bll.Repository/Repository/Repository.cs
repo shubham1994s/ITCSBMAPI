@@ -16147,8 +16147,15 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             model.qualification = obj.qualification;
                             model.occupation = obj.occupation;
                             model.maritalStatus = obj.maritalStatus;
-
-                            model.marriageDate = Convert.ToDateTime(obj.marriageDate);
+                            if(obj.marriageDate != "")
+                            {
+                                model.marriageDate = Convert.ToDateTime(obj.marriageDate);
+                            }
+                            else
+                            {
+                                model.marriageDate = null;
+                            }
+                          
 
                             model.livingStatus = obj.livingStatus;
                           
@@ -16214,8 +16221,15 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 objdata.qualification = obj.qualification;
                                 objdata.occupation = obj.occupation;
                                 objdata.maritalStatus = obj.maritalStatus;
+                                if (obj.marriageDate != "")
+                                {
+                                    objdata.marriageDate = Convert.ToDateTime(obj.marriageDate);
+                                }
+                                else
+                                {
+                                    model.marriageDate = null;
+                                }
 
-                                objdata.marriageDate = Convert.ToDateTime(obj.marriageDate);
 
                                 objdata.livingStatus = obj.livingStatus;
 
