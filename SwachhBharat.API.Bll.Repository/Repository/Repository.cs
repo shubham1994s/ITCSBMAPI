@@ -16172,11 +16172,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             {
                                 model.marriageDate = Convert.ToDateTime(obj.marriageDate);
                             }
-                            else
-                            {
-                                model.marriageDate = null;
-                            }
-                          
+                           
 
                             model.livingStatus = obj.livingStatus;
                           
@@ -16246,10 +16242,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 {
                                     objdata.marriageDate = Convert.ToDateTime(obj.marriageDate);
                                 }
-                                else
-                                {
-                                    model.marriageDate = null;
-                                }
+                               
 
 
                                 objdata.livingStatus = obj.livingStatus;
