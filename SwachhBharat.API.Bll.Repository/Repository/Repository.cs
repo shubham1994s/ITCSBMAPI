@@ -9502,6 +9502,27 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             return obj;
         }
 
+        public List<LatLongD> GetLatLong(int appId, int userid, DateTime date)
+        {
+            List<LatLongD> obj = new List<LatLongD>();
+            using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                var data = db.HouseMasters.Where(c=>c.userId==userid && EntityFunctions.TruncateTime(c.modified)== EntityFunctions.TruncateTime(date)).ToList();
+                foreach (var x in data)
+                {
+
+                    obj.Add(new LatLongD()
+                    {
+                       RefferenceId=x.ReferanceId,
+                       Lat=x.houseLat,
+                       Long=x.houseLong
+                    });
+                }
+
+            }
+                return obj;
+        }
+
 
         public List<SBWorkDetails> GetUserWorkForNormal(int userId, int year, int month, int appId)
         {

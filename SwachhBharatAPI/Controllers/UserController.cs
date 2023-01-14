@@ -260,6 +260,27 @@ namespace SwachhBharatAPI.Controllers
 
 
         [HttpGet]
+        [Route("Get/GetLatLongD")]
+        //api/BookATable/GetBookAtableList
+        public List<LatLongD> GetLatLong()
+        {
+            objRep = new Repository();
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("fdate");
+            List<LatLongD> objDetail = new List<LatLongD>();
+            var id = headerValue1.FirstOrDefault();
+            int AppId = int.Parse(id);
+            var u = headerValue2.FirstOrDefault();
+            int userId = int.Parse(u);
+            var date = headerValue3.FirstOrDefault();
+            DateTime fdate = Convert.ToDateTime(date);
+            objDetail = objRep.GetLatLong(AppId,userId,fdate).OrderByDescending(c => c.RefferenceId).ToList();
+            return objDetail;
+        }
+
+
+        [HttpGet]
         [Route("Get/WorkHistory/Details")]
         //api/BookATable/GetBookAtableList
         public List<SBWorkDetailsHistory> GetWorkDetails()

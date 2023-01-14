@@ -30,6 +30,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         SyncResult2 GetUserMobileIdentification(int appId, int userId, bool isSync, int batteryStatus, string imeinos);
 
         List<SBWorkDetails> GetUserWork(int userid, int year, int month, int appId, string EmpType);
+        List<LatLongD> GetLatLong(int appId,int userid, DateTime date);
         List<SBWorkDetailsHistory> GetUserWorkDetails(DateTime date, int appId, int userId, int languageId);
 
         CollectionResult SaveGarbageCollection(SBGarbageCollectionView obj, int AppId, int type, string batteryStatus);
