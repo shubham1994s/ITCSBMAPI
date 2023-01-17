@@ -5902,8 +5902,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
                 db.Database.Connection.Open();
-                using (var scope1 = db.Database.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
-                {
+                //using (var scope1 = db.Database.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
+                //{
 
                     //              using (TransactionScope scope = new
                     //TransactionScope(TransactionScopeOption.Required
@@ -6092,7 +6092,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                                             db.Locations.Add(loc);
                                             db.SaveChanges();
-                                            scope1.Commit();
+                                           // scope1.Commit();
                                             //  scope.Complete();
                                             //   db.Database.Connection.Close();
                                             result.IsExist = true;
@@ -6157,7 +6157,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                                         db.Locations.Add(loc);
                                         db.SaveChanges();
-                                        scope1.Commit();
+                                      //  scope1.Commit();
                                         // scope.Complete();
                                         //  db.Database.Connection.Close();
 
@@ -6495,7 +6495,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         }
                     }
                 //}
-            }
+            //}
             //}
         }
 
