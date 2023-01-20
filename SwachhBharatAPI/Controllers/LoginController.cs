@@ -6,31 +6,63 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using NLog;
+using System.IO;
+using NLog.Targets;
 
 namespace SwachhBharatAPI.Controllers
 {
     [RoutePrefix("api/Account")]
     public class LoginController : ApiController
     {
-        IRepository objRep;
+       IRepository objRep;
+       private static Logger logger = LogManager.GetCurrentClassLogger();
+  
 
+
+        //  private static ILogger<LoginController> _logger;
+        //public Action Index()
+        //{
+        //   // ViewBag.Title = "Home Page";
+        //    logger.Info("Hell You have visited the Index view" + Environment.NewLine + DateTime.Now);
+        //  //  return View();
+        //}
+        //public ActionResult About()
+        //{
+        //    ViewBag.Message = "Your app description page.";
+        //    logger.Info("hello now You have visited the About view" + Environment.NewLine + DateTime.Now);
+        //    return View();
+        //}
         // GET: api/users
 
-       // [Authorize]
+        // [Authorize]
         [Route("Login")]
         [HttpPost]
         public SBUser GetLogin(SBUser objlogin)
         {
-            IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+            int AppId = 0;
+            SBUser objresponse = new SBUser();
+            try
+            {
+                IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             var id = headerValue1.FirstOrDefault();
-            int AppId = int.Parse(id);
+             AppId = int.Parse(id);
 
             IEnumerable<string> headerValue2 = Request.Headers.GetValues("EmpType");
             var EmpType = headerValue2.FirstOrDefault();
 
-
-            objRep = new Repository();
-            SBUser objresponse = objRep.CheckUserLogin(objlogin.userLoginId, objlogin.userPassword, objlogin.imiNo, AppId,EmpType);
+            //    Session["AppId"] = AppId;
+                objRep = new Repository();
+           
+                 objresponse = objRep.CheckUserLogin(objlogin.userLoginId, objlogin.userPassword, objlogin.imiNo, AppId,EmpType);
+               
+            }
+            catch(Exception ex)
+            {
+                logger.Properties["AppId"] = AppId;
+                logger.Error(ex.Message + Environment.NewLine + DateTime.Now + Url.Request);
+            }
+            
             return objresponse;
         }
 
