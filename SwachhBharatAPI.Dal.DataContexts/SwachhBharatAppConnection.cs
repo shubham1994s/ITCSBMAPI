@@ -1,17 +1,22 @@
-﻿using System;
+﻿using Microsoft.Build.Framework;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace SwachhBharatAPI.Dal.DataContexts
 {
     public static class SwachhBharatAppConnection
     {
+       
         public static string GetConnectionString(int AppId)
         {
             try
             {
+
                 const string DefaultStringCon = @"metadata=res://*/ChildSwachhBharat.csdl|res://*/ChildSwachhBharat.ssdl|res://*/ChildSwachhBharat.msl;provider=System.Data.SqlClient;provider connection string='";
                 const string Data_Source = "data source=";
                 const string Initial_Catlog = ";initial catalog=";
@@ -43,6 +48,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
             catch (Exception ex)
             {
                 return string.Empty;
+                //loggers.LogError(ex.Message + Environment.NewLine + DateTime.Now);
             }
         }
     }
