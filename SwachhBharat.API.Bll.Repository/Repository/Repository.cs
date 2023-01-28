@@ -13222,6 +13222,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             //{
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
+                db.Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
                 try
                 {
                     DateTime Dateeee = DateTime.Now;
@@ -13737,6 +13738,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
+                db.Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
                 try
                 {
 
