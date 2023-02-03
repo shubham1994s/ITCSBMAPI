@@ -835,7 +835,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
             catch(Exception ex)
             {
-                logger.Properties["AppId"] = AppId;
+                logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + userName;
                 logger.Error(ex.Message);
             }
             return user;
@@ -2558,7 +2558,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                         catch(Exception ex)
                         {
-                            logger.Properties["AppId"] = AppId;
+                            logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                             logger.Error(ex.Message);
                             result.status = "error";
                             result.message = "Something is wrong,Try Again.. ";
@@ -2699,7 +2699,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     catch(Exception ex)
                     {
-                        logger.Properties["AppId"] = AppId;
+                        logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                         logger.Error(ex.Message);
                         result.status = "error";
                         result.message = "Something is wrong,Try Again.. ";
@@ -2789,7 +2789,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                         catch (Exception ex)
                         {
-                            logger.Properties["AppId"] = AppId;
+                            logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                             logger.Error(ex.Message);
                             result.status = "error";
                             result.message = "Something is wrong,Try Again.. ";
@@ -2893,7 +2893,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     catch(Exception ex)
                     {
-                        logger.Properties["AppId"] = AppId;
+                        logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                         logger.Error(ex.Message);
                         result.status = "error";
                         result.message = "Something is wrong,Try Again.. ";
@@ -2982,7 +2982,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                         catch(Exception ex)
                         {
-                            logger.Properties["AppId"] = AppId;
+                            logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                             logger.Error(ex.Message);
                             result.status = "error";
                             result.message = "Something is wrong,Try Again.. ";
@@ -3086,7 +3086,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     catch(Exception ex)
                     {
-                        logger.Properties["AppId"] = AppId;
+                        logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                         logger.Error(ex.Message);
                         result.status = "error";
                         result.message = "Something is wrong,Try Again.. ";
@@ -3189,7 +3189,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                             catch(Exception ex)
                             {
-                                logger.Properties["AppId"] = AppId;
+                                logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                                 logger.Error(ex.Message);
                                 result.status = "error";
                                 result.message = "Something is wrong,Try Again.. ";
@@ -3305,7 +3305,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         }
                         catch(Exception ex)
                         {
-                            logger.Properties["AppId"] = AppId;
+                            logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                             logger.Error(ex.Message);
                             result.status = "error";
                             result.message = "Something is wrong,Try Again.. ";
@@ -6496,7 +6496,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                         
                                         catch (Exception ex)
                                         {
-                                        logger.Properties["AppId"] = AppId;
+                                        logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                                         logger.Error(ex.Message);
                                     }
                                     }
@@ -6506,7 +6506,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                                 catch (Exception ex)
                                 {
-                                logger.Properties["AppId"] = AppId;
+                                logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                                 logger.Error(ex.Message);
                                 result.ID = obj.OfflineID;
                                     result.message = "Something is wrong,Try Again.. ";
@@ -6531,7 +6531,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
             catch(Exception ex)
             {
-                logger.Properties["AppId"] = AppId;
+                logger.Properties["AppId"] = "AppId=" + AppId + "UserId="+obj.userId;
                 logger.Error(ex.Message);
 
             }
@@ -7074,7 +7074,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                 catch (Exception ex)
                 {
-                    logger.Properties["AppId"] = AppId;
+                    logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                     logger.Error(ex.Message);
                     result.message = "Something is wrong,Try Again.. ";
                     result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
@@ -7371,7 +7371,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                 catch (Exception ex)
                 {
-                    logger.Properties["AppId"] = AppId;
+                    logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                     logger.Error(ex.Message);
                     result.message = "Something is wrong,Try Again.. ";
                     result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
@@ -7667,7 +7667,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                 catch (Exception ex)
                 {
-                    logger.Properties["AppId"] = AppId;
+                    logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                     logger.Error(ex.Message);
                     result.message = "Something is wrong,Try Again.. ";
                     result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
@@ -7967,7 +7967,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                 catch (Exception ex)
                 {
-                    logger.Properties["AppId"] = AppId;
+                    logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                     logger.Error(ex.Message);
                     result.message = "Something is wrong,Try Again.. ";
                     result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
@@ -8263,7 +8263,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 catch (Exception ex)
                 {
 
-                    logger.Properties["AppId"] = AppId;
+                    logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                     logger.Error(ex.Message);
     
                     result.message = "Something is wrong,Try Again.. ";
@@ -8586,7 +8586,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                 catch (Exception ex)
                 {
-                    logger.Properties["AppId"] = AppId;
+                    logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                     logger.Error(ex.Message);
     
                     result.message = "Something is wrong,Try Again.. ";
@@ -13665,7 +13665,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 }
                 catch (Exception ex)
                 {
-                    logger.Properties["AppId"] = AppId;
+                    logger.Properties["AppId"] = "AppId=" + AppId + "UserId=" + obj.userId;
                     logger.Error(ex.Message);
                     result.message = "Something is wrong,Try Again.. ";
                     result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
@@ -14177,7 +14177,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 }
                 catch (Exception ex)
                 {
-                    logger.Properties["AppId"] = AppId;
+                    logger.Properties["AppId"] = "AppId=" + AppId  ;
                     logger.Error(ex.Message);
                     result.Add(new CollectionSyncResult()
                     {

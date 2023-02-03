@@ -59,7 +59,7 @@ namespace SwachhBharatAPI.Controllers
             }
             catch(Exception ex)
             {
-                logger.Properties["AppId"] = AppId;
+                logger.Properties["AppId"] = "AppId=" + AppId ;
                 logger.Error(ex.Message + Environment.NewLine + DateTime.Now + Url.Request);
             }
             
