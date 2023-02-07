@@ -18,9 +18,12 @@ namespace SwachhBharatAPI.Models
             return userIdentity;
         }
 
-        internal Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager userManager)
+        internal async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager userManager)
         {
-            throw new NotImplementedException();
+            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await userManager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add custom user claims here
+            return userIdentity;
         }
     }
 
