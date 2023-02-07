@@ -6517,6 +6517,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                             }
 
+
                             else
                             {
                                 result.ID = obj.OfflineID;
