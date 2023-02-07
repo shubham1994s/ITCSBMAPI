@@ -165,8 +165,13 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         //Added By Neha
         List<SBWorkDetails> GetQrWorkHistory(int userid, int year, int month, int appId);
 
+        List<SBSurveyWork> GetSurveyWorkHistory(int userid, int year, int month, int appId);
+
+
         //Added by neha
         List<BigVQrworkhistorydetails> GetQrWorkHistoryDetails(DateTime date, int AppId, int userId);
+        List<SBSurveyWorkDetails> GetSurveyWorkHistoryDetails(DateTime? date, int AppId, int userId);
+
 
         //Added By neha
         List<CMSBEmplyeeIdelGrid> GetEmployeeIdelTime(int appId, DateTime fdate, DateTime tdate, int UserId, int Offset, int Fetch_Next, string SearchString);

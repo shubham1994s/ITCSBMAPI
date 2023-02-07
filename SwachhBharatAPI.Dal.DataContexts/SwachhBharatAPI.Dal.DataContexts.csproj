@@ -198,6 +198,12 @@
     <Compile Include="GetQrWorkHistory_Result.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetSurveyHistoryDetails_Result.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSurveyHistory_Result.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
     <Compile Include="GoogelHitDetail.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>

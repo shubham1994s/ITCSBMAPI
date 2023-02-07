@@ -116,6 +116,7 @@
     <Compile Include="SBAUserlocation.cs" />
     <Compile Include="SBDashboardVM.cs" />
     <Compile Include="SBGarbageCollectionView.cs" />
+    <Compile Include="SBSurveyWork.cs" />
     <Compile Include="SBUser.cs" />
     <Compile Include="SBUserAttendence.cs" />
     <Compile Include="SBUserAttendenceView.cs" />

@@ -14442,6 +14442,46 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
         }
 
+        public List<SBSurveyWork> GetSurveyWorkHistory(int userId, int year, int month, int appId)
+        {
+            List<SBSurveyWork> obj = new List<SBSurveyWork>();
+            using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                var data = db.GetSurveyHistory(userId, year, month).ToList();
+                foreach (var x in data)
+                {
+
+                    obj.Add(new SBSurveyWork()
+                    {
+                        date = x.SurveyDate,
+                        houseCollection = x.HouseCollection ?? 0,
+
+                    });
+                }
+
+            }
+            return obj;
+        }
+
+        public List<SBSurveyWorkDetails> GetSurveyWorkHistoryDetails(DateTime? date, int AppId, int userId)
+        {
+            List<SBSurveyWorkDetails> obj = new List<SBSurveyWorkDetails>();
+            using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
+            {
+
+                obj = db.GetSurveyHistoryDetails(userId, date).ToList().Select(a => new SBSurveyWorkDetails 
+                { 
+                    Date = a.SurveyDate,
+                    time = a.SurveyTime,
+                    HouseNo = a.ReferanceId
+                }).ToList();
+
+                
+                return obj.OrderBy(c => c.Date).OrderBy(c => c.time).ToList();
+
+            }
+        }
+
         public List<CMSBEmplyeeIdelGrid> GetEmployeeIdelTime(int appId, DateTime fdate, DateTime tdate, int UserId, int Offset, int Fetch_Next, string SearchString)
         {
             List<CMSBEmplyeeIdelGrid> obj = new List<CMSBEmplyeeIdelGrid>();

@@ -729,7 +729,62 @@ namespace SwachhBharatAPI.Controllers
         }
 
 
+        [HttpGet]
+        [Route("Get/SurveyWorkHistory")]
+        //api/BookATable/GetBookAtableList
+        public List<SBSurveyWork> GetSurveyWork()
+        {
+            _RepositoryApi = new Repository();
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("year");
+            IEnumerable<string> headerValue4 = Request.Headers.GetValues("month");
+            var id = headerValue1.FirstOrDefault();
+            int AppId = int.Parse(id);
+            var u = headerValue2.FirstOrDefault();
+            int userId = int.Parse(u);
+            var y = headerValue3.FirstOrDefault();
+            int year = int.Parse(y);
+            var m = headerValue4.FirstOrDefault();
+            int month = int.Parse(m);
+            List<SBSurveyWork> objDetail = new List<SBSurveyWork>();
+            objDetail = _RepositoryApi.GetSurveyWorkHistory(userId, year, month, AppId).OrderByDescending(c => c.date).ToList();
+            return objDetail;
+        }
 
 
+        [HttpGet]
+        [Route("Get/SurveyWorkHistoryDetails")]
+        //api/BookATable/GetBookAtableList
+        public List<SBSurveyWorkDetails> GetSurveyWorkDetails()
+        {
+            _RepositoryApi = new Repository();
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("date");
+
+
+            var id = headerValue1.FirstOrDefault();
+            int AppId = int.Parse(id);
+            var strDate = headerValue3.FirstOrDefault();
+            DateTime? Date = null;
+            DateTime dt;
+            bool isDate = DateTime.TryParseExact(strDate,
+                                   "dd-MM-yyyy",
+                                   CultureInfo.InvariantCulture,
+                                   DateTimeStyles.None,
+                                   out dt);
+            if (isDate)
+                Date = dt;
+            else
+                Date = null;
+            var user = headerValue2.FirstOrDefault();
+            int userId = int.Parse(user);
+
+
+            List<SBSurveyWorkDetails> objDetail = new List<SBSurveyWorkDetails>();
+            objDetail = _RepositoryApi.GetSurveyWorkHistoryDetails(Date, AppId, userId);
+            return objDetail;
+        }
     }
 }

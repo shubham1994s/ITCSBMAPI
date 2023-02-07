@@ -599,5 +599,35 @@ namespace SwachhBharatAPI.Dal.DataContexts
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UserLatLongDetail_Result>("SP_UserLatLongDetail", useridParameter, typeIdParameter);
         }
+    
+        public virtual ObjectResult<GetSurveyHistory_Result> GetSurveyHistory(Nullable<int> userId, Nullable<int> year, Nullable<int> month)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSurveyHistory_Result>("GetSurveyHistory", userIdParameter, yearParameter, monthParameter);
+        }
+    
+        public virtual ObjectResult<GetSurveyHistoryDetails_Result> GetSurveyHistoryDetails(Nullable<int> userId, Nullable<System.DateTime> surveyDate)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            var surveyDateParameter = surveyDate.HasValue ?
+                new ObjectParameter("surveyDate", surveyDate) :
+                new ObjectParameter("surveyDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSurveyHistoryDetails_Result>("GetSurveyHistoryDetails", userIdParameter, surveyDateParameter);
+        }
     }
 }

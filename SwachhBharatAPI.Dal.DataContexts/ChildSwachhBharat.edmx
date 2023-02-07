@@ -98,6 +98,7 @@
           <Property Name="QRStatusDate" Type="datetime" />
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
           <Property Name="DataEntryDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="GamePlayerDetails">
           <Key>
@@ -226,6 +227,8 @@
           <Property Name="QRStatus" Type="bit" />
           <Property Name="QRStatusDate" Type="datetime" />
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
+          <Property Name="New_Construction" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="LiquidWasteDetails">
           <Key>
@@ -249,6 +252,7 @@
           <Property Name="QRStatusDate" Type="datetime" />
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
           <Property Name="DataEntryDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -380,6 +384,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="QRStatusDate" Type="datetime" />
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
           <Property Name="DataEntryDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="SurveyFormDetails">
           <Key>
@@ -463,6 +468,12 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="tHr" Type="time" Precision="7" />
           <Property Name="tNh" Type="int" />
           <Property Name="bcThr" Type="bigint" />
+          <Property Name="UsTotalGcWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="UsTotalDryWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="UsTotalWetWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TotalGcWeightKg" Type="numeric" Precision="18" Scale="10" />
+          <Property Name="TotalDryWeightKg" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="TotalWetWeightKg" Type="decimal" Precision="18" Scale="10" />
         </EntityType>
         <EntityType Name="UserMaster">
           <Key>
@@ -695,6 +706,15 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Parameter Name="userId" Type="int" Mode="In" />
           <Parameter Name="year" Type="int" Mode="In" />
           <Parameter Name="month" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetSurveyHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+          <Parameter Name="year" Type="int" Mode="In" />
+          <Parameter Name="month" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetSurveyHistoryDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+          <Parameter Name="surveyDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="HouseDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="HouseDetails_ReferanceId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1085,6 +1105,15 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySet Name="ComplaintArises" EntityType="DevSwachhBharatNagpurModel.ComplaintArise" />
           <EntitySet Name="SurveyFormDetails" EntityType="DevSwachhBharatNagpurModel.SurveyFormDetail" />
           <EntitySet Name="TransDumpTDs" EntityType="DevSwachhBharatNagpurModel.TransDumpTD" />
+          <FunctionImport Name="GetSurveyHistory" ReturnType="Collection(DevSwachhBharatNagpurModel.GetSurveyHistory_Result)">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSurveyHistoryDetails" ReturnType="Collection(DevSwachhBharatNagpurModel.GetSurveyHistoryDetails_Result)">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="surveyDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -1905,6 +1934,8 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="QRStatus" Type="Boolean" />
           <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
           <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="New_Construction" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DumpYardDetail">
           <Key>
@@ -1929,6 +1960,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
           <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LiquidWasteDetail">
           <Key>
@@ -1952,6 +1984,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
           <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StreetSweepingDetail">
           <Key>
@@ -1975,6 +2008,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
           <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <ComplexType Name="SP_UserLatLongDetail_Result">
           <Property Type="Int32" Name="locId" Nullable="false" />
@@ -2081,7 +2115,23 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="tHr" Type="Time" Precision="7" />
           <Property Name="tNh" Type="Int32" />
           <Property Name="bcThr" Type="Int64" />
+          <Property Name="UsTotalGcWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="UsTotalDryWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="UsTotalWetWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TotalGcWeightKg" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="TotalDryWeightKg" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="TotalWetWeightKg" Type="Decimal" Precision="18" Scale="10" />
         </EntityType>
+        <ComplexType Name="GetSurveyHistory_Result">
+          <Property Type="String" Name="SurveyDate" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="createUserId" Nullable="true" />
+          <Property Type="Int32" Name="HouseCollection" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetSurveyHistoryDetails_Result">
+          <Property Type="String" Name="SurveyDate" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="SurveyTime" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ReferanceId" Nullable="true" MaxLength="250" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3033,6 +3083,8 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="HouseMasters">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.HouseMaster">
               <MappingFragment StoreEntitySet="HouseMaster">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="New_Construction" ColumnName="New_Construction" />
                 <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
                 <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
                 <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
@@ -3064,6 +3116,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="DumpYardDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.DumpYardDetail">
               <MappingFragment StoreEntitySet="DumpYardDetails">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
                 <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
                 <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
@@ -3089,6 +3142,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="LiquidWasteDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.LiquidWasteDetail">
               <MappingFragment StoreEntitySet="LiquidWasteDetails">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
                 <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
                 <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
@@ -3113,6 +3167,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="StreetSweepingDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.StreetSweepingDetail">
               <MappingFragment StoreEntitySet="StreetSweepingDetails">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
                 <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
                 <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
@@ -3224,6 +3279,12 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="TransDumpTDs">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.TransDumpTD">
               <MappingFragment StoreEntitySet="TransDumpTD">
+                <ScalarProperty Name="TotalWetWeightKg" ColumnName="TotalWetWeightKg" />
+                <ScalarProperty Name="TotalDryWeightKg" ColumnName="TotalDryWeightKg" />
+                <ScalarProperty Name="TotalGcWeightKg" ColumnName="TotalGcWeightKg" />
+                <ScalarProperty Name="UsTotalWetWeight" ColumnName="UsTotalWetWeight" />
+                <ScalarProperty Name="UsTotalDryWeight" ColumnName="UsTotalDryWeight" />
+                <ScalarProperty Name="UsTotalGcWeight" ColumnName="UsTotalGcWeight" />
                 <ScalarProperty Name="bcThr" ColumnName="bcThr" />
                 <ScalarProperty Name="tNh" ColumnName="tNh" />
                 <ScalarProperty Name="tHr" ColumnName="tHr" />
@@ -3249,6 +3310,24 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSurveyHistory" FunctionName="DevSwachhBharatNagpurModel.Store.GetSurveyHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DevSwachhBharatNagpurModel.GetSurveyHistory_Result">
+                <ScalarProperty Name="SurveyDate" ColumnName="SurveyDate" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="HouseCollection" ColumnName="HouseCollection" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSurveyHistoryDetails" FunctionName="DevSwachhBharatNagpurModel.Store.GetSurveyHistoryDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DevSwachhBharatNagpurModel.GetSurveyHistoryDetails_Result">
+                <ScalarProperty Name="SurveyDate" ColumnName="SurveyDate" />
+                <ScalarProperty Name="SurveyTime" ColumnName="SurveyTime" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
