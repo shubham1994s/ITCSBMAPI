@@ -18,10 +18,9 @@ namespace SwachhBharatAPI.Dal.DataContexts
     public partial class DevSwachhBharatNagpurEntities : DbContext
     {
         public DevSwachhBharatNagpurEntities(int AppId)
-               : base(SwachhBharatAppConnection.GetConnectionString(AppId))
+              : base(SwachhBharatAppConnection.GetConnectionString(AppId))
         {
         }
-
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -373,23 +372,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Locationdata_Result>("sp_Locationdata", fdateParameter, tdateParameter);
         }
     
-        public virtual ObjectResult<GetQrWorkHistory_Result> GetQrWorkHistory(Nullable<int> userId, Nullable<int> year, Nullable<int> month)
-        {
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("userId", userId) :
-                new ObjectParameter("userId", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("year", year) :
-                new ObjectParameter("year", typeof(int));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("month", month) :
-                new ObjectParameter("month", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQrWorkHistory_Result>("GetQrWorkHistory", userIdParameter, yearParameter, monthParameter);
-        }
-    
         public virtual ObjectResult<GetAttendenceDetailsTotalLiquid_Result> GetAttendenceDetailsTotalLiquid(Nullable<int> userId, Nullable<int> year, Nullable<int> month)
         {
             var userIdParameter = userId.HasValue ?
@@ -628,6 +610,23 @@ namespace SwachhBharatAPI.Dal.DataContexts
                 new ObjectParameter("surveyDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSurveyHistoryDetails_Result>("GetSurveyHistoryDetails", userIdParameter, surveyDateParameter);
+        }
+    
+        public virtual ObjectResult<GetQrWorkHistory_Result> GetQrWorkHistory(Nullable<int> userId, Nullable<int> year, Nullable<int> month)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQrWorkHistory_Result>("GetQrWorkHistory", userIdParameter, yearParameter, monthParameter);
         }
     }
 }

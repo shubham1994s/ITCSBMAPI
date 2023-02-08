@@ -14358,6 +14358,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         DumpYardCollection = checkIntNull(x.DumpYardCollection.ToString()),
                         LiquidCollection = checkIntNull(x.LiquidCollection.ToString()),
                         StreetCollection = checkIntNull(x.StreetCollection.ToString()),
+                        SurveyCollection = checkIntNull(x.SurveyCollection.ToString()),
                     });
                 }
 
@@ -14437,6 +14438,20 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                     });
                 }
+
+                var data5 = db.SurveyFormDetails.Where(c => EntityFunctions.TruncateTime(c.createDate) == EntityFunctions.TruncateTime(date) && c.createUserId == userId).ToList();
+                foreach (var z in data5)
+                {
+                    obj.Add(new BigVQrworkhistorydetails()
+                    {
+                        Date = Convert.ToDateTime(z.createDate).ToString("MM/dd/yyyy"),
+                        time = Convert.ToDateTime(z.createDate).ToString("HH:mm"),
+                        SurveyNo = z.ReferanceId,
+                        type = 11
+
+                    });
+                }
+
                 return obj.OrderBy(c => c.Date).OrderBy(c => c.time).ToList();
 
             }

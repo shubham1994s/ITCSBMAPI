@@ -17,5 +17,6 @@ namespace SwachhBhart.API.Bll.ViewModels
 
         public string LiquidNo { get; set; }
         public string StreetNo { get; set; }
+        public string SurveyNo { get; set; }
     }
 }
