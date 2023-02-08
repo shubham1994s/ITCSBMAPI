@@ -226,6 +226,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         IEnumerable<HSStreetDetailsGrid> GetStreetDetails(int userid, DateTime FromDate, DateTime Todate, int appId);
 
+        IEnumerable<HSRejectCount> GetRejectedHSCount(int appId);
+        IEnumerable<HSHouseDetailsGrid> GetRejectedHouseDetails(int appId);
+        IEnumerable<HSLiquidDetailsGrid> GetRejectedLiquidDetails(int appId);
+        IEnumerable<HSStreetDetailsGrid> GetRejectedStreetDetails(int appId);
+        IEnumerable<HSDumpYardDetailsGrid> GetRejectedDumpYardDetails(int appId);
+
         List<UserRoleDetails> UserRoleList(int userid, string EmpType, bool val,int EmpId);
 
         CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId);

@@ -628,5 +628,25 @@ namespace SwachhBharatAPI.Dal.DataContexts
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQrWorkHistory_Result>("GetQrWorkHistory", userIdParameter, yearParameter, monthParameter);
         }
+    
+        public virtual ObjectResult<SP_RejectDumpYardDetailsApp_Result> SP_RejectDumpYardDetailsApp()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RejectDumpYardDetailsApp_Result>("SP_RejectDumpYardDetailsApp");
+        }
+    
+        public virtual ObjectResult<SP_RejectHouseDetailsApp_Result> SP_RejectHouseDetailsApp()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RejectHouseDetailsApp_Result>("SP_RejectHouseDetailsApp");
+        }
+    
+        public virtual ObjectResult<SP_RejectLiquidDetailsApp_Result> SP_RejectLiquidDetailsApp()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RejectLiquidDetailsApp_Result>("SP_RejectLiquidDetailsApp");
+        }
+    
+        public virtual ObjectResult<SP_RejectStreetDetailsApp_Result> SP_RejectStreetDetailsApp()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RejectStreetDetailsApp_Result>("SP_RejectStreetDetailsApp");
+        }
     }
 }

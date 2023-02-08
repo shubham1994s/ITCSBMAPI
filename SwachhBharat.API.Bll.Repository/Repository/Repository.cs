@@ -15604,6 +15604,112 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
         }
 
+        public IEnumerable<HSRejectCount> GetRejectedHSCount(int appId)
+        {
+            List<HSRejectCount> obj = new List<HSRejectCount>();
+            using (var db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                obj.Add(new HSRejectCount()
+                {
+                    HouseCount = db.HouseMasters.Where(c => c.QRStatus == false).Count(),
+                    LiquidCount = db.LiquidWasteDetails.Where(c => c.QRStatus == false).Count(),
+                    StreetCount = db.StreetSweepingDetails.Where(c => c.QRStatus == false).Count(),
+                    DumpCount = db.DumpYardDetails.Where(c => c.QRStatus == false).Count(),
+
+                });
+
+
+                return obj;
+            }
+        }
+
+        public IEnumerable<HSHouseDetailsGrid> GetRejectedHouseDetails(int appId)
+        {
+            using (var db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                var data = db.SP_RejectHouseDetailsApp().Select(x => new HSHouseDetailsGrid
+                {
+                    houseId = x.houseId,
+                    Name = x.qrEmpName,
+                    Lat = x.houseLat,
+                    Long = x.houseLong,
+                    QRCodeImage = x.QRCodeImage,
+                    ReferanceId = x.ReferanceId,
+                    modifiedDate = x.modified.HasValue ? Convert.ToDateTime(x.modified).ToString("dd/MM/yyyy hh:mm tt") : "",
+                    QRStatus = x.QRStatus,
+                    Remark = x.Remark
+
+                }).ToList();
+
+                return data;
+            }
+        }
+
+        public IEnumerable<HSLiquidDetailsGrid> GetRejectedLiquidDetails(int appId)
+        {
+            using (var db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                var data = db.SP_RejectLiquidDetailsApp().Select(x => new HSLiquidDetailsGrid
+                {
+                    LWId = x.LWId,
+                    Name = x.qrEmpName,
+                    Lat = x.LWLat,
+                    Long = x.LWLong,
+                    QRCodeImage = x.QRCodeImage,
+                    ReferanceId = x.ReferanceId,
+                    modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
+                    QRStatus = x.QRStatus,
+                    Remark = x.Remark
+
+                }).ToList();
+
+                return data;
+            }
+        }
+
+        public IEnumerable<HSStreetDetailsGrid> GetRejectedStreetDetails(int appId)
+        {
+            using (var db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                var data = db.SP_RejectStreetDetailsApp().Select(x => new HSStreetDetailsGrid
+                {
+                    SSId = x.SSId,
+                    Name = x.qrEmpName,
+                    Lat = x.SSLat,
+                    Long = x.SSLong,
+                    QRCodeImage = x.QRCodeImage,
+                    ReferanceId = x.ReferanceId,
+                    modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
+                    QRStatus = x.QRStatus,
+                    Remark = x.Remark
+
+                }).ToList();
+
+                return data;
+            }
+        }
+
+        public IEnumerable<HSDumpYardDetailsGrid> GetRejectedDumpYardDetails(int appId)
+        {
+            using (var db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                var data = db.SP_RejectDumpYardDetailsApp().Select(x => new HSDumpYardDetailsGrid
+                {
+                    dyId = x.dyId,
+                    Name = x.qrEmpName,
+                    Lat = x.dyLat,
+                    Long = x.dyLong,
+                    QRCodeImage = x.QRCodeImage,
+                    ReferanceId = x.ReferanceId,
+                    modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
+                    QRStatus = x.QRStatus,
+                    Remark = x.Remark
+
+                }).ToList();
+
+                return data;
+            }
+        }
 
         public List<UserRoleDetails> UserRoleList(int userId, string EmpType, bool status, int EmpId)
         {

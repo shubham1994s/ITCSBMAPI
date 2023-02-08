@@ -488,8 +488,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\Nagpur\UserProfile\images.jpg" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Http.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Http.WebHost.dll" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -556,6 +554,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="obj\" />
     <Folder Include="Views\DumpYard\" />
     <Folder Include="Views\RFID\" />
     <Folder Include="Views\WasteManagement\" />

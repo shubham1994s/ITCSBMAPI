@@ -105,6 +105,7 @@
     <Compile Include="HSEmployee.cs" />
     <Compile Include="HSHouseDetailsGrid.cs" />
     <Compile Include="HSLiquidDetailsGrid.cs" />
+    <Compile Include="HSRejectCount.cs" />
     <Compile Include="HSStreetDetailsGrid.cs" />
     <Compile Include="LatLongD.cs" />
     <Compile Include="NameULB.cs" />

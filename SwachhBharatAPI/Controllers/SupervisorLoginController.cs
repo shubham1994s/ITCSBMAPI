@@ -350,6 +350,80 @@ namespace SwachhBharatAPI.Controllers
         }
 
 
+
+        [HttpGet]
+        [Route("RejectedHSCount")]
+        public List<HSRejectCount> GetRejectedHSCount()
+        {
+            objRep = new Repository();
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+
+            List<HSRejectCount> objDetail = new List<HSRejectCount>();
+            objDetail = objRep.GetRejectedHSCount(AppId).ToList();
+            return objDetail;
+        }
+
+
+        [HttpGet]
+        [Route("RejectedHouseDetails")]
+        public List<HSHouseDetailsGrid> GetRejectedHouseDetails()
+        {
+            objRep = new Repository();
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+
+            List<HSHouseDetailsGrid> objDetail = new List<HSHouseDetailsGrid>();
+            objDetail = objRep.GetRejectedHouseDetails(AppId).ToList();
+            return objDetail;
+        }
+
+        [HttpGet]
+        [Route("RejectedLiquidDetails")]
+        public List<HSLiquidDetailsGrid> GetRejectedLiquidDetails()
+        {
+            objRep = new Repository();
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+
+            List<HSLiquidDetailsGrid> objDetail = new List<HSLiquidDetailsGrid>();
+            objDetail = objRep.GetRejectedLiquidDetails(AppId).ToList();
+            return objDetail;
+        }
+
+        [HttpGet]
+        [Route("RejectedStreetDetails")]
+        public List<HSStreetDetailsGrid> GetRejectedStreetDetails()
+        {
+            objRep = new Repository();
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+
+            List<HSStreetDetailsGrid> objDetail = new List<HSStreetDetailsGrid>();
+            objDetail = objRep.GetRejectedStreetDetails(AppId).ToList();
+            return objDetail;
+        }
+
+        [HttpGet]
+        [Route("RejectedDumpYardDetails")]
+        public List<HSDumpYardDetailsGrid> GetRejectedDumpYardDetails()
+        {
+            objRep = new Repository();
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+
+            List<HSDumpYardDetailsGrid> objDetail = new List<HSDumpYardDetailsGrid>();
+            objDetail = objRep.GetRejectedDumpYardDetails(AppId).ToList();
+            return objDetail;
+        }
+
+
+
         [HttpGet]
         [Route("UserRoleList")]
         public List<UserRoleDetails> UserRoleList()
@@ -374,6 +448,9 @@ namespace SwachhBharatAPI.Controllers
             objDetail = objRep.UserRoleList(userId, EmpType, status, EmpId).ToList();
             return objDetail;
         }
+
+
+
 
 
         [Route("AddHouseScanifyEmployee")]

@@ -795,6 +795,10 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Parameter Name="fdate" Type="date" Mode="In" />
           <Parameter Name="tdate" Type="date" Mode="In" />
         </Function>
+        <Function Name="SP_RejectDumpYardDetailsApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_RejectHouseDetailsApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_RejectLiquidDetailsApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_RejectStreetDetailsApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_StreetDetailsApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fdate" Type="date" Mode="In" />
           <Parameter Name="tdate" Type="date" Mode="In" />
@@ -1114,6 +1118,10 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             <Parameter Name="year" Mode="In" Type="Int32" />
             <Parameter Name="month" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_RejectDumpYardDetailsApp" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_RejectDumpYardDetailsApp_Result)" />
+          <FunctionImport Name="SP_RejectHouseDetailsApp" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_RejectHouseDetailsApp_Result)" />
+          <FunctionImport Name="SP_RejectLiquidDetailsApp" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_RejectLiquidDetailsApp_Result)" />
+          <FunctionImport Name="SP_RejectStreetDetailsApp" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_RejectStreetDetailsApp_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -2132,6 +2140,54 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Type="Int32" Name="LiquidCollection" Nullable="true" />
           <Property Type="Int32" Name="StreetCollection" Nullable="true" />
           <Property Type="Int32" Name="SurveyCollection" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_RejectDumpYardDetailsApp_Result">
+          <Property Type="Int32" Name="userId" Nullable="true" />
+          <Property Type="Int32" Name="dyId" Nullable="false" />
+          <Property Type="String" Name="dyLat" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="dyLong" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ReferanceId" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="lastModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="qrEmpName" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="QRStatus" Nullable="true" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="QRCodeImage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_RejectHouseDetailsApp_Result">
+          <Property Type="Int32" Name="userId" Nullable="true" />
+          <Property Type="Int32" Name="houseId" Nullable="false" />
+          <Property Type="String" Name="houseLat" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="houseLong" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ReferanceId" Nullable="true" MaxLength="350" />
+          <Property Type="DateTime" Name="modified" Nullable="true" Precision="23" />
+          <Property Type="String" Name="qrEmpName" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="QRStatus" Nullable="true" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="QRCodeImage" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_RejectLiquidDetailsApp_Result">
+          <Property Type="Int32" Name="userId" Nullable="true" />
+          <Property Type="Int32" Name="LWId" Nullable="false" />
+          <Property Type="String" Name="LWLat" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="LWLong" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ReferanceId" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="lastModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="qrEmpName" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="QRStatus" Nullable="true" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="QRCodeImage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_RejectStreetDetailsApp_Result">
+          <Property Type="Int32" Name="userId" Nullable="true" />
+          <Property Type="Int32" Name="SSId" Nullable="false" />
+          <Property Type="String" Name="SSLat" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="SSLong" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ReferanceId" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="lastModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="qrEmpName" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="QRStatus" Nullable="true" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="QRCodeImage" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3327,6 +3383,70 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
                 <ScalarProperty Name="LiquidCollection" ColumnName="LiquidCollection" />
                 <ScalarProperty Name="StreetCollection" ColumnName="StreetCollection" />
                 <ScalarProperty Name="SurveyCollection" ColumnName="SurveyCollection" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_RejectDumpYardDetailsApp" FunctionName="DevSwachhBharatNagpurModel.Store.SP_RejectDumpYardDetailsApp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DevSwachhBharatNagpurModel.SP_RejectDumpYardDetailsApp_Result">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="dyId" ColumnName="dyId" />
+                <ScalarProperty Name="dyLat" ColumnName="dyLat" />
+                <ScalarProperty Name="dyLong" ColumnName="dyLong" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
+                <ScalarProperty Name="qrEmpName" ColumnName="qrEmpName" />
+                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_RejectHouseDetailsApp" FunctionName="DevSwachhBharatNagpurModel.Store.SP_RejectHouseDetailsApp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DevSwachhBharatNagpurModel.SP_RejectHouseDetailsApp_Result">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="houseId" ColumnName="houseId" />
+                <ScalarProperty Name="houseLat" ColumnName="houseLat" />
+                <ScalarProperty Name="houseLong" ColumnName="houseLong" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="qrEmpName" ColumnName="qrEmpName" />
+                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_RejectLiquidDetailsApp" FunctionName="DevSwachhBharatNagpurModel.Store.SP_RejectLiquidDetailsApp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DevSwachhBharatNagpurModel.SP_RejectLiquidDetailsApp_Result">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="LWId" ColumnName="LWId" />
+                <ScalarProperty Name="LWLat" ColumnName="LWLat" />
+                <ScalarProperty Name="LWLong" ColumnName="LWLong" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
+                <ScalarProperty Name="qrEmpName" ColumnName="qrEmpName" />
+                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_RejectStreetDetailsApp" FunctionName="DevSwachhBharatNagpurModel.Store.SP_RejectStreetDetailsApp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DevSwachhBharatNagpurModel.SP_RejectStreetDetailsApp_Result">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="SSId" ColumnName="SSId" />
+                <ScalarProperty Name="SSLat" ColumnName="SSLat" />
+                <ScalarProperty Name="SSLong" ColumnName="SSLong" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
+                <ScalarProperty Name="qrEmpName" ColumnName="qrEmpName" />
+                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
