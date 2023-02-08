@@ -60,6 +60,8 @@ namespace SwachhBharatAPI.Controllers
             catch(Exception ex)
             {
                 logger.Properties["AppId"] = "AppId=" + AppId ;
+                //logger.Properties["AppId"] = "AppId=" + AppId;
+                //logger.Properties["UserId"] = "UserId=" + objlogin.userId;
                 logger.Error(ex.Message + Environment.NewLine + DateTime.Now + Url.Request);
             }
             
