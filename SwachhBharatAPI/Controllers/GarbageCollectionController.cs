@@ -660,6 +660,7 @@ namespace SwachhBharatAPI.Controllers
                     svDetail.updateDate = item.updateDate;
 
                     CollectionSyncResult detail = _RepositoryApi.SaveSurveyDetails(svDetail, AppId);
+
                     if (detail.message == "")
                     {
                         objres.Add(new CollectionSyncResult()
@@ -681,10 +682,10 @@ namespace SwachhBharatAPI.Controllers
 
                     });
 
-                    return objres;
+                   
 
                 }
-
+                return objres;
 
             }
             catch (Exception ex)

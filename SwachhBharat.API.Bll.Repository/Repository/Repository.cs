@@ -8077,7 +8077,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             catch
                             {
                                 result.ID = obj.OfflineID;
-                                result.message = "Invalid LWId"; result.messageMar = "अवैध जीपी आयडी";
+                                result.message = "Invalid LWId"; result.messageMar = "अवैध लिक्विड आयडी";
                                 result.status = "error";
                                 return result;
                             }
@@ -8180,7 +8180,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             catch
                             {
                                 result.ID = obj.OfflineID;
-                                result.message = "Invalid LWId"; result.messageMar = "अवैध डीवाय आयडी";
+                                result.message = "Invalid LWId"; result.messageMar = "अवैध लिक्विड आयडी";
                                 result.status = "error";
                                 return result;
                             }
@@ -8375,7 +8375,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             catch
                             {
                                 result.ID = obj.OfflineID;
-                                result.message = "Invalid SSId"; result.messageMar = "अवैध जीपी आयडी";
+                                result.message = "Invalid SSId"; result.messageMar = "अवैध स्ट्रीट आयडी";
                                 result.status = "error";
                                 return result;
                             }
@@ -8478,7 +8478,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             catch
                             {
                                 result.ID = obj.OfflineID;
-                                result.message = "Invalid SSId"; result.messageMar = "अवैध डीवाय आयडी";
+                                result.message = "Invalid SSId"; result.messageMar = "अवैध स्ट्रीट आयडी";
                                 result.status = "error";
                                 return result;
                             }
@@ -13349,8 +13349,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 else
                                 {
                                     result.status = "error";
-                                    result.message = "Invalid Dump Yard ID";
-                                    result.messageMar = "अवैध डंप यार्ड आयडी ";
+                                    result.message = "Invalid Street ID";
+                                    result.messageMar = "अवैध स्ट्रीट आयडी ";
                                 }
 
                             }
@@ -13423,8 +13423,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 else
                                 {
                                     result.status = "error";
-                                    result.message = "Invalid Dump Yard ID";
-                                    result.messageMar = "अवैध डंप यार्ड आयडी ";
+                                    result.message = "Invalid Liquid ID";
+                                    result.messageMar = "अवैध लिक्विड आयडी ";
                                 }
 
                             }
@@ -13859,8 +13859,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                         {
                                             ID = Convert.ToInt32(item.OfflineId),
                                             status = "error",
-                                            message = "Invalid Dump Yard ID",
-                                            messageMar = "अवैध डंप यार्ड आयडी ",
+                                            message = "Invalid Street ID",
+                                            messageMar = "अवैध स्ट्रीट आयडी ",
                                         });
                                     }
 
@@ -13934,8 +13934,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                         {
                                             ID = Convert.ToInt32(item.OfflineId),
                                             status = "error",
-                                            message = "Invalid Dump Yard ID",
-                                            messageMar = "अवैध डंप यार्ड आयडी ",
+                                            message = "Invalid Liquid ID",
+                                            messageMar = "अवैध लिक्विड आयडी ",
                                         });
                                     }
 
@@ -16503,7 +16503,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             result.status = "success";
                             result.message = "Survey Details Updated Successfully";
                             result.messageMar = "सर्वेक्षण तपशील यशस्वीरित्या अद्यतनित केले";
-
+                            return result;
                         }
                         else
                         {
