@@ -28,6 +28,7 @@ using TransactionScope = System.Transactions.TransactionScope;
 using Microsoft.Build.Framework;
 using Microsoft.Extensions.Logging;
 using NLog;
+using System.Device.Location;
 
 //using Microsoft.Extensions.Configuration;
 
@@ -8789,16 +8790,23 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
             DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId);
 
-            string House_Lat = obj.Lat;
-            string House_Long = obj.Long;
-            string HouseLat = House_Lat.Substring(0, 5);
-            string HouseLong = House_Long.Substring(0, 5);
-            var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId && c.houseLat.Contains(HouseLat) && c.houseLong.Contains(HouseLong)).FirstOrDefault();
+            //string House_Lat = obj.Lat;
+            //string House_Long = obj.Long;
+            //string HouseLat = House_Lat.Substring(0, 5);
+            //string HouseLong = House_Long.Substring(0, 5);
+            //  var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId && c.houseLat.Contains(HouseLat) && c.houseLong.Contains(HouseLong)).FirstOrDefault();
+
+            var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
             coordinates p = new coordinates()
             {
                 lat = Convert.ToDouble(obj.Lat),
                 lng = Convert.ToDouble(obj.Long)
             };
+            var sCoord = new GeoCoordinate(Convert.ToDouble(house.houseLat), Convert.ToDouble(house.houseLong));
+            var eCoord = new GeoCoordinate(Convert.ToDouble(obj.Lat), Convert.ToDouble(obj.Long));
+        
+            
+            double a =   sCoord.GetDistanceTo(eCoord);
             if (appdetails.AppAreaLatLong != null)
             {
                 List<List<coordinates>> lstPoly = new List<List<coordinates>>();
@@ -8820,7 +8828,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             //  if ((obj.IsIn == true && appdetails.IsAreaActive == true) || (obj.IsIn == false && appdetails.IsAreaActive == false) ||  (obj.IsIn == true && appdetails.IsAreaActive == false))
             if (appdetails.IsAreaActive == true || appdetails.IsAreaActive == false || appdetails.IsAreaActive == null)
             {
-                if (obj.IsLocation == false && house != null && appdetails.IsScanNear == true)
+                if (obj.IsLocation == false && house != null && appdetails.IsScanNear == true && Convert.ToDouble(appdetails.Type)>=a)
                 {
                     switch (obj.gcType)
                     {
@@ -8906,7 +8914,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 {
                     result = SaveUserLocationOfflineSync(obj, AppId, type);
                 }
-                if (obj.IsLocation == false && house == null && appdetails.IsScanNear == true)
+                if (obj.IsLocation == false &&   Convert.ToDouble(appdetails.Type) < a && appdetails.IsScanNear == true)
                 {
                     result.ID = obj.OfflineID;
                     result.houseId = obj.houseId;
