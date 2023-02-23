@@ -8828,7 +8828,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             //  if ((obj.IsIn == true && appdetails.IsAreaActive == true) || (obj.IsIn == false && appdetails.IsAreaActive == false) ||  (obj.IsIn == true && appdetails.IsAreaActive == false))
             if (appdetails.IsAreaActive == true || appdetails.IsAreaActive == false || appdetails.IsAreaActive == null)
             {
-                if (obj.IsLocation == false && house != null && appdetails.IsScanNear == true && Convert.ToDouble(appdetails.Type)>=a)
+                if (obj.IsLocation == false && house != null && appdetails.IsScanNear == true && (Convert.ToDouble(appdetails.Type)>=a || (house.houseLat==null && house.houseLong==null) ))
                 {
                     switch (obj.gcType)
                     {
@@ -8914,14 +8914,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 {
                     result = SaveUserLocationOfflineSync(obj, AppId, type);
                 }
-                if (obj.IsLocation == false &&   Convert.ToDouble(appdetails.Type) < a && appdetails.IsScanNear == true)
+                if (obj.IsLocation == false &&   Convert.ToDouble(appdetails.Type) < a && appdetails.IsScanNear == true && (house.houseLat != null && house.houseLong != null))
                 {
                     result.ID = obj.OfflineID;
                     result.houseId = obj.houseId;
-                    result.message = "You Are Not In Nearby.";
-                    result.messageMar = "आपण जवळपास नाही.";
-
-
+                    result.message = "You Are Not Located Near a House,Your Distance From House is " + a +" Meter";
+                    result.messageMar = "तुम्ही घरा जवळपास नाही, तुमचे घरापासूनचे अंतर " + a + " मीटर आहे.";
                 }
 
                 if (obj.IsLocation == false && obj.EmpType == "N" && result.status == "success")
