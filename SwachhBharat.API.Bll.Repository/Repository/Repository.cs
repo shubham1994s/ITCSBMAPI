@@ -8796,17 +8796,68 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             //string HouseLong = House_Long.Substring(0, 5);
             //  var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId && c.houseLat.Contains(HouseLat) && c.houseLong.Contains(HouseLong)).FirstOrDefault();
 
-            var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
+            
             coordinates p = new coordinates()
             {
                 lat = Convert.ToDouble(obj.Lat),
                 lng = Convert.ToDouble(obj.Long)
             };
+
+            HouseMaster Hdata = new HouseMaster();
+            dynamic house = string.Empty;
+            string pme = string.Empty;
+            string pmm = string.Empty;
+            double a=0;
+            if (obj.houseId!=null)
+            {
+            house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
             var sCoord = new GeoCoordinate(Convert.ToDouble(house.houseLat), Convert.ToDouble(house.houseLong));
             var eCoord = new GeoCoordinate(Convert.ToDouble(obj.Lat), Convert.ToDouble(obj.Long));
-        
+            a  = sCoord.GetDistanceTo(eCoord);
+                Hdata.houseLat = house.houseLat;
+                Hdata.houseLong = house.houseLong;
+                pme = "House";
+                pmm = "घरा";
+            }
+           
+            if (obj.LWId != null)
+            {
+                house = db.LiquidWasteDetails.Where(c => c.ReferanceId == obj.LWId).FirstOrDefault();
+                var sCoord = new GeoCoordinate(Convert.ToDouble(house.LWLat), Convert.ToDouble(house.LWLong));
+                var eCoord = new GeoCoordinate(Convert.ToDouble(obj.Lat), Convert.ToDouble(obj.Long));
+                a = sCoord.GetDistanceTo(eCoord);
+                Hdata.houseLat = house.LWLat;
+                Hdata.houseLong = house.LWLong;
+                pme = "Liquid Point";
+                pmm = "लिक्विड पॉइंट";
+            }
             
-            double a =   sCoord.GetDistanceTo(eCoord);
+          
+            if (obj.SSId != null)
+            {
+                house = db.StreetSweepingDetails.Where(c => c.ReferanceId == obj.SSId).FirstOrDefault();
+                var sCoord = new GeoCoordinate(Convert.ToDouble(house.SSLat), Convert.ToDouble(house.SSLong));
+                var eCoord = new GeoCoordinate(Convert.ToDouble(obj.Lat), Convert.ToDouble(obj.Long));
+                a = sCoord.GetDistanceTo(eCoord);
+                Hdata.houseLat = house.SSLat;
+                Hdata.houseLong = house.SSLong;
+                pme = "Street Point";
+                pmm = "स्ट्रीट पॉइंट";
+            }
+          
+
+            if (obj.dyId != null)
+            {
+                house = db.DumpYardDetails.Where(c => c.ReferanceId == obj.SSId).FirstOrDefault();
+                var sCoord = new GeoCoordinate(Convert.ToDouble(house.dyLat), Convert.ToDouble(house.dyLong));
+                var eCoord = new GeoCoordinate(Convert.ToDouble(obj.Lat), Convert.ToDouble(obj.Long));
+                a = sCoord.GetDistanceTo(eCoord);
+                Hdata.houseLat = house.dyLat;
+                Hdata.houseLong = house.dyLong;
+                pme = "Dumpyard";
+                pmm = "डम्पयार्ड";
+            }
+
             if (appdetails.AppAreaLatLong != null)
             {
                 List<List<coordinates>> lstPoly = new List<List<coordinates>>();
@@ -8828,7 +8879,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             //  if ((obj.IsIn == true && appdetails.IsAreaActive == true) || (obj.IsIn == false && appdetails.IsAreaActive == false) ||  (obj.IsIn == true && appdetails.IsAreaActive == false))
             if (appdetails.IsAreaActive == true || appdetails.IsAreaActive == false || appdetails.IsAreaActive == null)
             {
-                if (obj.IsLocation == false && house != null && appdetails.IsScanNear == true && (Convert.ToDouble(appdetails.Type)>=a || (house.houseLat==null && house.houseLong==null) ))
+                if (obj.IsLocation == false && house != null && appdetails.IsScanNear == true && ((Convert.ToDouble(appdetails.Type)>=a || (Hdata.houseLat==null && Hdata.houseLong==null))))
                 {
                     switch (obj.gcType)
                     {
@@ -8914,12 +8965,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 {
                     result = SaveUserLocationOfflineSync(obj, AppId, type);
                 }
-                if (obj.IsLocation == false &&   Convert.ToDouble(appdetails.Type) < a && appdetails.IsScanNear == true && (house.houseLat != null && house.houseLong != null))
+                if (obj.IsLocation == false &&   Convert.ToDouble(appdetails.Type) < a && appdetails.IsScanNear == true && ((Hdata.houseLat != null && Hdata.houseLong != null)))
                 {
                     result.ID = obj.OfflineID;
                     result.houseId = obj.houseId;
-                    result.message = "You Are Not Located Near a House,Your Distance From House is " + a +" Meter";
-                    result.messageMar = "तुम्ही घरा जवळपास नाही, तुमचे घरापासूनचे अंतर " + a + " मीटर आहे.";
+                    result.message = "You Are Not Located Near a "+ pme + ",Your Distance From  " + pme + " is " + a +" Meter";
+                    result.messageMar = "तुम्ही  " + pmm + " जवळपास नाही, तुमचे  " + pmm + "पासूनचे अंतर " + a + " मीटर आहे.";
                 }
 
                 if (obj.IsLocation == false && obj.EmpType == "N" && result.status == "success")
