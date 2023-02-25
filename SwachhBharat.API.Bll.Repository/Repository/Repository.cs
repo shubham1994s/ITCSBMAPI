@@ -8846,17 +8846,17 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
 
 
-            if (obj.dyId != null)
-            {
-                house = db.DumpYardDetails.Where(c => c.ReferanceId == obj.SSId).FirstOrDefault();
-                var sCoord = new GeoCoordinate(Convert.ToDouble(house.dyLat), Convert.ToDouble(house.dyLong));
-                var eCoord = new GeoCoordinate(Convert.ToDouble(obj.Lat), Convert.ToDouble(obj.Long));
-                a = sCoord.GetDistanceTo(eCoord);
-                Hdata.houseLat = house.dyLat;
-                Hdata.houseLong = house.dyLong;
-                pme = "Dumpyard";
-                pmm = "डम्पयार्ड";
-            }
+            //if (obj.dyId != null)
+            //{
+            //    house = db.DumpYardDetails.Where(c => c.ReferanceId == obj.SSId).FirstOrDefault();
+            //    var sCoord = new GeoCoordinate(Convert.ToDouble(house.dyLat), Convert.ToDouble(house.dyLong));
+            //    var eCoord = new GeoCoordinate(Convert.ToDouble(obj.Lat), Convert.ToDouble(obj.Long));
+            //    a = sCoord.GetDistanceTo(eCoord);
+            //    Hdata.houseLat = house.dyLat;
+            //    Hdata.houseLong = house.dyLong;
+            //    pme = "Dumpyard";
+            //    pmm = "डम्पयार्ड";
+            //}
 
             if (appdetails.AppAreaLatLong != null)
             {
