@@ -8820,7 +8820,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 pmm = "घरा";
             }
 
-            if (obj.LWId != null)
+            if (obj.LWId != null && obj.LWId!="")
             {
                 house = db.LiquidWasteDetails.Where(c => c.ReferanceId == obj.LWId).FirstOrDefault();
                 var sCoord = new GeoCoordinate(Convert.ToDouble(house.LWLat), Convert.ToDouble(house.LWLong));
@@ -8833,7 +8833,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
 
 
-            if (obj.SSId != null)
+            if (obj.SSId != null && obj.SSId!="")
             {
                 house = db.StreetSweepingDetails.Where(c => c.ReferanceId == obj.SSId).FirstOrDefault();
                 var sCoord = new GeoCoordinate(Convert.ToDouble(house.SSLat), Convert.ToDouble(house.SSLong));
