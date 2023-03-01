@@ -8808,7 +8808,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             string pme = string.Empty;
             string pmm = string.Empty;
             double a = 0;
-            if (obj.houseId != null)
+            if (obj.houseId != null && obj.houseId!="")
             {
                 house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
                 var sCoord = new GeoCoordinate(Convert.ToDouble(house.houseLat), Convert.ToDouble(house.houseLong));
@@ -8967,6 +8967,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 }
                 if (obj.IsLocation == false && Convert.ToDouble(appdetails.Type) < a && appdetails.IsScanNear == true && ((Hdata.houseLat != null && Hdata.houseLong != null)))
                 {
+                    result.status = "error";
                     result.ID = obj.OfflineID;
                     result.houseId = obj.houseId;
                     result.message = "You Are Not Located Near a " + pme + ",Your Distance From  " + pme + " is " + a + " Meter";

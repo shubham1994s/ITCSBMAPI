@@ -326,7 +326,7 @@ namespace SwachhBharatAPI.Controllers
                             gcDetail.totalWetWeight = item.totalWetWeight;
                             gcDetail.EmpType = item.EmpType;
                             break;
-                        default:
+                        default:  // Save Loction 
                             gcDetail.houseId = "";
                             gcDetail.gpId = "";
                             gcDetail.dyId = "";
