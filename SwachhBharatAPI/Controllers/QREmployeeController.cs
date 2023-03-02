@@ -105,6 +105,7 @@ namespace SwachhBharatAPI.Controllers
             
             List<CollectionSyncResult> objDetail = new List<CollectionSyncResult>();
             objDetail = objRep.SaveQrHPDCollectionsOffline(obj, AppId);
+
             return objDetail;
         }
 

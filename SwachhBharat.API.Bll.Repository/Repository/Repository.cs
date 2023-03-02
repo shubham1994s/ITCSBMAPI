@@ -13286,6 +13286,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         {
             Result result = new Result();
             DevSwachhBharatMainEntities dbMain2 = new DevSwachhBharatMainEntities();
+            dbMain2.Database.Connection.Open();
             var appdetails = dbMain2.AppDetails.Where(c => c.AppId == AppId).FirstOrDefault();
 
             // var appdetails = dbMain.AppDetails.Where(c => c.AppId == AppId).FirstOrDefault();
@@ -13738,6 +13739,10 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         List<AppDetail> AppDetailss = dbMain2.Database.SqlQuery<AppDetail>("exec [Update_Trigger]").ToList();
                     }
                     return result;
+
+                    var updateappdetails = dbMain2.DailyScanCount(AppId.ToString());
+
+                    dbMain2.Database.Connection.Close();
                 }
                 catch (Exception ex)
                 {
@@ -13750,6 +13755,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     result.status = "error";
                     return result;
                 }
+
+
             }
             //}
         }
@@ -13812,7 +13819,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             List<CollectionSyncResult> result = new List<CollectionSyncResult>();
             DevSwachhBharatMainEntities dbMain2 = new DevSwachhBharatMainEntities();
             var appdetails = dbMain2.AppDetails.Where(c => c.AppId == AppId).FirstOrDefault();
-
+            dbMain2.Database.Connection.Open();
             using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
             {
                 db.Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
@@ -14265,6 +14272,10 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         }
 
                     }
+
+                    var updateappdetails = dbMain2.DailyScanCount(AppId.ToString());
+
+                    dbMain2.Database.Connection.Close();
                     return result;
                 }
                 catch (Exception ex)
@@ -14283,7 +14294,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     return result;
                 }
 
-
+                
             }
 
         }
