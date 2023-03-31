@@ -18,20 +18,21 @@ namespace SwachhBharatAPI.Controllers
     {
         //Added By Nishikant (13 june 2019)
 
-        private readonly ILogger<LoginController> _logger;
-        private readonly IRepository objRep;
+      //  private readonly ILogger<LoginController> _logger;
+        IRepository objRep;
 
-        public CitizenController(ILogger<LoginController> logger, IRepository repository)
+      //  public CitizenController(ILogger<LoginController> _logger, IRepository repository)
+       public CitizenController()
         {
-            _logger = logger;
-            objRep = repository;
+            //this._logger = _logger;
+            //this.objRep = repository;
         }
 
         [HttpGet]
         [Route("Get/MobileDetails")]
         public CitizenMobileDetails GetMobileDetails()
         {
-          //  objRep = new Repository();
+            objRep = new Repository();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             IEnumerable<string> headerValue2 = Request.Headers.GetValues("ReferanceId");
             IEnumerable<string> headerValue3 = Request.Headers.GetValues("FCMID");
@@ -64,7 +65,7 @@ namespace SwachhBharatAPI.Controllers
         [Route("Get/SendOTP")]
         public CitizenMobileOTP GetSendOTP()
         {
-            //objRep = new Repository();
+            objRep = new Repository();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             IEnumerable<string> headerValue2 = Request.Headers.GetValues("ReferanceId");
             IEnumerable<string> headerValue3 = Request.Headers.GetValues("Mobile");
@@ -88,7 +89,7 @@ namespace SwachhBharatAPI.Controllers
         public Result1 SaveDeviceDetails()
         {
             Result1 Result = new Result1();
-           // objRep = new Repository();
+            objRep = new Repository();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             IEnumerable<string> headerValue2 = Request.Headers.GetValues("ReferanceId");
             IEnumerable<string> headerValue3 = Request.Headers.GetValues("FCMID");
@@ -120,7 +121,7 @@ namespace SwachhBharatAPI.Controllers
         public Result1 SaveDeviceDetailsClear()
         {
             Result1 Result = new Result1();
-           // // objRep = new Repository();
+            objRep = new Repository();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             IEnumerable<string> headerValue2 = Request.Headers.GetValues("DeviceID");
             IEnumerable<string> headerValue3 = Request.Headers.GetValues("ReferenceID");
@@ -183,7 +184,7 @@ namespace SwachhBharatAPI.Controllers
 
         public GPHousedetailsVM GetGPHouseDetails(int AppId, string ReferanceId)
         {
-            // objRep = new Repository();
+            objRep = new Repository();
 
             GPHousedetailsVM objDetail = new GPHousedetailsVM();
             objDetail = objRep.GetGPHouseDetails(AppId, ReferanceId);
@@ -195,7 +196,7 @@ namespace SwachhBharatAPI.Controllers
 
         public List<CitizenCTPTAddress> GetCTPTAddress()
         {
-            // objRep = new Repository();
+            objRep = new Repository();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             var id = headerValue1.FirstOrDefault();
             int AppId = int.Parse(id);
