@@ -10457,18 +10457,26 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     if (name != null)
                     {
                         string QRCodeImage = "";
-                        var BQI = db.HouseMasters.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
-                        if (BQI.BinaryQrCodeImage != null)
+                        string houseQrImage = "";
+                        //var BQI = db.HouseMasters.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
+                        //var houseBQI = db.HouseMasters.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryHouseImage }).FirstOrDefault();
+                        var BQI =x.BinaryQrCodeImage ;
+                        var houseBQI =x.BinaryHouseImage;
+                        //if (BQI.BinaryQrCodeImage != null)
+                        if (BQI != null)
                         {
                             QRCodeImage = Convert.ToBase64String(x.BinaryQrCodeImage);
+                            houseQrImage = Convert.ToBase64String(x.BinaryHouseImage);
                         }
                         if (string.IsNullOrEmpty(QRCodeImage))
                         {
                             QRCodeImage = "/Images/default_not_upload.png";
+                            houseQrImage = "/Images/default_not_upload.png";
                         }
                         else
                         {
                             QRCodeImage = "data:image/jpeg;base64," + QRCodeImage;
+                            houseQrImage = "data:image/jpeg;base64," + houseQrImage;
                         }
                         obj.Add(new HSHouseDetailsGrid()
                         {
@@ -10477,6 +10485,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             Lat = x.houseLat,
                             Long = x.houseLong,
                             QRCodeImage = QRCodeImage,
+                            propertyImage = houseQrImage,
                             ReferanceId = x.ReferanceId,
                             modifiedDate = x.modified.HasValue ? Convert.ToDateTime(x.modified).ToString("dd/MM/yyyy hh:mm tt") : "",
                             QRStatus = x.QRStatus,
@@ -10493,6 +10502,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             Lat = x.houseLat,
                             Long = x.houseLong,
                             QRCodeImage = "/Images/default_not_upload.png",
+                            propertyImage = "/Images/default_not_upload.png",
                             ReferanceId = x.ReferanceId,
                             modifiedDate = x.modified.HasValue ? Convert.ToDateTime(x.modified).ToString("dd/MM/yyyy hh:mm tt") : "",
                             QRStatus = x.QRStatus,
@@ -10517,18 +10527,24 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     if (name != null)
                     {
                         string QRCodeImage = "";
-                        var BQI = db.DumpYardDetails.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
-                        if (BQI.BinaryQrCodeImage != null)
+                        string DumpImage = "";
+                        // var BQI = db.DumpYardDetails.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
+                        var BQI = x.BinaryQrCodeImage;
+                        var dumpBQI = x.BinaryDumpImage;
+                        if (BQI!= null)
                         {
                             QRCodeImage = Convert.ToBase64String(x.BinaryQrCodeImage);
+                            DumpImage = Convert.ToBase64String(x.BinaryDumpImage);
                         }
                         if (string.IsNullOrEmpty(QRCodeImage))
                         {
                             QRCodeImage = "/Images/default_not_upload.png";
+                            DumpImage = "/Images/default_not_upload.png";
                         }
                         else
                         {
                             QRCodeImage = "data:image/jpeg;base64," + QRCodeImage;
+                            DumpImage = "data:image/jpeg;base64," + DumpImage;
                         }
                         obj.Add(new HSHouseDetailsGrid()
                         {
@@ -10537,6 +10553,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             Lat = x.dyLat,
                             Long = x.dyLong,
                             QRCodeImage = QRCodeImage,
+                            propertyImage = DumpImage,
                             ReferanceId = x.ReferanceId,
                             modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
                             QRStatus = x.QRStatus,
@@ -10552,6 +10569,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             Lat = x.dyLat,
                             Long = x.dyLong,
                             QRCodeImage = "/Images/default_not_upload.png",
+                            propertyImage = "/Images/default_not_upload.png",
                             ReferanceId = x.ReferanceId,
                             modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
                             QRStatus = x.QRStatus,
@@ -10576,18 +10594,24 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     if (name != null)
                     {
                         string QRCodeImage = "";
-                        var BQI = db.LiquidWasteDetails.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
-                        if (BQI.BinaryQrCodeImage != null)
+                        string liquidImage = "";
+                        //var BQI = db.LiquidWasteDetails.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
+                        var BQI = x.BinaryQrCodeImage;
+                        var liquidBQI = x.BinaryLiquidImage;
+                        if (BQI != null)
                         {
                             QRCodeImage = Convert.ToBase64String(x.BinaryQrCodeImage);
+                            liquidImage = Convert.ToBase64String(x.BinaryLiquidImage);
                         }
                         if (string.IsNullOrEmpty(QRCodeImage))
                         {
                             QRCodeImage = "/Images/default_not_upload.png";
+                            liquidImage = "/Images/default_not_upload.png";
                         }
                         else
                         {
                             QRCodeImage = "data:image/jpeg;base64," + QRCodeImage;
+                            liquidImage = "data:image/jpeg;base64," + liquidImage;
                         }
                         obj.Add(new HSHouseDetailsGrid()
                         {
@@ -10596,6 +10620,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             Lat = x.LWLat,
                             Long = x.LWLong,
                             QRCodeImage = QRCodeImage,
+                            propertyImage = liquidImage,
                             ReferanceId = x.ReferanceId,
                             modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
                             QRStatus = x.QRStatus,
@@ -10610,6 +10635,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             Lat = x.LWLat,
                             Long = x.LWLong,
                             QRCodeImage = "/Images/default_not_upload.png",
+                            propertyImage = "/Images/default_not_upload.png",
                             ReferanceId = x.ReferanceId,
                             modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
                             QRStatus = x.QRStatus,
@@ -10634,18 +10660,24 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     if (name != null)
                     {
                         string QRCodeImage = "";
-                        var BQI = db.StreetSweepingDetails.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
-                        if (BQI.BinaryQrCodeImage != null)
+                        string streetImage = "";
+                        //var BQI = db.StreetSweepingDetails.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
+                        var BQI = x.BinaryQrCodeImage;
+                        var streetBQI = x.BinaryStreetImage;
+                        if (BQI != null)
                         {
                             QRCodeImage = Convert.ToBase64String(x.BinaryQrCodeImage);
+                            streetImage = Convert.ToBase64String(x.BinaryStreetImage);
                         }
                         if (string.IsNullOrEmpty(QRCodeImage))
                         {
                             QRCodeImage = "/Images/default_not_upload.png";
+                            streetImage = "/Images/default_not_upload.png";
                         }
                         else
                         {
                             QRCodeImage = "data:image/jpeg;base64," + QRCodeImage;
+                            streetImage = "data:image/jpeg;base64," + streetImage;
                         }
                         obj.Add(new HSHouseDetailsGrid()
                         {
@@ -10654,6 +10686,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             Lat = x.SSLat,
                             Long = x.SSLong,
                             QRCodeImage = QRCodeImage,
+                            propertyImage = streetImage,
                             ReferanceId = x.ReferanceId,
                             modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
                             QRStatus = x.QRStatus,
@@ -10668,6 +10701,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             Lat = x.SSLat,
                             Long = x.SSLong,
                             QRCodeImage = "/Images/default_not_upload.png",
+                            propertyImage = "/Images/default_not_upload.png",
                             ReferanceId = x.ReferanceId,
                             modifiedDate = x.lastModifiedDate.HasValue ? Convert.ToDateTime(x.lastModifiedDate).ToString("dd/MM/yyyy hh:mm tt") : "",
                             QRStatus = x.QRStatus,

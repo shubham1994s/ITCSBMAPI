@@ -56,14 +56,14 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<Daily_Attendance> Daily_Attendance { get; set; }
         public virtual DbSet<Vehical_QR_Master> Vehical_QR_Master { get; set; }
         public virtual DbSet<Vw_MsgNotification> Vw_MsgNotification { get; set; }
-        public virtual DbSet<HouseMaster> HouseMasters { get; set; }
-        public virtual DbSet<DumpYardDetail> DumpYardDetails { get; set; }
-        public virtual DbSet<LiquidWasteDetail> LiquidWasteDetails { get; set; }
-        public virtual DbSet<StreetSweepingDetail> StreetSweepingDetails { get; set; }
         public virtual DbSet<ComplaintMaster> ComplaintMasters { get; set; }
         public virtual DbSet<ComplaintArise> ComplaintArises { get; set; }
         public virtual DbSet<SurveyFormDetail> SurveyFormDetails { get; set; }
         public virtual DbSet<TransDumpTD> TransDumpTDs { get; set; }
+        public virtual DbSet<HouseMaster> HouseMasters { get; set; }
+        public virtual DbSet<DumpYardDetail> DumpYardDetails { get; set; }
+        public virtual DbSet<LiquidWasteDetail> LiquidWasteDetails { get; set; }
+        public virtual DbSet<StreetSweepingDetail> StreetSweepingDetails { get; set; }
     
         public virtual ObjectResult<sp_area_Result> sp_area()
         {

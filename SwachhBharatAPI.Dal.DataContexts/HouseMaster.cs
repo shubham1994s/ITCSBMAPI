@@ -41,5 +41,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public byte[] BinaryQrCodeImage { get; set; }
         public Nullable<int> New_Construction { get; set; }
         public string Remark { get; set; }
+        public Nullable<int> Property_Type_Id { get; set; }
+        public byte[] BinaryHouseImage { get; set; }
     }
 }

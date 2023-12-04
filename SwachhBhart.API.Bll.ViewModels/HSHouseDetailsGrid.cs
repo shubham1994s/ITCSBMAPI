@@ -21,5 +21,6 @@ namespace SwachhBhart.API.Bll.ViewModels
 
         public Nullable<System.DateTime> QRStatusDate { get; set; }
         public string Remark { get; set; }
+        public string propertyImage { get; set; }
     }
 }

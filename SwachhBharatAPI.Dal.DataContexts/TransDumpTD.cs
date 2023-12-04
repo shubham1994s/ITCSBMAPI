@@ -42,5 +42,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<decimal> TotalGcWeightKg { get; set; }
         public Nullable<decimal> TotalDryWeightKg { get; set; }
         public Nullable<decimal> TotalWetWeightKg { get; set; }
+        public Nullable<System.DateTime> Date_Time { get; set; }
     }
 }

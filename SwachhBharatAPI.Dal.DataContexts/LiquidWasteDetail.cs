@@ -33,5 +33,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public byte[] BinaryQrCodeImage { get; set; }
         public Nullable<System.DateTime> DataEntryDate { get; set; }
         public string Remark { get; set; }
+        public byte[] BinaryLiquidImage { get; set; }
     }
 }

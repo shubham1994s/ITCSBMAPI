@@ -99,6 +99,7 @@
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
           <Property Name="DataEntryDate" Type="datetime" />
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+          <Property Name="BinaryDumpImage" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="GamePlayerDetails">
           <Key>
@@ -229,6 +230,8 @@
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
           <Property Name="New_Construction" Type="int" />
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+          <Property Name="Property_Type_Id" Type="int" />
+          <Property Name="BinaryHouseImage" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="LiquidWasteDetails">
           <Key>
@@ -253,6 +256,7 @@
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
           <Property Name="DataEntryDate" Type="datetime" />
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+          <Property Name="BinaryLiquidImage" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -385,6 +389,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="BinaryQrCodeImage" Type="varbinary(max)" />
           <Property Name="DataEntryDate" Type="datetime" />
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+          <Property Name="BinaryStreetImage" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="SurveyFormDetails">
           <Key>
@@ -471,9 +476,10 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="UsTotalGcWeight" Type="decimal" Precision="18" Scale="4" />
           <Property Name="UsTotalDryWeight" Type="decimal" Precision="18" Scale="4" />
           <Property Name="UsTotalWetWeight" Type="decimal" Precision="18" Scale="4" />
-          <Property Name="TotalGcWeightKg" Type="numeric" Precision="18" Scale="10" />
+          <Property Name="TotalGcWeightKg" Type="decimal" Precision="18" Scale="10" />
           <Property Name="TotalDryWeightKg" Type="decimal" Precision="18" Scale="10" />
           <Property Name="TotalWetWeightKg" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="Date_Time" Type="datetime" />
         </EntityType>
         <EntityType Name="UserMaster">
           <Key>
@@ -1086,10 +1092,6 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <FunctionImport Name="VehicleList_TypeWise" ReturnType="Collection(DevSwachhBharatNagpurModel.VehicleList_TypeWise_Result)">
           <Parameter Name="VehicleType" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="HouseMasters" EntityType="DevSwachhBharatNagpurModel.HouseMaster" />
-          <EntitySet Name="DumpYardDetails" EntityType="DevSwachhBharatNagpurModel.DumpYardDetail" />
-          <EntitySet Name="LiquidWasteDetails" EntityType="DevSwachhBharatNagpurModel.LiquidWasteDetail" />
-          <EntitySet Name="StreetSweepingDetails" EntityType="DevSwachhBharatNagpurModel.StreetSweepingDetail" />
           <FunctionImport Name="BunchListAutoupdate">
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="RefferanceID" Mode="In" Type="String" />
@@ -1122,6 +1124,10 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <FunctionImport Name="SP_RejectHouseDetailsApp" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_RejectHouseDetailsApp_Result)" />
           <FunctionImport Name="SP_RejectLiquidDetailsApp" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_RejectLiquidDetailsApp_Result)" />
           <FunctionImport Name="SP_RejectStreetDetailsApp" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_RejectStreetDetailsApp_Result)" />
+          <EntitySet Name="HouseMasters" EntityType="DevSwachhBharatNagpurModel.HouseMaster" />
+          <EntitySet Name="DumpYardDetails" EntityType="DevSwachhBharatNagpurModel.DumpYardDetail" />
+          <EntitySet Name="LiquidWasteDetails" EntityType="DevSwachhBharatNagpurModel.LiquidWasteDetail" />
+          <EntitySet Name="StreetSweepingDetails" EntityType="DevSwachhBharatNagpurModel.StreetSweepingDetail" />
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -1904,111 +1910,6 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Type="Int32" Name="vqrId" Nullable="false" />
           <Property Type="String" Name="VehicalType" Nullable="true" MaxLength="10" />
         </ComplexType>
-        <EntityType Name="HouseMaster">
-          <Key>
-            <PropertyRef Name="houseId" />
-          </Key>
-          <Property Name="houseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="houseNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="houseOwner" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="houseOwnerMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="houseOwnerMobile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="houseAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="houseLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="houseLong" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="houseQRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ZoneId" Type="Int32" />
-          <Property Name="AreaId" Type="Int32" />
-          <Property Name="WardNo" Type="Int32" />
-          <Property Name="ReferanceId" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
-          <Property Name="modified" Type="DateTime" Precision="3" />
-          <Property Name="userId" Type="Int32" />
-          <Property Name="FCMID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="lastModifiedEntry" Type="DateTime" Precision="3" />
-          <Property Name="RFIDTagId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="WasteType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="QRCodeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OccupancyStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Property_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="QRStatus" Type="Boolean" />
-          <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
-          <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="New_Construction" Type="Int32" />
-          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="DumpYardDetail">
-          <Key>
-            <PropertyRef Name="dyId" />
-          </Key>
-          <Property Name="dyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="dyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="dyNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="dyLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="dyLong" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="dyQRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="zoneId" Type="Int32" />
-          <Property Name="wardId" Type="Int32" />
-          <Property Name="areaId" Type="Int32" />
-          <Property Name="ReferanceId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="dyAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="lastModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="userId" Type="Int32" />
-          <Property Name="EmployeeType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="QRCodeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="QRStatus" Type="Boolean" />
-          <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
-          <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
-          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="LiquidWasteDetail">
-          <Key>
-            <PropertyRef Name="LWId" />
-          </Key>
-          <Property Name="LWId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LWName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LWNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LWLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="LWLong" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="LWQRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="zoneId" Type="Int32" />
-          <Property Name="wardId" Type="Int32" />
-          <Property Name="areaId" Type="Int32" />
-          <Property Name="ReferanceId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LWAddreLW" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="lastModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="userId" Type="Int32" />
-          <Property Name="QRCodeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="QRStatus" Type="Boolean" />
-          <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
-          <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
-          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="StreetSweepingDetail">
-          <Key>
-            <PropertyRef Name="SSId" />
-          </Key>
-          <Property Name="SSId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SSName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SSNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SSLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="SSLong" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="SSQRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="zoneId" Type="Int32" />
-          <Property Name="wardId" Type="Int32" />
-          <Property Name="areaId" Type="Int32" />
-          <Property Name="ReferanceId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SSAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="lastModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="userId" Type="Int32" />
-          <Property Name="QRCodeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="QRStatus" Type="Boolean" />
-          <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
-          <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
-          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-        </EntityType>
         <ComplexType Name="SP_UserLatLongDetail_Result">
           <Property Type="Int32" Name="locId" Nullable="false" />
           <Property Type="Int32" Name="userId" Nullable="true" />
@@ -2120,6 +2021,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="TotalGcWeightKg" Type="Decimal" Precision="18" Scale="10" />
           <Property Name="TotalDryWeightKg" Type="Decimal" Precision="18" Scale="10" />
           <Property Name="TotalWetWeightKg" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="Date_Time" Type="DateTime" Precision="3" />
         </EntityType>
         <ComplexType Name="GetSurveyHistory_Result">
           <Property Type="String" Name="SurveyDate" Nullable="true" MaxLength="30" />
@@ -2189,6 +2091,116 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Type="String" Name="Remark" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="QRCodeImage" Nullable="true" />
         </ComplexType>
+        <EntityType Name="HouseMaster">
+          <Key>
+            <PropertyRef Name="houseId" />
+          </Key>
+          <Property Name="houseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="houseNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="houseOwner" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="houseOwnerMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="houseOwnerMobile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="houseAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="houseLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="houseLong" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="houseQRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ZoneId" Type="Int32" />
+          <Property Name="AreaId" Type="Int32" />
+          <Property Name="WardNo" Type="Int32" />
+          <Property Name="ReferanceId" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="FCMID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="lastModifiedEntry" Type="DateTime" Precision="3" />
+          <Property Name="RFIDTagId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="WasteType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="QRCodeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OccupancyStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Property_Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QRStatus" Type="Boolean" />
+          <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
+          <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="New_Construction" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Property_Type_Id" Type="Int32" />
+          <Property Name="BinaryHouseImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="DumpYardDetail">
+          <Key>
+            <PropertyRef Name="dyId" />
+          </Key>
+          <Property Name="dyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="dyNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="dyLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="dyLong" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="dyQRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="zoneId" Type="Int32" />
+          <Property Name="wardId" Type="Int32" />
+          <Property Name="areaId" Type="Int32" />
+          <Property Name="ReferanceId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="dyAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lastModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="EmployeeType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="QRCodeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QRStatus" Type="Boolean" />
+          <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
+          <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BinaryDumpImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="LiquidWasteDetail">
+          <Key>
+            <PropertyRef Name="LWId" />
+          </Key>
+          <Property Name="LWId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LWName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LWNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LWLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LWLong" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LWQRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="zoneId" Type="Int32" />
+          <Property Name="wardId" Type="Int32" />
+          <Property Name="areaId" Type="Int32" />
+          <Property Name="ReferanceId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LWAddreLW" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lastModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="QRCodeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QRStatus" Type="Boolean" />
+          <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
+          <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BinaryLiquidImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="StreetSweepingDetail">
+          <Key>
+            <PropertyRef Name="SSId" />
+          </Key>
+          <Property Name="SSId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SSName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SSNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SSLat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SSLong" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SSQRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="zoneId" Type="Int32" />
+          <Property Name="wardId" Type="Int32" />
+          <Property Name="areaId" Type="Int32" />
+          <Property Name="ReferanceId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SSAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lastModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="QRCodeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QRStatus" Type="Boolean" />
+          <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
+          <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BinaryStreetImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3124,115 +3136,6 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="HouseMasters">
-            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.HouseMaster">
-              <MappingFragment StoreEntitySet="HouseMaster">
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="New_Construction" ColumnName="New_Construction" />
-                <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
-                <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
-                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
-                <ScalarProperty Name="Property_Type" ColumnName="Property_Type" />
-                <ScalarProperty Name="OccupancyStatus" ColumnName="OccupancyStatus" />
-                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
-                <ScalarProperty Name="WasteType" ColumnName="WasteType" />
-                <ScalarProperty Name="RFIDTagId" ColumnName="RFIDTagId" />
-                <ScalarProperty Name="lastModifiedEntry" ColumnName="lastModifiedEntry" />
-                <ScalarProperty Name="FCMID" ColumnName="FCMID" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
-                <ScalarProperty Name="modified" ColumnName="modified" />
-                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
-                <ScalarProperty Name="WardNo" ColumnName="WardNo" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
-                <ScalarProperty Name="houseQRCode" ColumnName="houseQRCode" />
-                <ScalarProperty Name="houseLong" ColumnName="houseLong" />
-                <ScalarProperty Name="houseLat" ColumnName="houseLat" />
-                <ScalarProperty Name="houseAddress" ColumnName="houseAddress" />
-                <ScalarProperty Name="houseOwnerMobile" ColumnName="houseOwnerMobile" />
-                <ScalarProperty Name="houseOwnerMar" ColumnName="houseOwnerMar" />
-                <ScalarProperty Name="houseOwner" ColumnName="houseOwner" />
-                <ScalarProperty Name="houseNumber" ColumnName="houseNumber" />
-                <ScalarProperty Name="houseId" ColumnName="houseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DumpYardDetails">
-            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.DumpYardDetail">
-              <MappingFragment StoreEntitySet="DumpYardDetails">
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
-                <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
-                <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
-                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
-                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
-                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
-                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
-                <ScalarProperty Name="dyAddress" ColumnName="dyAddress" />
-                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
-                <ScalarProperty Name="areaId" ColumnName="areaId" />
-                <ScalarProperty Name="wardId" ColumnName="wardId" />
-                <ScalarProperty Name="zoneId" ColumnName="zoneId" />
-                <ScalarProperty Name="dyQRCode" ColumnName="dyQRCode" />
-                <ScalarProperty Name="dyLong" ColumnName="dyLong" />
-                <ScalarProperty Name="dyLat" ColumnName="dyLat" />
-                <ScalarProperty Name="dyNameMar" ColumnName="dyNameMar" />
-                <ScalarProperty Name="dyName" ColumnName="dyName" />
-                <ScalarProperty Name="dyId" ColumnName="dyId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LiquidWasteDetails">
-            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.LiquidWasteDetail">
-              <MappingFragment StoreEntitySet="LiquidWasteDetails">
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
-                <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
-                <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
-                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
-                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
-                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
-                <ScalarProperty Name="LWAddreLW" ColumnName="LWAddreLW" />
-                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
-                <ScalarProperty Name="areaId" ColumnName="areaId" />
-                <ScalarProperty Name="wardId" ColumnName="wardId" />
-                <ScalarProperty Name="zoneId" ColumnName="zoneId" />
-                <ScalarProperty Name="LWQRCode" ColumnName="LWQRCode" />
-                <ScalarProperty Name="LWLong" ColumnName="LWLong" />
-                <ScalarProperty Name="LWLat" ColumnName="LWLat" />
-                <ScalarProperty Name="LWNameMar" ColumnName="LWNameMar" />
-                <ScalarProperty Name="LWName" ColumnName="LWName" />
-                <ScalarProperty Name="LWId" ColumnName="LWId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StreetSweepingDetails">
-            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.StreetSweepingDetail">
-              <MappingFragment StoreEntitySet="StreetSweepingDetails">
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
-                <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
-                <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
-                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
-                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
-                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
-                <ScalarProperty Name="SSAddress" ColumnName="SSAddress" />
-                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
-                <ScalarProperty Name="areaId" ColumnName="areaId" />
-                <ScalarProperty Name="wardId" ColumnName="wardId" />
-                <ScalarProperty Name="zoneId" ColumnName="zoneId" />
-                <ScalarProperty Name="SSQRCode" ColumnName="SSQRCode" />
-                <ScalarProperty Name="SSLong" ColumnName="SSLong" />
-                <ScalarProperty Name="SSLat" ColumnName="SSLat" />
-                <ScalarProperty Name="SSNameMar" ColumnName="SSNameMar" />
-                <ScalarProperty Name="SSName" ColumnName="SSName" />
-                <ScalarProperty Name="SSId" ColumnName="SSId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="BunchListAutoupdate" FunctionName="DevSwachhBharatNagpurModel.Store.BunchListAutoupdate" />
           <FunctionImportMapping FunctionImportName="SP_UserLatLongDetail" FunctionName="DevSwachhBharatNagpurModel.Store.SP_UserLatLongDetail">
             <ResultMapping>
@@ -3323,6 +3226,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="TransDumpTDs">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.TransDumpTD">
               <MappingFragment StoreEntitySet="TransDumpTD">
+                <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
                 <ScalarProperty Name="TotalWetWeightKg" ColumnName="TotalWetWeightKg" />
                 <ScalarProperty Name="TotalDryWeightKg" ColumnName="TotalDryWeightKg" />
                 <ScalarProperty Name="TotalGcWeightKg" ColumnName="TotalGcWeightKg" />
@@ -3450,6 +3354,120 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="HouseMasters">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.HouseMaster">
+              <MappingFragment StoreEntitySet="HouseMaster">
+                <ScalarProperty Name="BinaryHouseImage" ColumnName="BinaryHouseImage" />
+                <ScalarProperty Name="Property_Type_Id" ColumnName="Property_Type_Id" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="New_Construction" ColumnName="New_Construction" />
+                <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
+                <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
+                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
+                <ScalarProperty Name="Property_Type" ColumnName="Property_Type" />
+                <ScalarProperty Name="OccupancyStatus" ColumnName="OccupancyStatus" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
+                <ScalarProperty Name="WasteType" ColumnName="WasteType" />
+                <ScalarProperty Name="RFIDTagId" ColumnName="RFIDTagId" />
+                <ScalarProperty Name="lastModifiedEntry" ColumnName="lastModifiedEntry" />
+                <ScalarProperty Name="FCMID" ColumnName="FCMID" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="WardNo" ColumnName="WardNo" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+                <ScalarProperty Name="houseQRCode" ColumnName="houseQRCode" />
+                <ScalarProperty Name="houseLong" ColumnName="houseLong" />
+                <ScalarProperty Name="houseLat" ColumnName="houseLat" />
+                <ScalarProperty Name="houseAddress" ColumnName="houseAddress" />
+                <ScalarProperty Name="houseOwnerMobile" ColumnName="houseOwnerMobile" />
+                <ScalarProperty Name="houseOwnerMar" ColumnName="houseOwnerMar" />
+                <ScalarProperty Name="houseOwner" ColumnName="houseOwner" />
+                <ScalarProperty Name="houseNumber" ColumnName="houseNumber" />
+                <ScalarProperty Name="houseId" ColumnName="houseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DumpYardDetails">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.DumpYardDetail">
+              <MappingFragment StoreEntitySet="DumpYardDetails">
+                <ScalarProperty Name="BinaryDumpImage" ColumnName="BinaryDumpImage" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
+                <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
+                <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
+                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
+                <ScalarProperty Name="dyAddress" ColumnName="dyAddress" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="areaId" ColumnName="areaId" />
+                <ScalarProperty Name="wardId" ColumnName="wardId" />
+                <ScalarProperty Name="zoneId" ColumnName="zoneId" />
+                <ScalarProperty Name="dyQRCode" ColumnName="dyQRCode" />
+                <ScalarProperty Name="dyLong" ColumnName="dyLong" />
+                <ScalarProperty Name="dyLat" ColumnName="dyLat" />
+                <ScalarProperty Name="dyNameMar" ColumnName="dyNameMar" />
+                <ScalarProperty Name="dyName" ColumnName="dyName" />
+                <ScalarProperty Name="dyId" ColumnName="dyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LiquidWasteDetails">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.LiquidWasteDetail">
+              <MappingFragment StoreEntitySet="LiquidWasteDetails">
+                <ScalarProperty Name="BinaryLiquidImage" ColumnName="BinaryLiquidImage" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
+                <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
+                <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
+                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
+                <ScalarProperty Name="LWAddreLW" ColumnName="LWAddreLW" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="areaId" ColumnName="areaId" />
+                <ScalarProperty Name="wardId" ColumnName="wardId" />
+                <ScalarProperty Name="zoneId" ColumnName="zoneId" />
+                <ScalarProperty Name="LWQRCode" ColumnName="LWQRCode" />
+                <ScalarProperty Name="LWLong" ColumnName="LWLong" />
+                <ScalarProperty Name="LWLat" ColumnName="LWLat" />
+                <ScalarProperty Name="LWNameMar" ColumnName="LWNameMar" />
+                <ScalarProperty Name="LWName" ColumnName="LWName" />
+                <ScalarProperty Name="LWId" ColumnName="LWId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StreetSweepingDetails">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.StreetSweepingDetail">
+              <MappingFragment StoreEntitySet="StreetSweepingDetails">
+                <ScalarProperty Name="BinaryStreetImage" ColumnName="BinaryStreetImage" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
+                <ScalarProperty Name="BinaryQrCodeImage" ColumnName="BinaryQrCodeImage" />
+                <ScalarProperty Name="QRStatusDate" ColumnName="QRStatusDate" />
+                <ScalarProperty Name="QRStatus" ColumnName="QRStatus" />
+                <ScalarProperty Name="QRCodeImage" ColumnName="QRCodeImage" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="lastModifiedDate" ColumnName="lastModifiedDate" />
+                <ScalarProperty Name="SSAddress" ColumnName="SSAddress" />
+                <ScalarProperty Name="ReferanceId" ColumnName="ReferanceId" />
+                <ScalarProperty Name="areaId" ColumnName="areaId" />
+                <ScalarProperty Name="wardId" ColumnName="wardId" />
+                <ScalarProperty Name="zoneId" ColumnName="zoneId" />
+                <ScalarProperty Name="SSQRCode" ColumnName="SSQRCode" />
+                <ScalarProperty Name="SSLong" ColumnName="SSLong" />
+                <ScalarProperty Name="SSLat" ColumnName="SSLat" />
+                <ScalarProperty Name="SSNameMar" ColumnName="SSNameMar" />
+                <ScalarProperty Name="SSName" ColumnName="SSName" />
+                <ScalarProperty Name="SSId" ColumnName="SSId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
