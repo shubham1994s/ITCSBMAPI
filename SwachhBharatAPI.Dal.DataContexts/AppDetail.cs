@@ -88,5 +88,16 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<int> Today_DumpScanCount { get; set; }
         public Nullable<int> Total_DumpCount { get; set; }
         public string AppLink { get; set; }
+        public Nullable<int> Today_MixedCount { get; set; }
+        public Nullable<int> Today_SegregatedCount { get; set; }
+        public Nullable<int> Today_GarbageNRCount { get; set; }
+        public Nullable<int> ulb_Liquid_Property { get; set; }
+        public Nullable<int> ulb_Street_Property { get; set; }
+        public Nullable<int> ulb_Dump_Property { get; set; }
+        public Nullable<int> Total_HouseScan_Property { get; set; }
+        public Nullable<int> Total_LiquidScan_Property { get; set; }
+        public Nullable<int> Total_StreetScan_Property { get; set; }
+        public Nullable<int> Total_DumpScan_Property { get; set; }
+        public string AIReportsPath { get; set; }
     }
 }

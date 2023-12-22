@@ -228,7 +228,7 @@ namespace SwachhBharatAPI.Controllers
                 userId = int.Parse(u);
             }
 
-             var ReferanceId= headerValue5.FirstOrDefault();
+            var ReferanceId = headerValue5.FirstOrDefault();
 
             List<HSHouseDetailsGrid> objDetail = new List<HSHouseDetailsGrid>();
             objDetail = objRep.GetHouseDetails(userId, FromDate, Todate, AppId, ReferanceId).ToList();
@@ -493,11 +493,11 @@ namespace SwachhBharatAPI.Controllers
 
                     objres.Add(new CollectionSyncResult()
                     {
-                        
+
                         status = detail.status,
                         messageMar = detail.messageMar,
                         message = detail.message
-                        
+
                     });
 
                     return objres;
@@ -628,11 +628,11 @@ namespace SwachhBharatAPI.Controllers
 
                 IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
                 var AppId = Convert.ToInt32(headerValue1.FirstOrDefault());
-               
+
 
                 foreach (var item in objRaw)
                 {
-                    
+
                     gcDetail.QRStatus = item.QRStatus;
                     gcDetail.ReferanceId = item.ReferanceId;
                     CollectionQRStatusResult detail = objRep.UpdateQRstatus(gcDetail, AppId);
@@ -640,7 +640,7 @@ namespace SwachhBharatAPI.Controllers
                     {
                         objres.Add(new CollectionQRStatusResult()
                         {
-                           ReferanceId=detail.ReferanceId,
+                            ReferanceId = detail.ReferanceId,
                             status = "error",
                             message = "Record not inserted",
                             messageMar = "रेकॉर्ड सबमिट केले नाही"
@@ -667,7 +667,7 @@ namespace SwachhBharatAPI.Controllers
 
                 objres.Add(new CollectionQRStatusResult()
                 {
-                     ReferanceId="",
+                    ReferanceId = "",
                     status = "error",
                     message = "Something is wrong,Try Again.. ",
                     messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
@@ -729,9 +729,9 @@ namespace SwachhBharatAPI.Controllers
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             IEnumerable<string> headerValue3 = Request.Headers.GetValues("ListType");
             var id = headerValue1.FirstOrDefault();
-            int AppId = int.Parse(id);           
-            var ListType = headerValue3.FirstOrDefault();     
-            objDetail = objRep.GetHouseList(AppId , ListType);
+            int AppId = int.Parse(id);
+            var ListType = headerValue3.FirstOrDefault();
+            objDetail = objRep.GetHouseList(AppId, ListType);
             return objDetail;
 
         }
@@ -739,7 +739,7 @@ namespace SwachhBharatAPI.Controllers
         [HttpGet]
         [Route("GetAllHDSLDetails")]
         public List<HSHouseDetailsGrid> GetHouseListById()
-        {           
+        {
             objRep = new Repository();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             IEnumerable<string> headerValue3 = Request.Headers.GetValues("ReferanceId");
@@ -749,7 +749,7 @@ namespace SwachhBharatAPI.Controllers
             var EmpType = EType.Substring(0, 1);
             var ReferanceId = headerValue3.FirstOrDefault();
             List<HSHouseDetailsGrid> objDetail = new List<HSHouseDetailsGrid>();
-            objDetail = objRep.GetHDSLList(AppId, EmpType,ReferanceId);
+            objDetail = objRep.GetHDSLList(AppId, EmpType, ReferanceId);
             return objDetail;
 
         }
@@ -758,7 +758,7 @@ namespace SwachhBharatAPI.Controllers
         [Route("GetUserRoleAttendance")]
         public List<UREmployeeAttendence> UserRoleAttendance()
         {
-           
+
 
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("FromDate");
             IEnumerable<string> headerValue2 = Request.Headers.GetValues("Todate");
@@ -787,6 +787,18 @@ namespace SwachhBharatAPI.Controllers
             objRep = new Repository();
             List<UREmployeeAttendence> objDetail = new List<UREmployeeAttendence>();
             objDetail = objRep.UserRoleAttendance(userId, FromDate, Todate, IsMobile).ToList();
+            return objDetail;
+        }
+
+
+        [HttpGet]
+        [Route("GetPropertyCount")]
+        public List<PropertyScanModel> TotalPropertyCount()
+        {
+
+            List<PropertyScanModel> objDetail = new List<PropertyScanModel>();
+            objRep = new Repository();
+            objDetail = objRep.GetTotalPropertyCount().ToList();
             return objDetail;
         }
 

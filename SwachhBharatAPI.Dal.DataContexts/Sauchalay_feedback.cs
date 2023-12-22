@@ -26,5 +26,12 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public string Rating { get; set; }
         public string Feedback { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public string que5 { get; set; }
+        public string que6 { get; set; }
+        public string que7 { get; set; }
+        public string que8 { get; set; }
+        public string que9 { get; set; }
+        public string que10 { get; set; }
+        public string que11 { get; set; }
     }
 }

@@ -110,6 +110,7 @@
     <Compile Include="LatLongD.cs" />
     <Compile Include="NameULB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyScanModel.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="SBAAttendenceSettingsGridRow.cs" />
     <Compile Include="SBAdmin.cs" />

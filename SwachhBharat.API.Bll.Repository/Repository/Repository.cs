@@ -8808,7 +8808,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             string pme = string.Empty;
             string pmm = string.Empty;
             double a = 0;
-            if (obj.houseId != null && obj.houseId!="")
+            if (obj.houseId != null && obj.houseId != "")
             {
                 house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
                 var sCoord = new GeoCoordinate(Convert.ToDouble(house.houseLat), Convert.ToDouble(house.houseLong));
@@ -8820,7 +8820,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 pmm = "घरा";
             }
 
-            if (obj.LWId != null && obj.LWId!="")
+            if (obj.LWId != null && obj.LWId != "")
             {
                 house = db.LiquidWasteDetails.Where(c => c.ReferanceId == obj.LWId).FirstOrDefault();
                 var sCoord = new GeoCoordinate(Convert.ToDouble(house.LWLat), Convert.ToDouble(house.LWLong));
@@ -8833,7 +8833,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
 
 
-            if (obj.SSId != null && obj.SSId!="")
+            if (obj.SSId != null && obj.SSId != "")
             {
                 house = db.StreetSweepingDetails.Where(c => c.ReferanceId == obj.SSId).FirstOrDefault();
                 var sCoord = new GeoCoordinate(Convert.ToDouble(house.SSLat), Convert.ToDouble(house.SSLong));
@@ -10460,8 +10460,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         string houseQrImage = "";
                         //var BQI = db.HouseMasters.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
                         //var houseBQI = db.HouseMasters.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryHouseImage }).FirstOrDefault();
-                        var BQI =x.BinaryQrCodeImage ;
-                        var houseBQI =x.BinaryHouseImage;
+                        var BQI = x.BinaryQrCodeImage;
+                        var houseBQI = x.BinaryHouseImage;
                         //if (BQI.BinaryQrCodeImage != null)
                         if (BQI != null)
                         {
@@ -10531,7 +10531,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         // var BQI = db.DumpYardDetails.Where(c => c.ReferanceId == ReferanceId).Select(c => new { c.BinaryQrCodeImage }).FirstOrDefault();
                         var BQI = x.BinaryQrCodeImage;
                         var dumpBQI = x.BinaryDumpImage;
-                        if (BQI!= null)
+                        if (BQI != null)
                         {
                             QRCodeImage = Convert.ToBase64String(x.BinaryQrCodeImage);
                             DumpImage = Convert.ToBase64String(x.BinaryDumpImage);
@@ -14329,7 +14329,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     return result;
                 }
 
-                
+
             }
 
         }
@@ -15211,7 +15211,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 user.gtFeatures = false;
                 user.EmpType = "";
                 user.imiNo = "";
-                user.message = "UserName or Passward not Match.";
+                user.message = "UserName or Password not Match.";
                 user.messageMar = "वापरकर्ता नाव किंवा पासवर्ड जुळत नाही.";
             }
             else if (obj != null && obj.LoginId == userName && obj.Password == password)
@@ -16773,6 +16773,41 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
             }
             return obj;
+        }
+
+
+        public List<PropertyScanModel> GetTotalPropertyCount()
+        {
+            List<PropertyScanModel> propertyList = new List<PropertyScanModel>();
+            try
+            {
+                dbMain.Database.CommandTimeout = 60000;
+                var data = dbMain.PropertyScanCount().ToList();
+                if (data != null)
+                {
+                    int id = 0;
+                    foreach (var item in data)
+                    {
+                        id = id + 1;
+                        propertyList.Add(new PropertyScanModel()
+                        {
+                            srNo = id,
+                            appName = item.appName,
+                            houseCount = Convert.ToInt32(item.houseCount).ToString(),
+                            dumpYardCount = Convert.ToInt32(item.dumpCount).ToString(),
+                            liquidCount = Convert.ToInt32(item.liquidCount).ToString(),
+                            streetCount = Convert.ToInt32(item.streetCount).ToString(),
+                        }); ;
+                    }
+                }
+
+                return propertyList.OrderBy(c => c.appName).ToList();
+            }
+            catch (Exception ex)
+            {
+                return propertyList;
+            }
+
         }
 
         #endregion

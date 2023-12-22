@@ -160,7 +160,7 @@
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="GamePlayerDetail.cs">
-      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+      <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="Game_AnswerType.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
@@ -253,6 +253,9 @@
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyScanCount_Result.cs">
+      <DependentUpon>MainSwachhBharat.tt</DependentUpon>
+    </Compile>
     <Compile Include="QrEmployeeMaster.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
@@ -278,7 +281,7 @@
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_DistanceCount_Result.cs">
-      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+      <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_DumpYardDetailsApp_Result.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
@@ -353,7 +356,7 @@
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_UserLatLongDetail_Result.cs">
-      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+      <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
     <Compile Include="state_districts.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>

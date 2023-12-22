@@ -175,6 +175,17 @@
           <Property Name="Today_DumpScanCount" Type="int" />
           <Property Name="Total_DumpCount" Type="int" />
           <Property Name="AppLink" Type="nvarchar" MaxLength="500" />
+          <Property Name="Today_MixedCount" Type="int" />
+          <Property Name="Today_SegregatedCount" Type="int" />
+          <Property Name="Today_GarbageNRCount" Type="int" />
+          <Property Name="ulb_Liquid_Property" Type="int" />
+          <Property Name="ulb_Street_Property" Type="int" />
+          <Property Name="ulb_Dump_Property" Type="int" />
+          <Property Name="Total_HouseScan_Property" Type="int" />
+          <Property Name="Total_LiquidScan_Property" Type="int" />
+          <Property Name="Total_StreetScan_Property" Type="int" />
+          <Property Name="Total_DumpScan_Property" Type="int" />
+          <Property Name="AIReportsPath" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -409,6 +420,13 @@
           <Property Name="Rating" Type="nvarchar" MaxLength="50" />
           <Property Name="Feedback" Type="nvarchar(max)" />
           <Property Name="Date" Type="datetime" />
+          <Property Name="que5" Type="nvarchar" MaxLength="50" />
+          <Property Name="que6" Type="nvarchar" MaxLength="50" />
+          <Property Name="que7" Type="nvarchar" MaxLength="50" />
+          <Property Name="que8" Type="nvarchar" MaxLength="50" />
+          <Property Name="que9" Type="nvarchar" MaxLength="50" />
+          <Property Name="que10" Type="nvarchar" MaxLength="50" />
+          <Property Name="que11" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="state_districts">
           <Key>
@@ -526,6 +544,7 @@
           <Parameter Name="Ulbappid" Type="varchar" Mode="In" />
         </Function>
         <Function Name="HouseEntryCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PropertyScanCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Admin_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Admin2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Admin3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -725,8 +744,9 @@
           <EntitySet Name="tehsils" EntityType="DevSwachhBharatMainModel.tehsil" />
           <EntitySet Name="CheckAppDs" EntityType="DevSwachhBharatMainModel.CheckAppD" />
           <FunctionImport Name="DailyScanCount" ReturnType="Collection(Int32)">
-            <Parameter Name="Ulbappid" Mode="In" Type="String" />
+          <Parameter Name="Ulbappid" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PropertyScanCount" ReturnType="Collection(DevSwachhBharatMainModel.PropertyScanCount_Result)" />
           </EntityContainer>
         <ComplexType Name="Update_Trigger_Result">
           <Property Type="Int32" Name="AppId" Nullable="false" />
@@ -939,6 +959,17 @@
           <Property Name="Today_DumpScanCount" Type="Int32" />
           <Property Name="Total_DumpCount" Type="Int32" />
           <Property Name="AppLink" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Today_MixedCount" Type="Int32" />
+          <Property Name="Today_SegregatedCount" Type="Int32" />
+          <Property Name="Today_GarbageNRCount" Type="Int32" />
+          <Property Name="ulb_Liquid_Property" Type="Int32" />
+          <Property Name="ulb_Street_Property" Type="Int32" />
+          <Property Name="ulb_Dump_Property" Type="Int32" />
+          <Property Name="Total_HouseScan_Property" Type="Int32" />
+          <Property Name="Total_LiquidScan_Property" Type="Int32" />
+          <Property Name="Total_StreetScan_Property" Type="Int32" />
+          <Property Name="Total_DumpScan_Property" Type="Int32" />
+          <Property Name="AIReportsPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1161,6 +1192,13 @@
           <Property Name="Rating" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="que5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="que6" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="que7" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="que8" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="que9" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="que10" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="que11" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="state_districts">
           <Key>
@@ -1344,6 +1382,15 @@
           <Property Name="AppId" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
+        <ComplexType Name="PropertyScanCount_Result">
+          <Property Type="String" Name="appName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="dataSource" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="houseCount" Nullable="true" />
+          <Property Type="Int32" Name="dumpCount" Nullable="true" />
+          <Property Type="Int32" Name="liquidCount" Nullable="true" />
+          <Property Type="Int32" Name="streetCount" Nullable="true" />
+          <Property Type="DateTime" Name="today_date" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1422,6 +1469,17 @@
           <EntitySetMapping Name="AppDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatMainModel.AppDetail">
               <MappingFragment StoreEntitySet="AppDetails">
+                <ScalarProperty Name="AIReportsPath" ColumnName="AIReportsPath" />
+                <ScalarProperty Name="Total_DumpScan_Property" ColumnName="Total_DumpScan_Property" />
+                <ScalarProperty Name="Total_StreetScan_Property" ColumnName="Total_StreetScan_Property" />
+                <ScalarProperty Name="Total_LiquidScan_Property" ColumnName="Total_LiquidScan_Property" />
+                <ScalarProperty Name="Total_HouseScan_Property" ColumnName="Total_HouseScan_Property" />
+                <ScalarProperty Name="ulb_Dump_Property" ColumnName="ulb_Dump_Property" />
+                <ScalarProperty Name="ulb_Street_Property" ColumnName="ulb_Street_Property" />
+                <ScalarProperty Name="ulb_Liquid_Property" ColumnName="ulb_Liquid_Property" />
+                <ScalarProperty Name="Today_GarbageNRCount" ColumnName="Today_GarbageNRCount" />
+                <ScalarProperty Name="Today_SegregatedCount" ColumnName="Today_SegregatedCount" />
+                <ScalarProperty Name="Today_MixedCount" ColumnName="Today_MixedCount" />
                 <ScalarProperty Name="AppLink" ColumnName="AppLink" />
                 <ScalarProperty Name="Total_DumpCount" ColumnName="Total_DumpCount" />
                 <ScalarProperty Name="Today_DumpScanCount" ColumnName="Today_DumpScanCount" />
@@ -1717,6 +1775,13 @@
           <EntitySetMapping Name="Sauchalay_feedback">
             <EntityTypeMapping TypeName="DevSwachhBharatMainModel.Sauchalay_feedback">
               <MappingFragment StoreEntitySet="Sauchalay_feedback">
+                <ScalarProperty Name="que11" ColumnName="que11" />
+                <ScalarProperty Name="que10" ColumnName="que10" />
+                <ScalarProperty Name="que9" ColumnName="que9" />
+                <ScalarProperty Name="que8" ColumnName="que8" />
+                <ScalarProperty Name="que7" ColumnName="que7" />
+                <ScalarProperty Name="que6" ColumnName="que6" />
+                <ScalarProperty Name="que5" ColumnName="que5" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Feedback" ColumnName="Feedback" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
@@ -1926,6 +1991,19 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DailyScanCount" FunctionName="DevSwachhBharatMainModel.Store.DailyScanCount" />
+          <FunctionImportMapping FunctionImportName="PropertyScanCount" FunctionName="DevSwachhBharatMainModel.Store.PropertyScanCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DevSwachhBharatMainModel.PropertyScanCount_Result">
+                <ScalarProperty Name="appName" ColumnName="appName" />
+                <ScalarProperty Name="dataSource" ColumnName="dataSource" />
+                <ScalarProperty Name="houseCount" ColumnName="houseCount" />
+                <ScalarProperty Name="dumpCount" ColumnName="dumpCount" />
+                <ScalarProperty Name="liquidCount" ColumnName="liquidCount" />
+                <ScalarProperty Name="streetCount" ColumnName="streetCount" />
+                <ScalarProperty Name="today_date" ColumnName="today_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
