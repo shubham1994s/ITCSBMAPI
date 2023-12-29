@@ -16116,7 +16116,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     {
                         model.EmpId = obj.EmpId;
                         model.EmpName = obj.EmpName;
-                        model.LoginId = obj.LoginId;
+                        //model.LoginId = obj.LoginId;
                         model.Password = obj.Password;
                         model.EmpMobileNumber = obj.EmpMobileNumber;
                         model.EmpAddress = obj.EmpAddress;
@@ -16143,22 +16143,35 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 }
                 else
                 {
-                    objdata.EmpName = obj.EmpName;
-                    objdata.LoginId = obj.LoginId;
-                    objdata.Password = obj.Password;
-                    objdata.EmpMobileNumber = obj.EmpMobileNumber;
-                    objdata.EmpAddress = obj.EmpAddress;
-                    objdata.type = obj.type;
-                    objdata.isActive = obj.isActive;
-                    objdata.isActiveULB = obj.isActiveULB;
-                    objdata.lastModifyDateEntry = DateTime.Now;
+                    var userNameeExists = dbMain.EmployeeMasters.Where(x => x.LoginId.ToLower() == obj.LoginId.ToLower()).FirstOrDefault();
+                    if (userNameeExists == null)
+                    {
+                        objdata.EmpName = obj.EmpName;
+                        objdata.LoginId = obj.LoginId;
+                        objdata.Password = obj.Password;
+                        objdata.EmpMobileNumber = obj.EmpMobileNumber;
+                        objdata.EmpAddress = obj.EmpAddress;
+                        objdata.type = obj.type;
+                        objdata.isActive = obj.isActive;
+                        objdata.isActiveULB = obj.isActiveULB;
+                        objdata.lastModifyDateEntry = DateTime.Now;
 
-                    dbMain.EmployeeMasters.Add(objdata);
-                    dbMain.SaveChanges();
-                    result.status = "success";
-                    result.message = "User Role Added successfully";
-                    result.messageMar = "वापरकर्ता भूमिका तपशील यशस्वीरित्या जोडले";
-                    return result;
+                        dbMain.EmployeeMasters.Add(objdata);
+                        dbMain.SaveChanges();
+                        result.status = "success";
+                        result.message = "User Role Added successfully";
+                        result.messageMar = "वापरकर्ता भूमिका तपशील यशस्वीरित्या जोडले";
+                        return result;
+                    }
+                    else
+                    {
+                        result.status = "error";
+                        result.message = "This LoginId Is Already Exist !";
+                        result.messageMar = "हे लॉगिनआयडी आधीच अस्तित्वात आहे !";
+                        return result;
+                    }
+
+                    
                 }
 
             }
