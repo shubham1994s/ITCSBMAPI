@@ -15947,26 +15947,36 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             var isrecord2 = db.UserMasters.Where(x => x.userLoginId == obj.qrEmpLoginId && x.isActive == true).FirstOrDefault();
                             if (isrecord1 == null && isrecord2 == null)
                             {
+                                if (string.IsNullOrEmpty(obj.qrEmpName) || string.IsNullOrEmpty(obj.qrEmpLoginId) || string.IsNullOrEmpty(obj.qrEmpPassword))
+                                {
+                                    result.status = "error";
+                                    result.message = "Employee Name,Username and Password is Required.";
+                                    result.messageMar = "कर्मचाऱ्याचे नाव,वापरकर्तानाव आणि पासवर्ड आवश्यक आहे";
+                                    return result;
+                                }
+                                else
+                                {
+                                    objdata.qrEmpName = obj.qrEmpName;
+                                    objdata.qrEmpLoginId = obj.qrEmpLoginId;
+                                    objdata.qrEmpPassword = obj.qrEmpPassword;
+                                    objdata.qrEmpMobileNumber = obj.qrEmpMobileNumber;
+                                    objdata.qrEmpAddress = obj.qrEmpAddress;
+                                    objdata.type = "Employee";
+                                    objdata.typeId = 1;
+                                    //objdata.imoNo = obj.imoNo;
+                                    objdata.imoNo = null;
+                                    objdata.bloodGroup = "0";
+                                    objdata.isActive = obj.isActive;
 
+                                    db.QrEmployeeMasters.Add(objdata);
+                                    db.SaveChanges();
+                                    result.status = "success";
+                                    result.message = "Employee Details Added successfully";
+                                    result.messageMar = "कर्मचारी तपशील यशस्वीरित्या जोडले";
+                                    return result;
+                                }
 
-                                objdata.qrEmpName = obj.qrEmpName;
-                                objdata.qrEmpLoginId = obj.qrEmpLoginId;
-                                objdata.qrEmpPassword = obj.qrEmpPassword;
-                                objdata.qrEmpMobileNumber = obj.qrEmpMobileNumber;
-                                objdata.qrEmpAddress = obj.qrEmpAddress;
-                                objdata.type = "Employee";
-                                objdata.typeId = 1;
-                                //objdata.imoNo = obj.imoNo;
-                                objdata.imoNo = null;
-                                objdata.bloodGroup = "0";
-                                objdata.isActive = obj.isActive;
-
-                                db.QrEmployeeMasters.Add(objdata);
-                                db.SaveChanges();
-                                result.status = "success";
-                                result.message = "Employee Details Added successfully";
-                                result.messageMar = "कर्मचारी तपशील यशस्वीरित्या जोडले";
-                                return result;
+                               
                             }
                             else
                             {
@@ -16146,22 +16156,34 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     var userNameeExists = dbMain.EmployeeMasters.Where(x => x.LoginId.ToLower() == obj.LoginId.ToLower()).FirstOrDefault();
                     if (userNameeExists == null)
                     {
-                        objdata.EmpName = obj.EmpName;
-                        objdata.LoginId = obj.LoginId;
-                        objdata.Password = obj.Password;
-                        objdata.EmpMobileNumber = obj.EmpMobileNumber;
-                        objdata.EmpAddress = obj.EmpAddress;
-                        objdata.type = obj.type;
-                        objdata.isActive = obj.isActive;
-                        objdata.isActiveULB = obj.isActiveULB;
-                        objdata.lastModifyDateEntry = DateTime.Now;
+                        if (string.IsNullOrEmpty(obj.EmpName) || string.IsNullOrEmpty(obj.LoginId) || string.IsNullOrEmpty(obj.Password))
+                        {
+                            result.status = "error";
+                            result.message = "User Role Name,Username and Password is Required.";
+                            result.messageMar = "वापरकर्ताचे नाव,वापरकर्तानाव आणि पासवर्ड आवश्यक आहे";
+                            return result;
+                        }
+                        else
+                        {
+                            objdata.EmpName = obj.EmpName;
+                            objdata.LoginId = obj.LoginId;
+                            objdata.Password = obj.Password;
+                            objdata.EmpMobileNumber = obj.EmpMobileNumber;
+                            objdata.EmpAddress = obj.EmpAddress;
+                            objdata.type = obj.type;
+                            objdata.isActive = obj.isActive;
+                            objdata.isActiveULB = obj.isActiveULB;
+                            objdata.lastModifyDateEntry = DateTime.Now;
 
-                        dbMain.EmployeeMasters.Add(objdata);
-                        dbMain.SaveChanges();
-                        result.status = "success";
-                        result.message = "User Role Added successfully";
-                        result.messageMar = "वापरकर्ता भूमिका तपशील यशस्वीरित्या जोडले";
-                        return result;
+                            dbMain.EmployeeMasters.Add(objdata);
+                            dbMain.SaveChanges();
+                            result.status = "success";
+                            result.message = "User Role Added successfully";
+                            result.messageMar = "वापरकर्ता भूमिका तपशील यशस्वीरित्या जोडले";
+                            return result;
+                        }
+
+                      
                     }
                     else
                     {

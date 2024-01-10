@@ -479,6 +479,8 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.imoNo = item.imoNo;
                     gcDetail.isActive = item.isActive;
 
+
+
                     CollectionSyncResult detail = objRep.SaveAddEmployee(gcDetail, AppId);
                     if (detail.message == "")
                     {
