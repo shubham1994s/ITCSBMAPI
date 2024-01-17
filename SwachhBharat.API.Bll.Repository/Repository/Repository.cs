@@ -15828,8 +15828,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         {
                             EmpId = x.EmpId,
                             EmpName = x.EmpName.ToString(),
-                            LoginId = x.LoginId,
-                            Password = x.Password,
+                            LoginId = x.LoginId.Trim(),
+                            Password = x.Password.Trim(),
                             EmpMobileNumber = x.EmpMobileNumber,
                             EmpAddress = x.EmpAddress,
                             type = x.type,
@@ -15848,8 +15848,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         {
                             EmpId = x.EmpId,
                             EmpName = x.EmpName.ToString(),
-                            LoginId = x.LoginId,
-                            Password = x.Password,
+                            LoginId = x.LoginId.Trim(),
+                            Password = x.Password.Trim(),
                             EmpMobileNumber = x.EmpMobileNumber,
                             EmpAddress = x.EmpAddress,
                             type = x.type,
@@ -15897,7 +15897,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             model.qrEmpId = obj.qrEmpId;
                             model.qrEmpName = obj.qrEmpName;
                             // model.qrEmpLoginId = obj.qrEmpLoginId;
-                            model.qrEmpPassword = obj.qrEmpPassword;
+                            model.qrEmpPassword = obj.qrEmpPassword.Trim();
                             model.qrEmpMobileNumber = obj.qrEmpMobileNumber;
                             model.qrEmpAddress = obj.qrEmpAddress;
                             model.type = "Employee";
@@ -15957,8 +15957,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 else
                                 {
                                     objdata.qrEmpName = obj.qrEmpName;
-                                    objdata.qrEmpLoginId = obj.qrEmpLoginId;
-                                    objdata.qrEmpPassword = obj.qrEmpPassword;
+                                    objdata.qrEmpLoginId = obj.qrEmpLoginId.Trim();
+                                    objdata.qrEmpPassword = obj.qrEmpPassword.Trim();
                                     objdata.qrEmpMobileNumber = obj.qrEmpMobileNumber;
                                     objdata.qrEmpAddress = obj.qrEmpAddress;
                                     objdata.type = "Employee";
@@ -15976,7 +15976,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                     return result;
                                 }
 
-                               
+
                             }
                             else
                             {
@@ -16127,7 +16127,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         model.EmpId = obj.EmpId;
                         model.EmpName = obj.EmpName;
                         //model.LoginId = obj.LoginId;
-                        model.Password = obj.Password;
+                        model.Password = obj.Password.Trim();
                         model.EmpMobileNumber = obj.EmpMobileNumber;
                         model.EmpAddress = obj.EmpAddress;
                         model.type = obj.type;
@@ -16166,8 +16166,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         else
                         {
                             objdata.EmpName = obj.EmpName;
-                            objdata.LoginId = obj.LoginId;
-                            objdata.Password = obj.Password;
+                            objdata.LoginId = obj.LoginId.Trim();
+                            objdata.Password = obj.Password.Trim();
                             objdata.EmpMobileNumber = obj.EmpMobileNumber;
                             objdata.EmpAddress = obj.EmpAddress;
                             objdata.type = obj.type;
@@ -16183,7 +16183,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             return result;
                         }
 
-                      
+
                     }
                     else
                     {
@@ -16193,7 +16193,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         return result;
                     }
 
-                    
+
                 }
 
             }
@@ -16811,7 +16811,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         }
 
 
-        public List<PropertyScanModel> GetTotalPropertyCount()
+        public List<PropertyScanModel> GetTotalPropertyCount(int hsuserid,string hsType)
         {
             List<PropertyScanModel> propertyList = new List<PropertyScanModel>();
             try
@@ -16833,6 +16833,28 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             liquidCount = Convert.ToInt32(item.liquidCount).ToString(),
                             streetCount = Convert.ToInt32(item.streetCount).ToString(),
                         }); ;
+                    }
+
+                    // For Property Count As Per Supervisor.
+                    if (hsType == "SA")
+                    {
+                        int rowIndexNumber = 0;
+                        List<string> termsList = new List<string>();
+                        var hsappids = dbMain.EmployeeMasters.Where(c => c.EmpId == hsuserid && c.isActive==true).FirstOrDefault();
+                        if (hsappids != null)
+                        {
+                            string[] values = hsappids.isActiveULB.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(str => str.Trim()).ToArray();
+                            foreach (var Nitem in values)
+                            {
+                                int ida = Convert.ToInt32(Nitem);
+                                var appname = dbMain.AppDetails.Where(c => c.AppId == ida).Select(s => s.AppName).FirstOrDefault();
+                                termsList.Add(appname);
+                            }
+                            string[] terms = termsList.ToArray();
+                            propertyList = propertyList.Where(x => terms.Contains(x.appName)).OrderBy(x => x.appName).ToList();
+                            propertyList.ToList().ForEach(rowItem => { rowIndexNumber += 1; rowItem.srNo = rowIndexNumber; }); // for srNo Update
+                            return propertyList;
+                        }
                     }
                 }
 

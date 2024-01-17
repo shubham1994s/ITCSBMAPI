@@ -472,8 +472,8 @@ namespace SwachhBharatAPI.Controllers
                 {
                     gcDetail.qrEmpId = item.qrEmpId;
                     gcDetail.qrEmpName = item.qrEmpName;
-                    gcDetail.qrEmpLoginId = item.qrEmpLoginId;
-                    gcDetail.qrEmpPassword = item.qrEmpPassword;
+                    gcDetail.qrEmpLoginId = item.qrEmpLoginId.Trim();
+                    gcDetail.qrEmpPassword = item.qrEmpPassword.Trim();
                     gcDetail.qrEmpMobileNumber = item.qrEmpMobileNumber;
                     gcDetail.qrEmpAddress = item.qrEmpAddress;
                     gcDetail.imoNo = item.imoNo;
@@ -554,8 +554,8 @@ namespace SwachhBharatAPI.Controllers
                 {
                     gcDetail.EmpId = item.EmpId;
                     gcDetail.EmpName = item.EmpName;
-                    gcDetail.LoginId = item.LoginId;
-                    gcDetail.Password = item.Password;
+                    gcDetail.LoginId = item.LoginId.Trim();
+                    gcDetail.Password = item.Password.Trim();
                     gcDetail.EmpMobileNumber = item.EmpMobileNumber;
                     gcDetail.EmpAddress = item.EmpAddress;
                     gcDetail.type = item.type;
@@ -797,10 +797,18 @@ namespace SwachhBharatAPI.Controllers
         [Route("GetPropertyCount")]
         public List<PropertyScanModel> TotalPropertyCount()
         {
-
+            int userId = 0;
             List<PropertyScanModel> objDetail = new List<PropertyScanModel>();
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("userId");
+            IEnumerable<string> headerValue2 = Request.Headers.GetValues("empType");
+            var u = headerValue1.FirstOrDefault();
+            if (!string.IsNullOrEmpty(u))
+            {
+               userId = int.Parse(u);
+            }
+            var empType = headerValue2.FirstOrDefault();
             objRep = new Repository();
-            objDetail = objRep.GetTotalPropertyCount().ToList();
+            objDetail = objRep.GetTotalPropertyCount(userId, empType).ToList();
             return objDetail;
         }
 
