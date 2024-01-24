@@ -248,9 +248,13 @@ namespace SwachhBharatAPI.Dal.DataContexts
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("DailyScanCount", ulbappidParameter);
         }
     
-        public virtual ObjectResult<PropertyScanCount_Result> PropertyScanCount()
+        public virtual ObjectResult<PropertyScanCount_Result> PropertyScanCount(Nullable<System.DateTime> fDate)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PropertyScanCount_Result>("PropertyScanCount");
+            var fDateParameter = fDate.HasValue ?
+                new ObjectParameter("fDate", fDate) :
+                new ObjectParameter("fDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PropertyScanCount_Result>("PropertyScanCount", fDateParameter);
         }
     }
 }

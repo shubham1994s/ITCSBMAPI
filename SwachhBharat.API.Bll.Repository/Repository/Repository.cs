@@ -16811,13 +16811,13 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         }
 
 
-        public List<PropertyScanModel> GetTotalPropertyCount(int hsuserid,string hsType)
+        public List<PropertyScanModel> GetTotalPropertyCount(int hsuserid,string hsType, DateTime fDate)
         {
             List<PropertyScanModel> propertyList = new List<PropertyScanModel>();
             try
             {
                 dbMain.Database.CommandTimeout = 60000;
-                var data = dbMain.PropertyScanCount().ToList();
+                var data = dbMain.PropertyScanCount(fDate).ToList();
                 if (data != null)
                 {
                     int id = 0;
@@ -16832,6 +16832,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             dumpYardCount = Convert.ToInt32(item.dumpCount).ToString(),
                             liquidCount = Convert.ToInt32(item.liquidCount).ToString(),
                             streetCount = Convert.ToInt32(item.streetCount).ToString(),
+                            teamCount = Convert.ToInt32(item.teamCount).ToString(),
                         }); ;
                     }
 

@@ -14,5 +14,6 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string dumpYardCount { get; set; }
         public string liquidCount { get; set; }
         public string streetCount { get; set; }
+        public string teamCount { get; set; }
     }
 }

@@ -251,7 +251,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         CollectionSyncResult SaveSurveyDetails(SurveyFormDetails obj, int AppId);
 
         List<SurveyFormDetail> GetSurveyDetailsById(int appId ,string ReferanceId);
-        List<PropertyScanModel>GetTotalPropertyCount(int hsuserid, string hsType);
+        List<PropertyScanModel>GetTotalPropertyCount(int hsuserid, string hsType,DateTime fDate);
 
         
 

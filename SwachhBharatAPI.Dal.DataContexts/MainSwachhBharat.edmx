@@ -544,7 +544,9 @@
           <Parameter Name="Ulbappid" Type="varchar" Mode="In" />
         </Function>
         <Function Name="HouseEntryCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="PropertyScanCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PropertyScanCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fDate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="SP_Admin_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Admin2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Admin3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -746,7 +748,9 @@
           <FunctionImport Name="DailyScanCount" ReturnType="Collection(Int32)">
           <Parameter Name="Ulbappid" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="PropertyScanCount" ReturnType="Collection(DevSwachhBharatMainModel.PropertyScanCount_Result)" />
+          <FunctionImport Name="PropertyScanCount" ReturnType="Collection(DevSwachhBharatMainModel.PropertyScanCount_Result)">
+            <Parameter Name="fDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Update_Trigger_Result">
           <Property Type="Int32" Name="AppId" Nullable="false" />
@@ -1389,7 +1393,8 @@
           <Property Type="Int32" Name="dumpCount" Nullable="true" />
           <Property Type="Int32" Name="liquidCount" Nullable="true" />
           <Property Type="Int32" Name="streetCount" Nullable="true" />
-          <Property Type="DateTime" Name="today_date" Nullable="true" />
+          <Property Type="DateTime" Name="today_date" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="teamCount" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2001,6 +2006,7 @@
                 <ScalarProperty Name="liquidCount" ColumnName="liquidCount" />
                 <ScalarProperty Name="streetCount" ColumnName="streetCount" />
                 <ScalarProperty Name="today_date" ColumnName="today_date" />
+                <ScalarProperty Name="teamCount" ColumnName="teamCount" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

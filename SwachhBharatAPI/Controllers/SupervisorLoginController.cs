@@ -801,14 +801,29 @@ namespace SwachhBharatAPI.Controllers
             List<PropertyScanModel> objDetail = new List<PropertyScanModel>();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("userId");
             IEnumerable<string> headerValue2 = Request.Headers.GetValues("empType");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("fDate");
+
             var u = headerValue1.FirstOrDefault();
             if (!string.IsNullOrEmpty(u))
             {
                userId = int.Parse(u);
             }
             var empType = headerValue2.FirstOrDefault();
+
+            var Fdate = headerValue3.FirstOrDefault();
+            DateTime FromDate;
+            if (!string.IsNullOrEmpty(Fdate))
+            {
+                 FromDate = Convert.ToDateTime(Fdate);
+            }
+            else
+            {
+                 FromDate = DateTime.Now;
+            }
+            
+
             objRep = new Repository();
-            objDetail = objRep.GetTotalPropertyCount(userId, empType).ToList();
+            objDetail = objRep.GetTotalPropertyCount(userId, empType, FromDate).ToList();
             return objDetail;
         }
 

@@ -20,5 +20,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<int> liquidCount { get; set; }
         public Nullable<int> streetCount { get; set; }
         public Nullable<System.DateTime> today_date { get; set; }
+        public Nullable<int> teamCount { get; set; }
     }
 }
