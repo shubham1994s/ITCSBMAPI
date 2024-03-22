@@ -261,6 +261,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         #region RFID
         Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT);
+        CheckHSURUsernameResponse GetHSURUsername(string loginid);
         #endregion
     }
 }

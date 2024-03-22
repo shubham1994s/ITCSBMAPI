@@ -16997,6 +16997,44 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         }
 
+        public CheckHSURUsernameResponse GetHSURUsername(string loginid)
+        {
+            CheckHSURUsernameResponse result = new CheckHSURUsernameResponse();
+
+            try
+            {
+                var model = dbMain.EmployeeMasters.Where(c => c.LoginId == loginid).FirstOrDefault();
+
+                if(model != null)
+                {
+                    result.Code = 200;
+                    result.Status = "Success";
+                    result.IsExist = 1;
+                    result.Message = "This login ID is already taken. Please choose a different one.";
+                    result.MessageMar = "हा लॉगिन आयडी आधीच घेतलेला आहे. कृपया एक वेगळा निवडा.";
+                    return result;
+                }
+                else
+                {
+                    result.Code = 200;
+                    result.Status = "Success";
+                    result.IsExist = 0;
+                    result.Message = "This login ID is available.";
+                    result.MessageMar = "हा लॉगिन आयडी उपलब्ध आहे.";
+
+                    return result;
+                }
+            }
+            catch (WebException ex)
+            {
+                result.Code = (int)((HttpWebResponse)ex.Response).StatusCode;
+                result.Status = "error";
+                result.Message = "Something is wrong,Try Again.. ";
+                result.MessageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
+                return result;
+            }
+        }
+
         #endregion
     }
 }

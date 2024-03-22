@@ -57,6 +57,7 @@
     <Compile Include="BigVQrEmployeeVM.cs" />
     <Compile Include="BigVQRHPDVM.cs" />
     <Compile Include="BigVQrworkhistorydetails.cs" />
+    <Compile Include="CheckHSURUsernameResponse.cs" />
     <Compile Include="Citizen\CitizenMobileDetails.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="CMSB\CMSBAreaVM.cs" />

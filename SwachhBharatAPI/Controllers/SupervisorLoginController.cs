@@ -658,7 +658,39 @@ namespace SwachhBharatAPI.Controllers
 
 
         //END
+        [Route("CheckHSURUsername")]
+        [HttpGet]
+        public CheckHSURUsernameResponse CheckHSURUsername()
+        {
+            objRep = new Repository();
+            CheckHSURUsernameResponse objres = new CheckHSURUsernameResponse();
+            try
+            {
+                IEnumerable<string> headerValue1 = Request.Headers.GetValues("Loginid");
 
+                var Loginid = headerValue1.FirstOrDefault();
+
+                CheckHSURUsernameResponse GetUsername = objRep.GetHSURUsername(Loginid);
+
+                objres.Code = GetUsername.Code;
+                objres.Status = GetUsername.Status;
+                objres.IsExist = GetUsername.IsExist;
+                objres.Message = GetUsername.Message;
+                objres.MessageMar = GetUsername.MessageMar;
+
+                return objres;
+            }
+            catch (WebException ex)
+            {
+
+                objres.Code = (int)((HttpWebResponse)ex.Response).StatusCode;
+                objres.Status = "error";
+                objres.Message = "Something is wrong,Try Again.. ";
+                objres.MessageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
+                return objres;
+
+            }
+        }
 
         [Route("AddHouseScanifyUserRole")]
         [HttpPost]
