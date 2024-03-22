@@ -15447,6 +15447,65 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         }
 
+        public List<EmployeePartner> GetEmployeePartnerList(int appId, int pId, int QrEmpID, bool status)
+        {
+            List<EmployeePartner> obj = new List<EmployeePartner>();
+            try
+            {
+                using (var db = new DevSwachhBharatNagpurEntities(appId))
+                {
+                    { 
+                        if (QrEmpID != 0 && pId!=0 )
+                        {
+                            var data = db.PartnerDetails.Where(c => c.qrEmpId == QrEmpID && c.pId==pId).ToList();
+                            foreach (var x in data)
+                            {
+                                obj.Add(new EmployeePartner()
+                                {
+                                    pId=x.pId,
+                                    qrEmpId = x.qrEmpId,
+                                    pName = x.pName.ToString(),
+                                    pMobile = x.pMobile,
+                                    pAddress = x.pAddress,
+                                    vendorType = x.vendorType,
+                                    wagesMode = x.wagesMode,
+                                    perQrPlate = Convert.ToInt32(x.perQrPlate),
+                                    isActive = x.isActive,
+                                });
+                            }
+                        }
+                        else 
+                        {
+                            var data = db.PartnerDetails.Where(c => c.qrEmpId == QrEmpID && c.isActive == status).ToList();
+                            foreach (var x in data)
+                            {
+                                obj.Add(new EmployeePartner()
+                                {
+                                    pId = x.pId,
+                                    qrEmpId = x.qrEmpId,
+                                    pName = x.pName.ToString(),
+                                    pMobile = x.pMobile,
+                                    pAddress = x.pAddress,
+                                    vendorType = x.vendorType,
+                                    wagesMode = x.wagesMode,
+                                    perQrPlate = Convert.ToInt32(x.perQrPlate),
+                                    isActive = x.isActive,
+                                });
+                            }
+                        }
+
+                    }
+
+                    return obj.OrderByDescending(c => c.pId).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                return obj;
+            }
+
+        }
+
         public IEnumerable<HouseScanifyDetailsGridRow> GetHouseScanifyDetails(int qrEmpId, DateTime FromDate, DateTime Todate, int appId)
         {
             using (var db = new DevSwachhBharatNagpurEntities(appId))
@@ -15884,16 +15943,6 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         var model = db.QrEmployeeMasters.Where(c => c.qrEmpId == obj.qrEmpId).FirstOrDefault();
                         if (model != null)
                         {
-
-                            //var isrecord = db.QrEmployeeMasters.Where(x => x.qrEmpName == obj.qrEmpName && x.isActive == true).FirstOrDefault();
-                            //if (isrecord == null)
-                            //{
-
-                            //var isrecord1 = db.QrEmployeeMasters.Where(x => x.qrEmpLoginId == obj.qrEmpLoginId && x.isActive == true).FirstOrDefault();
-                            //var isrecord2 = db.UserMasters.Where(x => x.userLoginId == obj.qrEmpLoginId && x.isActive == true).FirstOrDefault();
-                            //if (isrecord1 == null && isrecord2 == null)
-                            //{
-
                             model.qrEmpId = obj.qrEmpId;
                             model.qrEmpName = obj.qrEmpName;
                             // model.qrEmpLoginId = obj.qrEmpLoginId;
@@ -15910,22 +15959,6 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             result.status = "success";
                             result.message = "Employee Details Updated successfully";
                             result.messageMar = "कर्मचारी तपशील यशस्वीरित्या अद्यतनित केले";
-                            //}
-                            //else
-                            //{
-                            //    result.status = "Error";
-                            //    result.message = "This LoginId Is Already Exist !";
-                            //    result.messageMar = "हे लॉगिनआयडी आधीच अस्तित्वात आहे !";
-                            //    return result;
-                            //}
-                            //}
-                            //else
-                            //{
-                            //    result.status = "Error";
-                            //    result.message = "Name Already Exist";
-                            //    result.messageMar = "नाव आधीपासून अस्तित्वात आहे..";
-                            //    return result;
-                            //}
 
                         }
                         else
@@ -15940,11 +15973,11 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     else
                     {
-                        var isrecord = db.QrEmployeeMasters.Where(x => x.qrEmpName == obj.qrEmpName && x.isActive == true).FirstOrDefault();
+                        var isrecord = db.QrEmployeeMasters.Where(x => x.qrEmpName == obj.qrEmpName).FirstOrDefault();
                         if (isrecord == null)
                         {
-                            var isrecord1 = db.QrEmployeeMasters.Where(x => x.qrEmpLoginId == obj.qrEmpLoginId && x.isActive == true).FirstOrDefault();
-                            var isrecord2 = db.UserMasters.Where(x => x.userLoginId == obj.qrEmpLoginId && x.isActive == true).FirstOrDefault();
+                            var isrecord1 = db.QrEmployeeMasters.Where(x => x.qrEmpLoginId == obj.qrEmpLoginId).FirstOrDefault();
+                            var isrecord2 = db.UserMasters.Where(x => x.userLoginId == obj.qrEmpLoginId).FirstOrDefault();
                             if (isrecord1 == null && isrecord2 == null)
                             {
                                 if (string.IsNullOrEmpty(obj.qrEmpName) || string.IsNullOrEmpty(obj.qrEmpLoginId) || string.IsNullOrEmpty(obj.qrEmpPassword))
@@ -15993,6 +16026,102 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             result.status = "Error";
                             result.message = "Name Already Exist";
                             result.messageMar = "नाव आधीपासून अस्तित्वात आहे..";
+                            return result;
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    result.message = "Something is wrong,Try Again.. ";
+                    result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
+                    result.status = "error";
+                    return result;
+                }
+
+
+            }
+
+            return result;
+        }
+
+        public CollectionSyncResult SaveAddEmployeePartner(EmployeePartner obj, int AppId)
+        {
+            CollectionSyncResult result = new CollectionSyncResult();
+            PartnerDetail objdata = new PartnerDetail();
+            using (var db = new DevSwachhBharatNagpurEntities(AppId))
+            {
+                try
+                {
+                    if (obj.pId != 0 && obj.pId!=null)
+                    {
+                        var model = db.PartnerDetails.Where(c => c.pId == obj.pId).FirstOrDefault();
+                        if (model != null)
+                        {
+                            model.pId =Convert.ToInt32( obj.pId);
+                            model.qrEmpId = obj.qrEmpId;
+                            model.pName = obj.pName;
+                            model.pMobile = obj.pMobile;
+                            model.pAddress = obj.pAddress;
+                            model.vendorType = obj.vendorType;
+                            model.wagesMode = obj.wagesMode;
+                            model.perQrPlate = obj.perQrPlate == null ? 0 : obj.perQrPlate;
+                            model.isActive = obj.isActive;
+                            model.lastModifyDate = DateTime.Now;
+
+                            db.SaveChanges();
+                            result.status = "success";
+                            result.message = "Employee Partner Details Updated successfully";
+                            result.messageMar = "कर्मचारी भागीदार तपशील यशस्वीरित्या अद्यतनित केले";
+
+                        }
+                        else
+                        {
+                            result.message = "This Employee Partner Not Available.";
+                            result.messageMar = "कर्मचारी भागीदार उपलब्ध नाही.";
+                            result.status = "error";
+                            return result;
+
+                        }
+
+                    }
+                    else
+                    {
+                        var NameExists = db.PartnerDetails.Where(x => x.pName.ToUpper() == obj.pName.ToUpper()).FirstOrDefault();
+                        var MobileNoExists = db.PartnerDetails.Where(x => x.pMobile.ToUpper() == obj.pMobile.ToUpper()).FirstOrDefault();
+                        if (NameExists == null && MobileNoExists == null)
+                        {
+                            if (string.IsNullOrEmpty(obj.pName) || string.IsNullOrEmpty(obj.pMobile))
+                            {
+                                result.status = "error";
+                                result.message = "Employee Partner Name,MobileNumber is Required.";
+                                result.messageMar = "कर्मचारी भागीदाऱ्याचे नाव,मोबाईल नंबर आवश्यक आहे";
+                                return result;
+                            }
+                            else
+                            {
+                                objdata.qrEmpId = obj.qrEmpId;
+                                objdata.pName = obj.pName;
+                                objdata.pMobile = obj.pMobile;
+                                objdata.pAddress = obj.pAddress;
+                                objdata.vendorType = obj.vendorType;
+                                objdata.wagesMode = obj.wagesMode;
+                                objdata.perQrPlate = obj.perQrPlate == null ? 0 : obj.perQrPlate;
+                                objdata.isActive = obj.isActive;
+                                objdata.createDate = DateTime.Now;
+                                db.PartnerDetails.Add(objdata);
+                                db.SaveChanges();
+                                result.status = "success";
+                                result.message = "Employee Partner Details Added successfully";
+                                result.messageMar = "कर्मचारी भागीदार तपशील यशस्वीरित्या जोडले";
+                                return result;
+                            }
+                        }
+                        else
+                        {
+                            result.status = "Error";
+                            result.message = "Partner Already Exist";
+                            result.messageMar = "भागीदार आधीपासून अस्तित्वात आहे..";
                             return result;
                         }
                     }
@@ -16811,7 +16940,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         }
 
 
-        public List<PropertyScanModel> GetTotalPropertyCount(int hsuserid,string hsType, DateTime fDate)
+        public List<PropertyScanModel> GetTotalPropertyCount(int hsuserid, string hsType, DateTime fDate)
         {
             List<PropertyScanModel> propertyList = new List<PropertyScanModel>();
             try
@@ -16841,7 +16970,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     {
                         int rowIndexNumber = 0;
                         List<string> termsList = new List<string>();
-                        var hsappids = dbMain.EmployeeMasters.Where(c => c.EmpId == hsuserid && c.isActive==true).FirstOrDefault();
+                        var hsappids = dbMain.EmployeeMasters.Where(c => c.EmpId == hsuserid && c.isActive == true).FirstOrDefault();
                         if (hsappids != null)
                         {
                             string[] values = hsappids.isActiveULB.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(str => str.Trim()).ToArray();

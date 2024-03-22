@@ -214,6 +214,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         List<HouseScanifyEmployeeDetails> GetQREmployeeDetailsList(int userid, string EmpType, int appId,int QrEmpID, bool val);
 
+       
         IEnumerable<HouseScanifyDetailsGridRow> GetHouseScanifyDetails(int qrEmpId, DateTime FromDate, DateTime Todate, int appId);
 
         IEnumerable<HSAttendanceGrid> GetAttendanceDetails(int userid, DateTime FromDate, DateTime Todate, int appId);
@@ -236,6 +237,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId);
 
+        CollectionSyncResult SaveAddEmployeePartner(EmployeePartner obj, int AppId);
+
         CollectionQRStatusResult UpdateQRstatus(HSHouseDetailsGrid obj, int AppId);
 
         CollectionSyncResult SaveAddUserRole(UserRoleDetails obj);
@@ -253,7 +256,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         List<SurveyFormDetail> GetSurveyDetailsById(int appId ,string ReferanceId);
         List<PropertyScanModel>GetTotalPropertyCount(int hsuserid, string hsType,DateTime fDate);
 
-        
+        List<EmployeePartner> GetEmployeePartnerList(int appid, int pId, int qrEmpId, bool status);
+
 
         #region RFID
         Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT);

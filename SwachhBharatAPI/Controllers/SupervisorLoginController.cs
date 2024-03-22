@@ -534,6 +534,132 @@ namespace SwachhBharatAPI.Controllers
 
         }
 
+
+        //Partner API
+        [Route("AddEmployeePartner")]
+        [HttpPost]
+        public List<CollectionSyncResult> AddEmployeePartner(List<EmployeePartner>objRaw)
+        {
+            objRep = new Repository();
+            EmployeePartner PDetail = new EmployeePartner();
+            List<CollectionSyncResult> objres = new List<CollectionSyncResult>();
+            try
+            {
+                IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+                var AppId = Convert.ToInt32(headerValue1.FirstOrDefault());
+
+                foreach (var item in objRaw)
+                {
+                    PDetail.pId = item.pId;
+                    PDetail.qrEmpId = item.qrEmpId;
+                    PDetail.pName = item.pName;                 
+                    PDetail.pMobile = item.pMobile;
+                    PDetail.pAddress = item.pAddress;
+                    PDetail.vendorType = item.vendorType;
+                    PDetail.wagesMode = item.wagesMode;
+                    PDetail.perQrPlate = item.perQrPlate;
+                    PDetail.isActive = item.isActive;
+
+                    CollectionSyncResult detail = objRep.SaveAddEmployeePartner(PDetail, AppId);
+                    if (detail.message == "")
+                    {
+                        objres.Add(new CollectionSyncResult()
+                        {
+                            ID = detail.ID,
+                            status = "error",
+                            message = "Record not inserted",
+                            messageMar = "रेकॉर्ड सबमिट केले नाही"
+                        });
+                    }
+
+                    objres.Add(new CollectionSyncResult()
+                    {
+                        status = detail.status,
+                        messageMar = detail.messageMar,
+                        message = detail.message
+                    });
+
+                    return objres;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                objres.Add(new CollectionSyncResult()
+                {
+                    ID = 0,
+                    status = "error",
+                    message = "Something is wrong,Try Again.. ",
+                    messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
+                });
+                return objres;
+
+            }
+
+            objres.Add(new CollectionSyncResult()
+            {
+                ID = 0,
+                status = "error",
+                message = "Record not inserted",
+                messageMar = "रेकॉर्ड सबमिट केले नाही",
+            });
+
+            return objres;
+
+        }
+
+        [HttpGet]
+        [Route("EmployeePartnerList")]
+        public List<EmployeePartner> GetEmployeePartnerList()
+        {
+            objRep = new Repository();
+
+            IEnumerable<string> headerValue4 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("pId");
+            IEnumerable<string> headerValue2 = Request.Headers.GetValues("qrEmpId");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("status");
+
+            var app = headerValue4.FirstOrDefault();
+            int appid = int.Parse(app);
+
+
+            var Id = headerValue1.FirstOrDefault();
+            int pId;
+            if (Id!=null && Id != "")
+            {
+                 pId = int.Parse(Id);
+            }
+            else
+            {
+                 pId = 0;
+            }
+
+            var EmpID = headerValue2.FirstOrDefault();
+            int qrEmpId;
+            if (EmpID != null && EmpID != "")
+            {
+                qrEmpId = int.Parse(EmpID);
+            }
+            else
+            {
+                qrEmpId = 0;
+            }
+
+            var s = headerValue3.FirstOrDefault();
+            bool status = bool.Parse(s);
+
+            List<EmployeePartner> objDetail = new List<EmployeePartner>();
+            objDetail = objRep.GetEmployeePartnerList(appid,pId,qrEmpId,status).ToList();
+            return objDetail;
+        }
+
+
+        //END
+
+
         [Route("AddHouseScanifyUserRole")]
         [HttpPost]
 

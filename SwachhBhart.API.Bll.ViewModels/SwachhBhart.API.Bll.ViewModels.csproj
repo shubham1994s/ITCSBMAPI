@@ -87,6 +87,7 @@
     <Compile Include="DumpTripVM.cs" />
     <Compile Include="EmpComplaintArise.cs" />
     <Compile Include="DumpYardPointDetailsVM.cs" />
+    <Compile Include="EmployeePartner.cs" />
     <Compile Include="EmployeeVM.cs" />
     <Compile Include="Games\SBGameAnswerTypeVM.cs" />
     <Compile Include="Games\SBGamePlayerDetailsVM.cs" />

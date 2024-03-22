@@ -280,6 +280,22 @@
           <Property Name="SourceId" Type="int" />
           <Property Name="EmployeeType" Type="varchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="PartnerDetails">
+          <Key>
+            <PropertyRef Name="pId" />
+          </Key>
+          <Property Name="pId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="qrEmpId" Type="int" />
+          <Property Name="pName" Type="nvarchar" MaxLength="250" />
+          <Property Name="pMobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="pAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="vendorType" Type="nvarchar" MaxLength="100" />
+          <Property Name="wagesMode" Type="nvarchar" MaxLength="100" />
+          <Property Name="perQrPlate" Type="int" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="lastModifyDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Qr_Employee_Daily_Attendance">
           <Key>
             <PropertyRef Name="qrEmpDaId" />
@@ -835,6 +851,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySet Name="HouseMaster" EntityType="Self.HouseMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LiquidWasteDetails" EntityType="Self.LiquidWasteDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PartnerDetails" EntityType="Self.PartnerDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qr_Employee_Daily_Attendance" EntityType="Self.Qr_Employee_Daily_Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qr_Location" EntityType="Self.Qr_Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QrEmployeeMaster" EntityType="Self.QrEmployeeMaster" Schema="dbo" store:Type="Tables" />
@@ -1128,6 +1145,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySet Name="DumpYardDetails" EntityType="DevSwachhBharatNagpurModel.DumpYardDetail" />
           <EntitySet Name="LiquidWasteDetails" EntityType="DevSwachhBharatNagpurModel.LiquidWasteDetail" />
           <EntitySet Name="StreetSweepingDetails" EntityType="DevSwachhBharatNagpurModel.StreetSweepingDetail" />
+          <EntitySet Name="PartnerDetails" EntityType="DevSwachhBharatNagpurModel.PartnerDetail" />
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -2200,6 +2218,22 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
           <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="BinaryStreetImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="PartnerDetail">
+          <Key>
+            <PropertyRef Name="pId" />
+          </Key>
+          <Property Name="pId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="qrEmpId" Type="Int32" />
+          <Property Name="pName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="pMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="vendorType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="wagesMode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="perQrPlate" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="lastModifyDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3465,6 +3499,23 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
                 <ScalarProperty Name="SSNameMar" ColumnName="SSNameMar" />
                 <ScalarProperty Name="SSName" ColumnName="SSName" />
                 <ScalarProperty Name="SSId" ColumnName="SSId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartnerDetails">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.PartnerDetail">
+              <MappingFragment StoreEntitySet="PartnerDetails">
+                <ScalarProperty Name="lastModifyDate" ColumnName="lastModifyDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="perQrPlate" ColumnName="perQrPlate" />
+                <ScalarProperty Name="wagesMode" ColumnName="wagesMode" />
+                <ScalarProperty Name="vendorType" ColumnName="vendorType" />
+                <ScalarProperty Name="pAddress" ColumnName="pAddress" />
+                <ScalarProperty Name="pMobile" ColumnName="pMobile" />
+                <ScalarProperty Name="pName" ColumnName="pName" />
+                <ScalarProperty Name="qrEmpId" ColumnName="qrEmpId" />
+                <ScalarProperty Name="pId" ColumnName="pId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

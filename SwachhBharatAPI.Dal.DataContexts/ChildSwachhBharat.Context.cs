@@ -21,7 +21,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
               : base(SwachhBharatAppConnection.GetConnectionString(AppId))
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -64,6 +64,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<DumpYardDetail> DumpYardDetails { get; set; }
         public virtual DbSet<LiquidWasteDetail> LiquidWasteDetails { get; set; }
         public virtual DbSet<StreetSweepingDetail> StreetSweepingDetails { get; set; }
+        public virtual DbSet<PartnerDetail> PartnerDetails { get; set; }
     
         public virtual ObjectResult<sp_area_Result> sp_area()
         {
