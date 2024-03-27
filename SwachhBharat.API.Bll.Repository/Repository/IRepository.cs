@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SwachhBhart.API.Bll.ViewModels.LinkULRModel;
 
 namespace SwachhBharat.API.Bll.Repository.Repository
 {
@@ -257,6 +258,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         List<PropertyScanModel>GetTotalPropertyCount(int hsuserid, string hsType,DateTime fDate);
 
         List<EmployeePartner> GetEmployeePartnerList(int appid, int pId, int qrEmpId, bool status);
+
+        List<LinkRoot> GetLinkURL(int appid);
 
 
         #region RFID

@@ -29,6 +29,7 @@ using Microsoft.Build.Framework;
 using Microsoft.Extensions.Logging;
 using NLog;
 using System.Device.Location;
+using static SwachhBhart.API.Bll.ViewModels.LinkULRModel;
 
 //using Microsoft.Extensions.Configuration;
 
@@ -15454,15 +15455,15 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             {
                 using (var db = new DevSwachhBharatNagpurEntities(appId))
                 {
-                    { 
-                        if (QrEmpID != 0 && pId!=0 )
+                    {
+                        if (QrEmpID != 0 && pId != 0)
                         {
-                            var data = db.PartnerDetails.Where(c => c.qrEmpId == QrEmpID && c.pId==pId).ToList();
+                            var data = db.PartnerDetails.Where(c => c.qrEmpId == QrEmpID && c.pId == pId).ToList();
                             foreach (var x in data)
                             {
                                 obj.Add(new EmployeePartner()
                                 {
-                                    pId=x.pId,
+                                    pId = x.pId,
                                     qrEmpId = x.qrEmpId,
                                     pName = x.pName.ToString(),
                                     pMobile = x.pMobile,
@@ -15474,7 +15475,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 });
                             }
                         }
-                        else 
+                        else
                         {
                             var data = db.PartnerDetails.Where(c => c.qrEmpId == QrEmpID && c.isActive == status).ToList();
                             foreach (var x in data)
@@ -16053,12 +16054,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             {
                 try
                 {
-                    if (obj.pId != 0 && obj.pId!=null)
+                    if (obj.pId != 0 && obj.pId != null)
                     {
                         var model = db.PartnerDetails.Where(c => c.pId == obj.pId).FirstOrDefault();
                         if (model != null)
                         {
-                            model.pId =Convert.ToInt32( obj.pId);
+                            model.pId = Convert.ToInt32(obj.pId);
                             model.qrEmpId = obj.qrEmpId;
                             model.pName = obj.pName;
                             model.pMobile = obj.pMobile;
@@ -17005,7 +17006,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             {
                 var model = dbMain.EmployeeMasters.Where(c => c.LoginId == loginid).FirstOrDefault();
 
-                if(model != null)
+                if (model != null)
                 {
                     result.Code = 200;
                     result.Status = "Success";
@@ -17035,6 +17036,46 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
         }
 
+
+        public List<LinkRoot> GetLinkURL(int Appid)
+        {
+            List<LinkRoot> objLinkRoot = new List<LinkRoot>();
+            DashboardLink objdash = new DashboardLink();
+            MapLink objmap = new MapLink();
+            try
+            {
+                var domain = dbMain.AppDetails.Where(m => m.AppId == Appid).Select(m => m.baseImageUrlCMS).FirstOrDefault();
+                if (domain != null)
+                {
+                    var wasteUsername = dbMain.UserInApps.Join(dbMain.AspNetUsers, u => u.UserId, uir => uir.Id, (u, uir) => new { u, uir })
+                    .Where(m => m.u.AppId == Appid)
+                    .Select(m => m.uir.Email).FirstOrDefault();
+                    var liquidUsername = dbMain.AD_USER_MST_LIQUID.Where(c => c.APP_ID == Appid).Select(c => c.ADUM_LOGIN_ID).FirstOrDefault();
+                    var streetUsername = dbMain.AD_USER_MST_STREET.Where(c => c.APP_ID == Appid).Select(c => c.ADUM_LOGIN_ID).FirstOrDefault();
+
+                    objdash.wasteDashboardLink = domain + "?returnUrl=" + wasteUsername + "&Type=W";
+                    objdash.liquidDashboardLink = domain + "?returnUrl=" + liquidUsername + "&Type=L";
+                    objdash.streetDashboardLink = domain + "?returnUrl=" + streetUsername + "&Type=S";
+
+                    objmap.wasteMapLink = domain + "/account/maplogin?returnUrl=" + wasteUsername + "&Type=W";
+                    objmap.liquidMapLink = domain + "/account/maplogin?returnUrl=" + liquidUsername + "&Type=L";
+                    objmap.streetMapLink = domain + "/account/maplogin?returnUrl=" + streetUsername + "&Type=S";
+
+                    objLinkRoot.Add(new LinkRoot()
+                    {
+                        dashboardLink = objdash,
+                        mapLink = objmap,
+                    });
+                }
+
+                return objLinkRoot;
+            }
+            catch (Exception ex)
+            {
+                return objLinkRoot;
+            }
+
+        }
         #endregion
     }
 }

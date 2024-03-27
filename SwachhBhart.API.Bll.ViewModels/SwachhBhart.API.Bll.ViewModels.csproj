@@ -110,6 +110,7 @@
     <Compile Include="HSRejectCount.cs" />
     <Compile Include="HSStreetDetailsGrid.cs" />
     <Compile Include="LatLongD.cs" />
+    <Compile Include="LinkULRModel.cs" />
     <Compile Include="NameULB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyScanModel.cs" />

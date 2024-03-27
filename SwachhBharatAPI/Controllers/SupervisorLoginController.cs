@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using static SwachhBhart.API.Bll.ViewModels.LinkULRModel;
 
 namespace SwachhBharatAPI.Controllers
 {
@@ -982,6 +983,22 @@ namespace SwachhBharatAPI.Controllers
 
             objRep = new Repository();
             objDetail = objRep.GetTotalPropertyCount(userId, empType, FromDate).ToList();
+            return objDetail;
+        }
+
+        [HttpGet]
+        [Route("GetLinkURL")]
+        public List<LinkRoot> LinkURL()
+        {
+            List<LinkRoot> objDetail = new List<LinkRoot>();
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+            var AppId = Convert.ToInt32(headerValue1.FirstOrDefault());
+            if (AppId!=0)
+            {
+                objRep = new Repository();
+                objDetail = objRep.GetLinkURL(AppId).ToList();
+            }
+           
             return objDetail;
         }
 
