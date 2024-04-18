@@ -15975,6 +15975,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             model.imoNo = obj.imoNo;
                             model.bloodGroup = "0";
                             model.isActive = obj.isActive;
+                            model.IsPartner = obj.isPartner;
+
                             model.userEmployeeNo = FECode;
 
                             db.SaveChanges();
@@ -16012,7 +16014,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 else
                                 {
 
-                                    var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('QrEmployeeMaster') + + IDENT_INCR ('QrEmployeeMaster')").FirstOrDefault();
+                                    var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('QrEmployeeMaster') + IDENT_INCR ('QrEmployeeMaster')").FirstOrDefault();
                                     var nextIdInt = (int)nextId;
                                     objHs.UserID = nextIdInt;
                                     objHs.AppId = AppId;
@@ -16036,6 +16038,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                             objdata.imoNo = null;
                                             objdata.bloodGroup = "0";
                                             objdata.isActive = obj.isActive;
+                                            objdata.IsPartner = obj.isPartner;
                                             objdata.userEmployeeNo = FECode;
 
                                             db.QrEmployeeMasters.Add(objdata);

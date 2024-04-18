@@ -18,10 +18,11 @@ namespace SwachhBharatAPI.Dal.DataContexts
     public partial class DevSwachhBharatNagpurEntities : DbContext
     {
         public DevSwachhBharatNagpurEntities(int AppId)
-              : base(SwachhBharatAppConnection.GetConnectionString(AppId))
+               : base(SwachhBharatAppConnection.GetConnectionString(AppId))
         {
         }
-    
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -34,7 +35,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<ZoneMaster> ZoneMasters { get; set; }
         public virtual DbSet<GarbagePointDetail> GarbagePointDetails { get; set; }
         public virtual DbSet<Qr_Employee_Daily_Attendance> Qr_Employee_Daily_Attendance { get; set; }
-        public virtual DbSet<QrEmployeeMaster> QrEmployeeMasters { get; set; }
         public virtual DbSet<BinLatLong> BinLatLongs { get; set; }
         public virtual DbSet<DeviceDetail> DeviceDetails { get; set; }
         public virtual DbSet<Qr_Location> Qr_Location { get; set; }
@@ -65,6 +65,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<LiquidWasteDetail> LiquidWasteDetails { get; set; }
         public virtual DbSet<StreetSweepingDetail> StreetSweepingDetails { get; set; }
         public virtual DbSet<PartnerDetail> PartnerDetails { get; set; }
+        public virtual DbSet<QrEmployeeMaster> QrEmployeeMasters { get; set; }
     
         public virtual ObjectResult<sp_area_Result> sp_area()
         {

@@ -30,5 +30,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<bool> isActive { get; set; }
         public string target { get; set; }
         public Nullable<System.DateTime> lastModifyDate { get; set; }
+        public Nullable<bool> IsPartner { get; set; }
     }
 }

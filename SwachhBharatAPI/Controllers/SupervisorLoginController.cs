@@ -481,6 +481,8 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.qrEmpAddress = item.qrEmpAddress;
                     gcDetail.imoNo = item.imoNo;
                     gcDetail.isActive = item.isActive;
+                    gcDetail.isPartner = item.isPartner;
+
 
 
 
