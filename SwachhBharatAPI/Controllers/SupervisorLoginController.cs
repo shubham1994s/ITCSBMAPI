@@ -468,6 +468,8 @@ namespace SwachhBharatAPI.Controllers
                 IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
                 var AppId = Convert.ToInt32(headerValue1.FirstOrDefault());
 
+                IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
+                var UserId = Convert.ToInt32(headerValue2.FirstOrDefault());
 
                 foreach (var item in objRaw)
                 {
@@ -482,7 +484,7 @@ namespace SwachhBharatAPI.Controllers
 
 
 
-                    CollectionSyncResult detail = objRep.SaveAddEmployee(gcDetail, AppId);
+                    CollectionSyncResult detail = objRep.SaveAddEmployee(gcDetail, AppId, UserId);
                     if (detail.message == "")
                     {
                         objres.Add(new CollectionSyncResult()

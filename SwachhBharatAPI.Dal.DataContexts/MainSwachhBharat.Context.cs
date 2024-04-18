@@ -58,6 +58,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<AD_USER_MST_STREET> AD_USER_MST_STREET { get; set; }
         public virtual DbSet<tehsil> tehsils { get; set; }
         public virtual DbSet<CheckAppD> CheckAppDs { get; set; }
+        public virtual DbSet<HSEmpCodeDatail> HSEmpCodeDatails { get; set; }
     
         public virtual ObjectResult<Update_Trigger_Result> Update_Trigger()
         {
@@ -105,9 +106,13 @@ namespace SwachhBharatAPI.Dal.DataContexts
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Admin_table");
         }
     
-        public virtual int SP_Admin2()
+        public virtual int SP_Admin2(Nullable<System.DateTime> fdate)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Admin2");
+            var fdateParameter = fdate.HasValue ?
+                new ObjectParameter("fdate", fdate) :
+                new ObjectParameter("fdate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Admin2", fdateParameter);
         }
     
         public virtual int SP_Admin3()
@@ -150,7 +155,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SSRS_GarbageCollection", appIdParameter, fdateParameter, tdateParameter, userIdParameter, garbageTypeParameter);
         }
     
-        public virtual ObjectResult<SP_ULBADMIN_Result> SP_ULBADMIN(Nullable<int> divisionIdIn, Nullable<int> districtIdIn, Nullable<int> appIdIN, Nullable<int> userId)
+        public virtual ObjectResult<SP_ULBADMIN_Result> SP_ULBADMIN(Nullable<int> divisionIdIn, Nullable<int> districtIdIn, Nullable<int> appIdIN, Nullable<int> userId, Nullable<System.DateTime> date)
         {
             var divisionIdInParameter = divisionIdIn.HasValue ?
                 new ObjectParameter("DivisionIdIn", divisionIdIn) :
@@ -168,7 +173,11 @@ namespace SwachhBharatAPI.Dal.DataContexts
                 new ObjectParameter("UserId", userId) :
                 new ObjectParameter("UserId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ULBADMIN_Result>("SP_ULBADMIN", divisionIdInParameter, districtIdInParameter, appIdINParameter, userIdParameter);
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ULBADMIN_Result>("SP_ULBADMIN", divisionIdInParameter, districtIdInParameter, appIdINParameter, userIdParameter, dateParameter);
         }
     
         public virtual ObjectResult<SP_ULBADMINMAP_Result> SP_ULBADMINMAP(Nullable<int> divisionIdIn, Nullable<int> districtIdIn, Nullable<int> appIdIN, Nullable<int> userId)

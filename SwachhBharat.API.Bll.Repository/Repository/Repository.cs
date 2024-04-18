@@ -15931,10 +15931,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         }
 
 
-        public CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId)
+        public CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId,int UserId)
         {
             CollectionSyncResult result = new CollectionSyncResult();
             QrEmployeeMaster objdata = new QrEmployeeMaster();
+            HSEmpCodeDatail objHs = new HSEmpCodeDatail();
+
             using (var db = new DevSwachhBharatNagpurEntities(AppId))
             {
                 try
@@ -15944,6 +15946,24 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         var model = db.QrEmployeeMasters.Where(c => c.qrEmpId == obj.qrEmpId).FirstOrDefault();
                         if (model != null)
                         {
+
+                            var FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == obj.qrEmpId).Select(c => c.UCode).FirstOrDefault();
+                            if (FECode == null)
+                            {
+                                //var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('QrEmployeeMaster')").FirstOrDefault();
+                                //var nextIdInt = (int)nextId;
+                                objHs.UserID = obj.qrEmpId;
+                                objHs.AppId = AppId;
+                                objHs.CId = UserId;
+                                objHs.CreateDate = DateTime.Now;
+                                dbMain.HSEmpCodeDatails.Add(objHs);
+                                int i = dbMain.SaveChanges();
+                                if (i > 0)
+                                {
+                                    FECode= dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == obj.qrEmpId).Select(c => c.UCode).FirstOrDefault();
+                                }
+                            }
+
                             model.qrEmpId = obj.qrEmpId;
                             model.qrEmpName = obj.qrEmpName;
                             // model.qrEmpLoginId = obj.qrEmpLoginId;
@@ -15955,6 +15975,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             model.imoNo = obj.imoNo;
                             model.bloodGroup = "0";
                             model.isActive = obj.isActive;
+                            model.userEmployeeNo = FECode;
 
                             db.SaveChanges();
                             result.status = "success";
@@ -15990,24 +16011,44 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 }
                                 else
                                 {
-                                    objdata.qrEmpName = obj.qrEmpName;
-                                    objdata.qrEmpLoginId = obj.qrEmpLoginId.Trim();
-                                    objdata.qrEmpPassword = obj.qrEmpPassword.Trim();
-                                    objdata.qrEmpMobileNumber = obj.qrEmpMobileNumber;
-                                    objdata.qrEmpAddress = obj.qrEmpAddress;
-                                    objdata.type = "Employee";
-                                    objdata.typeId = 1;
-                                    //objdata.imoNo = obj.imoNo;
-                                    objdata.imoNo = null;
-                                    objdata.bloodGroup = "0";
-                                    objdata.isActive = obj.isActive;
 
-                                    db.QrEmployeeMasters.Add(objdata);
-                                    db.SaveChanges();
-                                    result.status = "success";
-                                    result.message = "Employee Details Added successfully";
-                                    result.messageMar = "कर्मचारी तपशील यशस्वीरित्या जोडले";
-                                    return result;
+                                    var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('QrEmployeeMaster') + + IDENT_INCR ('QrEmployeeMaster')").FirstOrDefault();
+                                    var nextIdInt = (int)nextId;
+                                    objHs.UserID = nextIdInt;
+                                    objHs.AppId = AppId;
+                                    objHs.CId = UserId;
+                                    objHs.CreateDate = DateTime.Now;
+                                    dbMain.HSEmpCodeDatails.Add(objHs);
+                                    int i = dbMain.SaveChanges();
+                                    if (i > 0)
+                                    {
+                                        var FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == nextIdInt).Select(c => c.UCode).FirstOrDefault();
+                                        if (FECode != null)
+                                        {
+                                            objdata.qrEmpName = obj.qrEmpName;
+                                            objdata.qrEmpLoginId = obj.qrEmpLoginId.Trim();
+                                            objdata.qrEmpPassword = obj.qrEmpPassword.Trim();
+                                            objdata.qrEmpMobileNumber = obj.qrEmpMobileNumber;
+                                            objdata.qrEmpAddress = obj.qrEmpAddress;
+                                            objdata.type = "Employee";
+                                            objdata.typeId = 1;
+                                            //objdata.imoNo = obj.imoNo;
+                                            objdata.imoNo = null;
+                                            objdata.bloodGroup = "0";
+                                            objdata.isActive = obj.isActive;
+                                            objdata.userEmployeeNo = FECode;
+
+                                            db.QrEmployeeMasters.Add(objdata);
+                                            db.SaveChanges();
+                                            result.status = "success";
+                                            result.message = "Employee Details Added successfully";
+                                            result.messageMar = "कर्मचारी तपशील यशस्वीरित्या जोडले";
+                                            return result;
+                                        }
+                                       
+                                    }
+
+                                   
                                 }
 
 

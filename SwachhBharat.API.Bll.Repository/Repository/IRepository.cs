@@ -236,7 +236,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         List<UserRoleDetails> UserRoleList(int userid, string EmpType, bool val,int EmpId);
 
-        CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId);
+        CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId,int UserId);
 
         CollectionSyncResult SaveAddEmployeePartner(EmployeePartner obj, int AppId);
 

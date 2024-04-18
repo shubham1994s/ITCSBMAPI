@@ -365,6 +365,17 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="GoogleAPI" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="HSEmpCodeDatails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="AppId" Type="int" />
+          <Property Name="CId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="HSUR_Daily_Attendance">
           <Key>
             <PropertyRef Name="daID" />
@@ -548,7 +559,9 @@
           <Parameter Name="fDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="SP_Admin_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="SP_Admin2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_Admin2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fdate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="SP_Admin3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Admin5" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_area" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -577,6 +590,7 @@
           <Parameter Name="DistrictIdIn" Type="int" Mode="In" />
           <Parameter Name="AppIdIN" Type="int" Mode="In" />
           <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="date" Type="datetime" Mode="In" />
         </Function>
         <Function Name="SP_ULBADMINMAP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionIdIn" Type="int" Mode="In" />
@@ -623,6 +637,7 @@
           <EntitySet Name="GamePlayerDetails" EntityType="Self.GamePlayerDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogelHitDetails" EntityType="Self.GoogelHitDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogleAPIDetails" EntityType="Self.GoogleAPIDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HSEmpCodeDatails" EntityType="Self.HSEmpCodeDatails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HSUR_Daily_Attendance" EntityType="Self.HSUR_Daily_Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LanguageInfo" EntityType="Self.LanguageInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFID_Master" EntityType="Self.RFID_Master" Schema="dbo" store:Type="Tables" />
@@ -705,7 +720,9 @@
           <FunctionImport Name="All_SP_GetEmpWiseHouseScan" />
           <FunctionImport Name="HouseEntryCount" />
           <FunctionImport Name="SP_Admin_table" />
-          <FunctionImport Name="SP_Admin2" />
+          <FunctionImport Name="SP_Admin2" >
+            <Parameter Name="fdate" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <FunctionImport Name="SP_Admin3" />
           <FunctionImport Name="SP_Admin5" />
           <FunctionImport Name="sp_area" />
@@ -721,6 +738,7 @@
             <Parameter Name="DistrictIdIn" Mode="In" Type="Int32" />
             <Parameter Name="AppIdIN" Mode="In" Type="Int32" />
             <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_ULBADMINMAP" ReturnType="Collection(DevSwachhBharatMainModel.SP_ULBADMINMAP_Result)">
             <Parameter Name="DivisionIdIn" Mode="In" Type="Int32" />
@@ -749,8 +767,9 @@
           <Parameter Name="Ulbappid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PropertyScanCount" ReturnType="Collection(DevSwachhBharatMainModel.PropertyScanCount_Result)">
-            <Parameter Name="fDate" Mode="In" Type="DateTime" />
+          <Parameter Name="fDate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="HSEmpCodeDatails" EntityType="DevSwachhBharatMainModel.HSEmpCodeDatail" />
           </EntityContainer>
         <ComplexType Name="Update_Trigger_Result">
           <Property Type="Int32" Name="AppId" Nullable="false" />
@@ -1396,6 +1415,17 @@
           <Property Type="DateTime" Name="today_date" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="teamCount" Nullable="true" />
         </ComplexType>
+        <EntityType Name="HSEmpCodeDatail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="AppId" Type="Int32" />
+          <Property Name="CId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2010,6 +2040,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="HSEmpCodeDatails">
+            <EntityTypeMapping TypeName="DevSwachhBharatMainModel.HSEmpCodeDatail">
+              <MappingFragment StoreEntitySet="HSEmpCodeDatails">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CId" ColumnName="CId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UCode" ColumnName="UCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
