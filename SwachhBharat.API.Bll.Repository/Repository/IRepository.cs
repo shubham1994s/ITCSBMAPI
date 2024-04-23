@@ -215,7 +215,9 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         List<HouseScanifyEmployeeDetails> GetQREmployeeDetailsList(int userid, string EmpType, int appId,int QrEmpID, bool val);
 
-       
+        List<TeamEmployee> GetTeamEmployeeList(int appId, bool isPartner);
+
+
         IEnumerable<HouseScanifyDetailsGridRow> GetHouseScanifyDetails(int qrEmpId, DateTime FromDate, DateTime Todate, int appId);
 
         IEnumerable<HSAttendanceGrid> GetAttendanceDetails(int userid, DateTime FromDate, DateTime Todate, int appId);
@@ -239,6 +241,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId,int UserId);
 
         CollectionSyncResult SaveAddEmployeePartner(EmployeePartner obj, int AppId);
+
+        CollectionSyncResult SaveAssignPartner(int AppId, int UserID, AssignTeam obj);
 
         CollectionQRStatusResult UpdateQRstatus(HSHouseDetailsGrid obj, int AppId);
 

@@ -15407,6 +15407,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                     imoNo = x.imoNo,
                                     bloodGroup = x.bloodGroup,
                                     isActive = x.isActive,
+                                    isPartner = x.IsPartner != true ? false : true,
                                     target = x.target,
                                     lastModifyDate = x.lastModifyDate,
                                 });
@@ -15430,6 +15431,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                     imoNo = x.imoNo,
                                     bloodGroup = x.bloodGroup,
                                     isActive = x.isActive,
+                                    isPartner = x.IsPartner != true ? false : true,
                                     target = x.target,
                                     lastModifyDate = x.lastModifyDate,
                                 });
@@ -15439,6 +15441,70 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
 
                     return obj.OrderByDescending(c => c.qrEmpId).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                return obj;
+            }
+
+        }
+
+        public List<TeamEmployee> GetTeamEmployeeList(int appId, bool isPartner)
+        {
+            List<TeamEmployee> obj = new List<TeamEmployee>();
+            try
+            {
+                using (var db = new DevSwachhBharatNagpurEntities(appId))
+                {
+                    {
+                        if (isPartner == true)
+                        {
+                            List<int> excludingList = new List<int>();
+                            var MasterId = db.HSTeamDetails.Where(s => s.IsActive == true).Select(s => s.Pid).ToList();
+                            foreach (var item in MasterId)
+                            {
+                                excludingList.Add(item);
+                            }
+                            var excluding = excludingList.ToArray();
+
+                            var data = db.QrEmployeeMasters.Where(c => c.IsPartner == true && c.isActive == true && !excludingList.Contains(c.qrEmpId)).ToList();
+                            foreach (var x in data)
+                            {
+                                obj.Add(new TeamEmployee()
+                                {
+                                    qrEmpId = x.qrEmpId,
+                                    qrEmpName = x.qrEmpName.ToString(),
+                                    isActive = x.isActive,
+                                    isPartner = x.IsPartner != true ? false : true,
+                                });
+                            }
+                        }
+                        else
+                        {
+                            List<int> excludingList = new List<int>();
+                            var MasterId = db.HSTeamDetails.Where(s => s.IsActive == true).Select(s => s.Sid).ToList();
+                            foreach (var item in MasterId)
+                            {
+                                excludingList.Add(item);
+                            }
+                            var excluding = excludingList.ToArray();
+
+                            var data = db.QrEmployeeMasters.Where(c => c.IsPartner != true && c.isActive == true && !excludingList.Contains(c.qrEmpId)).ToList();
+                            foreach (var x in data)
+                            {
+                                obj.Add(new TeamEmployee()
+                                {
+                                    qrEmpId = x.qrEmpId,
+                                    qrEmpName = x.qrEmpName.ToString(),
+                                    isActive = x.isActive,
+                                    isPartner = x.IsPartner != true ? false : true,
+                                });
+                            }
+                        }
+                    }
+
+                    return obj.OrderBy(c => c.qrEmpName).ToList();
                 }
             }
             catch (Exception)
@@ -15931,7 +15997,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         }
 
 
-        public CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId,int UserId)
+        public CollectionSyncResult SaveAddEmployee(HouseScanifyEmployeeDetails obj, int AppId, int UserId)
         {
             CollectionSyncResult result = new CollectionSyncResult();
             QrEmployeeMaster objdata = new QrEmployeeMaster();
@@ -15960,7 +16026,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 int i = dbMain.SaveChanges();
                                 if (i > 0)
                                 {
-                                    FECode= dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == obj.qrEmpId).Select(c => c.UCode).FirstOrDefault();
+                                    FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == obj.qrEmpId).Select(c => c.UCode).FirstOrDefault();
                                 }
                             }
 
@@ -16048,10 +16114,10 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                             result.messageMar = "कर्मचारी तपशील यशस्वीरित्या जोडले";
                                             return result;
                                         }
-                                       
+
                                     }
 
-                                   
+
                                 }
 
 
@@ -16167,6 +16233,93 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             result.status = "Error";
                             result.message = "Partner Already Exist";
                             result.messageMar = "भागीदार आधीपासून अस्तित्वात आहे..";
+                            return result;
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    result.message = "Something is wrong,Try Again.. ";
+                    result.messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..";
+                    result.status = "error";
+                    return result;
+                }
+
+
+            }
+
+            return result;
+        }
+
+        public CollectionSyncResult SaveAssignPartner(int AppId, int UserId, AssignTeam obj)
+        {
+            CollectionSyncResult result = new CollectionSyncResult();
+            HSTeamDetail objdata = new HSTeamDetail();
+            using (var db = new DevSwachhBharatNagpurEntities(AppId))
+            {
+                try
+                {
+                    if (obj.Id > 0)
+                    {
+                        var model = db.HSTeamDetails.Where(c => c.Id == obj.Id).FirstOrDefault();
+                        if (model != null)
+                        {
+                            model.Sid = Convert.ToInt32(obj.scanEmpId);
+                            model.Pid = Convert.ToInt32(obj.partnerEmpId);
+                            model.Cid = UserId;
+                           // model.IsActive = obj.isActive;
+                            model.IsActive = false;
+                            model.UpdateDate = DateTime.Now;
+
+                            db.SaveChanges();
+                            result.status = "success";
+                            result.message = "This Team Deleted Successfully";
+                            result.messageMar = "ही टीम यशस्वीरित्या काढली";
+
+                        }
+                        else
+                        {
+                            result.message = "This Team Not Available.";
+                            result.messageMar = "ही टीम उपलब्ध नाही.";
+                            result.status = "error";
+                            return result;
+
+                        }
+
+                    }
+                    else
+                    {
+                        var IdExists = db.HSTeamDetails.Where(x => x.Sid == obj.scanEmpId && x.Pid == obj.partnerEmpId && obj.isActive==true ).FirstOrDefault();
+                        if (IdExists == null)
+                        {
+                            if (obj.scanEmpId == null || obj.partnerEmpId == null)
+                            {
+                                result.status = "error";
+                                result.message = "Please Select Properly Employee Team.";
+                                result.messageMar = "कृपया योग्यरित्या कर्मचारी संघ निवडा";
+                                return result;
+                            }
+                            else
+                            {
+                                objdata.Sid =Convert.ToInt32(obj.scanEmpId);
+                                objdata.Pid = Convert.ToInt32(obj.partnerEmpId);
+                                objdata.IsActive = obj.isActive;
+                                objdata.Cid = UserId;
+                                objdata.CreateDate = DateTime.Now;
+                                db.HSTeamDetails.Add(objdata);
+                                db.SaveChanges();
+                                result.status = "success";
+                                result.message = "Employee Team Assigned Successfully";
+                                result.messageMar = "कर्मचारी संघ यशस्वीरित्या नियुक्त केला";
+                                return result;
+                            }
+                        }
+                        else
+                        {
+                            result.status = "Error";
+                            result.message = "Employee Team Already Exist";
+                            result.messageMar = "कर्मचारी संघ आधीच अस्तित्वात आहे";
                             return result;
                         }
                     }

@@ -119,6 +119,33 @@ namespace SwachhBharatAPI.Controllers
             return objDetail;
         }
 
+
+        [HttpGet]
+        [Route("TeamEmployeeList")]
+        public List<TeamEmployee> GetTeamEmployeeList()
+        {
+            objRep = new Repository();
+
+            //IEnumerable<string> headerValue1 = Request.Headers.GetValues("EmpType");
+            //IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue4 = Request.Headers.GetValues("isPartner");
+
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+            //var EmpType = headerValue1.FirstOrDefault();
+            //var u = headerValue2.FirstOrDefault();
+            //int userId = int.Parse(u);
+
+            var s = headerValue4.FirstOrDefault();
+            bool isPartner = bool.Parse(s);
+
+            List<TeamEmployee> objDetail = new List<TeamEmployee>();
+            objDetail = objRep.GetTeamEmployeeList(AppId, isPartner).ToList();
+            return objDetail;
+        }
+
+
         [HttpGet]
         [Route("HouseScanifyDetailsGridRow")]
         // Show Live Data On Dashboard
@@ -450,10 +477,6 @@ namespace SwachhBharatAPI.Controllers
             return objDetail;
         }
 
-
-
-
-
         [Route("AddHouseScanifyEmployee")]
         [HttpPost]
         public List<CollectionSyncResult> AddEmployee(List<HouseScanifyEmployeeDetails> objRaw)
@@ -540,7 +563,77 @@ namespace SwachhBharatAPI.Controllers
         }
 
 
-        //Partner API
+        [Route("AssignPartner")]
+        [HttpPost]
+        public List<CollectionSyncResult> AssignPartner(List<AssignTeam> objRaw)
+        {
+            objRep = new Repository();
+            AssignTeam ATDetail = new AssignTeam();
+            List<CollectionSyncResult> objres = new List<CollectionSyncResult>();
+            try
+            {
+                IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
+                var AppId = Convert.ToInt32(headerValue1.FirstOrDefault());
+
+                IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
+                var userId = Convert.ToInt32(headerValue2.FirstOrDefault());
+
+                foreach (var item in objRaw)
+                {
+                    ATDetail.Id = item.Id;
+                    ATDetail.scanEmpId = item.scanEmpId;
+                    ATDetail.partnerEmpId = item.partnerEmpId;
+                    ATDetail.userId = item.userId;
+                    ATDetail.isActive = item.isActive;
+
+                    CollectionSyncResult detail = objRep.SaveAssignPartner(AppId, userId, ATDetail);
+                    if (detail.message == "")
+                    {
+                        objres.Add(new CollectionSyncResult()
+                        {
+                            ID = detail.ID,
+                            status = "error",
+                            message = "Record not inserted",
+                            messageMar = "रेकॉर्ड सबमिट केले नाही"
+                        });
+                    }
+
+                    objres.Add(new CollectionSyncResult()
+                    {
+                        status = detail.status,
+                        messageMar = detail.messageMar,
+                        message = detail.message
+                    });
+
+                    return objres;
+                }
+            }
+            catch (Exception ex)
+            {
+                objres.Add(new CollectionSyncResult()
+                {
+                    ID = 0,
+                    status = "error",
+                    message = "Something is wrong,Try Again.. ",
+                    messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
+                });
+                return objres;
+            }
+
+            objres.Add(new CollectionSyncResult()
+            {
+                ID = 0,
+                status = "error",
+                message = "Record not inserted",
+                messageMar = "रेकॉर्ड सबमिट केले नाही",
+            });
+
+            return objres;
+
+        }
+
+
+        //Partner API  -- currently not in use.
         [Route("AddEmployeePartner")]
         [HttpPost]
         public List<CollectionSyncResult> AddEmployeePartner(List<EmployeePartner>objRaw)
@@ -660,9 +753,9 @@ namespace SwachhBharatAPI.Controllers
             objDetail = objRep.GetEmployeePartnerList(appid,pId,qrEmpId,status).ToList();
             return objDetail;
         }
-
-
         //END
+
+
         [Route("CheckHSURUsername")]
         [HttpGet]
         public CheckHSURUsernameResponse CheckHSURUsername()

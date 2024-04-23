@@ -225,6 +225,9 @@
     <Compile Include="HSEmpCodeDatail.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
+    <Compile Include="HSTeamDetail.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
     <Compile Include="HSUR_Daily_Attendance.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
