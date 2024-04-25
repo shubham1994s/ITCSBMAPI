@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssignPartnerDetails.cs" />
     <Compile Include="AssignTeam.cs" />
     <Compile Include="AttendanceGridVM.cs" />
     <Compile Include="BigVQREmployeeAttendenceVM.cs" />

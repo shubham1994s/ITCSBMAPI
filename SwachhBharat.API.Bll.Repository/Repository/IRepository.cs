@@ -217,7 +217,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         List<TeamEmployee> GetTeamEmployeeList(int appId, bool isPartner);
 
-
+        List<AssignPartnerDetails> GetAssignPartnerDetailsList(int AppId, int TeamId);
         IEnumerable<HouseScanifyDetailsGridRow> GetHouseScanifyDetails(int qrEmpId, DateTime FromDate, DateTime Todate, int appId);
 
         IEnumerable<HSAttendanceGrid> GetAttendanceDetails(int userid, DateTime FromDate, DateTime Todate, int appId);

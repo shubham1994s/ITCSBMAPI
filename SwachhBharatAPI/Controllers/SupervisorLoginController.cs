@@ -581,8 +581,8 @@ namespace SwachhBharatAPI.Controllers
                 foreach (var item in objRaw)
                 {
                     ATDetail.Id = item.Id;
-                    ATDetail.scanEmpId = item.scanEmpId;
-                    ATDetail.partnerEmpId = item.partnerEmpId;
+                    ATDetail.scannerId = item.scannerId;
+                    ATDetail.partnerId = item.partnerId;
                     ATDetail.userId = item.userId;
                     ATDetail.isActive = item.isActive;
 
@@ -631,6 +631,37 @@ namespace SwachhBharatAPI.Controllers
             return objres;
 
         }
+
+        [Route("AssignPartnerDetailsList")]
+        [HttpGet]
+        public List<AssignPartnerDetails> GetAssignPartnerDetailsList()
+        {
+            objRep = new Repository();
+
+            //IEnumerable<string> headerValue1 = Request.Headers.GetValues("EmpType");
+            //IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue4 = Request.Headers.GetValues("id");
+
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+            //var EmpType = headerValue1.FirstOrDefault();
+            //var u = headerValue2.FirstOrDefault();
+            //int userId = int.Parse(u);
+
+            var s = headerValue4.FirstOrDefault();
+            int TeamId = 0;
+            if (s!=null && s != "")
+            {
+              TeamId = int.Parse(s);
+            }
+           
+
+            List<AssignPartnerDetails> objDetail = new List<AssignPartnerDetails>();
+            objDetail = objRep.GetAssignPartnerDetailsList(AppId, TeamId).ToList();
+            return objDetail;
+        }
+
 
 
         //Partner API  -- currently not in use.

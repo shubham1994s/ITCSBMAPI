@@ -15514,6 +15514,48 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         }
 
+        public List<AssignPartnerDetails> GetAssignPartnerDetailsList(int appId, int teamId)
+        {
+            List<AssignPartnerDetails> obj = new List<AssignPartnerDetails>();
+            try
+            {
+                using (var db = new DevSwachhBharatNagpurEntities(appId))
+                {
+                    {
+                            var data = db.GetHSTeamDetails().ToList();
+                            foreach (var x in data)
+                            {
+                                obj.Add(new AssignPartnerDetails()
+                                {
+                                    id = x.Id,
+                                    sId = x.Sid,
+                                    pId = x.Pid,
+                                    cId = x.Cid,
+                                    scannerName = x.ScannerName,
+                                    partnerName = x.PartnerName,
+                                    creatorName = x.CreatorName,
+                                    isActive = x.IsActive,
+                                    createDate=x.CreateDate,
+                                    updateDate=x.UpdateDate ==null ? null:x.UpdateDate
+                                });;
+                            }
+                       
+                    }
+
+                    if (teamId > 0)
+                    {
+                        return obj.OrderByDescending(c => c.id).Where(c=>c.id==teamId).ToList();
+                    }
+                    return obj.OrderByDescending(c => c.id).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                return obj;
+            }
+
+        }
+
         public List<EmployeePartner> GetEmployeePartnerList(int appId, int pId, int QrEmpID, bool status)
         {
             List<EmployeePartner> obj = new List<EmployeePartner>();
@@ -16265,8 +16307,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         var model = db.HSTeamDetails.Where(c => c.Id == obj.Id).FirstOrDefault();
                         if (model != null)
                         {
-                            model.Sid = Convert.ToInt32(obj.scanEmpId);
-                            model.Pid = Convert.ToInt32(obj.partnerEmpId);
+                            //model.Sid = Convert.ToInt32(obj.scanEmpId);
+                            //model.Pid = Convert.ToInt32(obj.partnerEmpId);
                             model.Cid = UserId;
                            // model.IsActive = obj.isActive;
                             model.IsActive = false;
@@ -16290,10 +16332,10 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     else
                     {
-                        var IdExists = db.HSTeamDetails.Where(x => x.Sid == obj.scanEmpId && x.Pid == obj.partnerEmpId && obj.isActive==true ).FirstOrDefault();
+                        var IdExists = db.HSTeamDetails.Where(x => x.Sid == obj.scannerId && x.Pid == obj.partnerId && obj.isActive==true ).FirstOrDefault();
                         if (IdExists == null)
                         {
-                            if (obj.scanEmpId == null || obj.partnerEmpId == null)
+                            if (obj.scannerId == null || obj.partnerId == null)
                             {
                                 result.status = "error";
                                 result.message = "Please Select Properly Employee Team.";
@@ -16302,16 +16344,16 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             }
                             else
                             {
-                                objdata.Sid =Convert.ToInt32(obj.scanEmpId);
-                                objdata.Pid = Convert.ToInt32(obj.partnerEmpId);
+                                objdata.Sid =Convert.ToInt32(obj.scannerId);
+                                objdata.Pid = Convert.ToInt32(obj.partnerId);
                                 objdata.IsActive = obj.isActive;
                                 objdata.Cid = UserId;
                                 objdata.CreateDate = DateTime.Now;
                                 db.HSTeamDetails.Add(objdata);
                                 db.SaveChanges();
                                 result.status = "success";
-                                result.message = "Employee Team Assigned Successfully";
-                                result.messageMar = "कर्मचारी संघ यशस्वीरित्या नियुक्त केला";
+                                result.message = "Employee Team Assign Successfully";
+                                result.messageMar = "कर्मचारी संघ यशस्वीरित्या नियुक्त केले";
                                 return result;
                             }
                         }

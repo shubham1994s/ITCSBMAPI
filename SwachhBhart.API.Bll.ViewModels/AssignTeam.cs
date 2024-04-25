@@ -9,8 +9,8 @@ namespace SwachhBhart.API.Bll.ViewModels
    public class AssignTeam
     {
         public int? Id { get; set; }
-        public int? scanEmpId { get; set; }
-        public int? partnerEmpId { get; set; }
+        public int? scannerId { get; set; }
+        public int? partnerId { get; set; }
         public int? userId { get; set; }
         public Nullable<bool> isActive { get; set; }
 
