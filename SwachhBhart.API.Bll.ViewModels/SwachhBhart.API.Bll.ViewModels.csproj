@@ -111,6 +111,7 @@
     <Compile Include="HSLiquidDetailsGrid.cs" />
     <Compile Include="HSRejectCount.cs" />
     <Compile Include="HSStreetDetailsGrid.cs" />
+    <Compile Include="HS_ForceUpdateResult.cs" />
     <Compile Include="LatLongD.cs" />
     <Compile Include="LinkULRModel.cs" />
     <Compile Include="NameULB.cs" />

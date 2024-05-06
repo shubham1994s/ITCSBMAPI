@@ -59,6 +59,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<tehsil> tehsils { get; set; }
         public virtual DbSet<CheckAppD> CheckAppDs { get; set; }
         public virtual DbSet<HSEmpCodeDatail> HSEmpCodeDatails { get; set; }
+        public virtual DbSet<HS_ForceUpdate> HS_ForceUpdate { get; set; }
     
         public virtual ObjectResult<Update_Trigger_Result> Update_Trigger()
         {

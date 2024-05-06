@@ -365,6 +365,17 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="GoogleAPI" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="HS_ForceUpdate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppLink" Type="nvarchar" MaxLength="250" />
+          <Property Name="AppVersion" Type="int" />
+          <Property Name="ForceUpdate" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="HSEmpCodeDatails">
           <Key>
             <PropertyRef Name="ID" />
@@ -637,6 +648,7 @@
           <EntitySet Name="GamePlayerDetails" EntityType="Self.GamePlayerDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogelHitDetails" EntityType="Self.GoogelHitDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoogleAPIDetails" EntityType="Self.GoogleAPIDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HS_ForceUpdate" EntityType="Self.HS_ForceUpdate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HSEmpCodeDatails" EntityType="Self.HSEmpCodeDatails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HSUR_Daily_Attendance" EntityType="Self.HSUR_Daily_Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LanguageInfo" EntityType="Self.LanguageInfo" Schema="dbo" store:Type="Tables" />
@@ -721,7 +733,7 @@
           <FunctionImport Name="HouseEntryCount" />
           <FunctionImport Name="SP_Admin_table" />
           <FunctionImport Name="SP_Admin2" >
-            <Parameter Name="fdate" Mode="In" Type="DateTime" />
+          <Parameter Name="fdate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_Admin3" />
           <FunctionImport Name="SP_Admin5" />
@@ -770,6 +782,7 @@
           <Parameter Name="fDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="HSEmpCodeDatails" EntityType="DevSwachhBharatMainModel.HSEmpCodeDatail" />
+          <EntitySet Name="HS_ForceUpdate" EntityType="DevSwachhBharatMainModel.HS_ForceUpdate" />
           </EntityContainer>
         <ComplexType Name="Update_Trigger_Result">
           <Property Type="Int32" Name="AppId" Nullable="false" />
@@ -1426,6 +1439,17 @@
           <Property Name="CId" Type="Int32" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="HS_ForceUpdate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppLink" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="AppVersion" Type="Int32" />
+          <Property Name="ForceUpdate" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2049,6 +2073,18 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UCode" ColumnName="UCode" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HS_ForceUpdate">
+            <EntityTypeMapping TypeName="DevSwachhBharatMainModel.HS_ForceUpdate">
+              <MappingFragment StoreEntitySet="HS_ForceUpdate">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ForceUpdate" ColumnName="ForceUpdate" />
+                <ScalarProperty Name="AppVersion" ColumnName="AppVersion" />
+                <ScalarProperty Name="AppLink" ColumnName="AppLink" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

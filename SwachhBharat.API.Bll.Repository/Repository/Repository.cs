@@ -17315,6 +17315,52 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
 
         }
+
+        public HS_ForceUpdateResult AppUpdateVesrion(int AppVersion)
+        {
+            HS_ForceUpdateResult result = new HS_ForceUpdateResult();
+            try
+            {
+                var Hsdetails = dbMain.HS_ForceUpdate.Where(c=>c.ForceUpdate==true).FirstOrDefault();
+                if (Hsdetails.AppVersion != AppVersion && Hsdetails.ForceUpdate == true)
+                {
+                    if (Convert.ToInt32(Hsdetails.AppVersion) <= Convert.ToInt32(AppVersion))
+                    {
+                        result.status = "error";
+                        result.isForceUpdate = false;
+                        result.applink = "";
+                        result.version = Hsdetails.AppVersion;
+                        return result;
+                    }
+                    else
+                    {
+                        result.status = "success";
+                        result.isForceUpdate = true;
+                        result.applink = Hsdetails.AppLink;
+                        result.version = Hsdetails.AppVersion;
+                        return result;
+                    }
+                }
+                else
+                {
+                    result.status = "error";
+                    result.isForceUpdate = false;
+                    result.applink = "";
+                    result.version = 0;
+                    return result;
+                }
+            }
+            catch (Exception ex )
+            {
+                result.status = "error";
+                result.isForceUpdate = false;
+                result.applink = "";
+                result.version = 0;
+                return result;
+            }
+
+        }
+
         #endregion
     }
 }

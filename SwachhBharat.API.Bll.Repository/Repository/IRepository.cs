@@ -265,6 +265,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         List<LinkRoot> GetLinkURL(int appid);
 
+        HS_ForceUpdateResult AppUpdateVesrion(int AppVersion);
 
         #region RFID
         Result SaveRfidDetails(string ReaderId, string TagId, string Lat, string Long, string Type, string DT);

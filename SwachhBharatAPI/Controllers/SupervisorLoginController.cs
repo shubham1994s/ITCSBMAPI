@@ -1130,5 +1130,21 @@ namespace SwachhBharatAPI.Controllers
             return objDetail;
         }
 
+        [HttpGet]
+        [Route("VersionUpdate")]
+        public HS_ForceUpdateResult UpdateVesrion()
+        {
+            int AppVersion = 0;
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("appVersion");
+            var Version = headerValue1.FirstOrDefault();
+            if (!string.IsNullOrEmpty(Version))
+            {
+                AppVersion = int.Parse(Version);
+            }
+            objRep = new Repository();
+            HS_ForceUpdateResult objresponse = objRep.AppUpdateVesrion(AppVersion);
+            return objresponse;
+        }
+
     }
 }
