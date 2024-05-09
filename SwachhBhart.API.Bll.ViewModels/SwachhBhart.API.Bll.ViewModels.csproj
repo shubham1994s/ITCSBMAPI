@@ -133,6 +133,7 @@
     <Compile Include="SBVehicleType.cs" />
     <Compile Include="SBWorkDetails.cs" />
     <Compile Include="SBWorkDetailsHistory.cs" />
+    <Compile Include="ScannerPartner.cs" />
     <Compile Include="SurveyFormDetails.cs" />
     <Compile Include="SyncResult.cs" />
     <Compile Include="TeamEmployee.cs" />

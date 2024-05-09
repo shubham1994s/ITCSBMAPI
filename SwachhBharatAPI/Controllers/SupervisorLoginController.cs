@@ -120,30 +120,7 @@ namespace SwachhBharatAPI.Controllers
         }
 
 
-        [HttpGet]
-        [Route("TeamEmployeeList")]
-        public List<TeamEmployee> GetTeamEmployeeList()
-        {
-            objRep = new Repository();
 
-            //IEnumerable<string> headerValue1 = Request.Headers.GetValues("EmpType");
-            //IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
-            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
-            IEnumerable<string> headerValue4 = Request.Headers.GetValues("isPartner");
-
-            var id = headerValue3.FirstOrDefault();
-            int AppId = int.Parse(id);
-            //var EmpType = headerValue1.FirstOrDefault();
-            //var u = headerValue2.FirstOrDefault();
-            //int userId = int.Parse(u);
-
-            var s = headerValue4.FirstOrDefault();
-            bool isPartner = bool.Parse(s);
-
-            List<TeamEmployee> objDetail = new List<TeamEmployee>();
-            objDetail = objRep.GetTeamEmployeeList(AppId, isPartner).ToList();
-            return objDetail;
-        }
 
 
         [HttpGet]
@@ -184,6 +161,46 @@ namespace SwachhBharatAPI.Controllers
             return objDetail;
         }
 
+
+        //Start  Get New House Scanify Deatils With Partner 
+        // Show Live Data On Dashboard
+        [HttpGet]
+        [Route("ScannerPartnerData")]
+        public List<ScannerPartner> GetScannerPartnerData()
+        {
+            objRep = new Repository();
+
+            IEnumerable<string> headerValue1 = Request.Headers.GetValues("FromDate");
+            IEnumerable<string> headerValue2 = Request.Headers.GetValues("Todate");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue4 = Request.Headers.GetValues("userId");
+
+
+            var Fdate = headerValue1.FirstOrDefault();
+            DateTime FromDate = Convert.ToDateTime(Fdate);
+
+            var Tdate = headerValue2.FirstOrDefault();
+            DateTime Todate = Convert.ToDateTime(Tdate);
+
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+
+            int qrEmpId;
+            var u = headerValue4.FirstOrDefault();
+            if (u == "null" || u == "" || u == null)
+            {
+                qrEmpId = 0;
+            }
+            else
+            {
+                qrEmpId = int.Parse(u);
+            }
+
+            List<ScannerPartner> objDetail = new List<ScannerPartner>();
+            objDetail = objRep.GetScannerPartnerData(qrEmpId, FromDate, Todate, AppId).ToList();
+            return objDetail;
+        }
+        // End
 
         [HttpGet]
         [Route("AttendanceGridRow")]
@@ -662,7 +679,30 @@ namespace SwachhBharatAPI.Controllers
             return objDetail;
         }
 
+        [HttpGet]
+        [Route("TeamEmployeeList")]
+        public List<TeamEmployee> GetTeamEmployeeList()
+        {
+            objRep = new Repository();
 
+            //IEnumerable<string> headerValue1 = Request.Headers.GetValues("EmpType");
+            //IEnumerable<string> headerValue2 = Request.Headers.GetValues("userId");
+            IEnumerable<string> headerValue3 = Request.Headers.GetValues("appId");
+            IEnumerable<string> headerValue4 = Request.Headers.GetValues("isPartner");
+
+            var id = headerValue3.FirstOrDefault();
+            int AppId = int.Parse(id);
+            //var EmpType = headerValue1.FirstOrDefault();
+            //var u = headerValue2.FirstOrDefault();
+            //int userId = int.Parse(u);
+
+            var s = headerValue4.FirstOrDefault();
+            bool isPartner = bool.Parse(s);
+
+            List<TeamEmployee> objDetail = new List<TeamEmployee>();
+            objDetail = objRep.GetTeamEmployeeList(AppId, isPartner).ToList();
+            return objDetail;
+        }
 
         //Partner API  -- currently not in use.
         [Route("AddEmployeePartner")]

@@ -100,6 +100,7 @@
           <Property Name="DataEntryDate" Type="datetime" />
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
           <Property Name="BinaryDumpImage" Type="varbinary(max)" />
+          <Property Name="partnerId" Type="int" />
         </EntityType>
         <EntityType Name="GamePlayerDetails">
           <Key>
@@ -232,6 +233,7 @@
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
           <Property Name="Property_Type_Id" Type="int" />
           <Property Name="BinaryHouseImage" Type="varbinary(max)" />
+          <Property Name="partnerId" Type="int" />
         </EntityType>
         <EntityType Name="HSTeamDetails">
           <Key>
@@ -269,6 +271,7 @@
           <Property Name="DataEntryDate" Type="datetime" />
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
           <Property Name="BinaryLiquidImage" Type="varbinary(max)" />
+          <Property Name="partnerId" Type="int" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -325,6 +328,7 @@
           <Property Name="startNote" Type="nvarchar(max)" />
           <Property Name="endNote" Type="nvarchar(max)" />
           <Property Name="batteryStatus" Type="varchar" MaxLength="20" />
+          <Property Name="partnerId" Type="int" />
         </EntityType>
         <EntityType Name="Qr_Location">
           <Key>
@@ -419,6 +423,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddr
           <Property Name="DataEntryDate" Type="datetime" />
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
           <Property Name="BinaryStreetImage" Type="varbinary(max)" />
+          <Property Name="partnerId" Type="int" />
         </EntityType>
         <EntityType Name="SurveyFormDetails">
           <Key>
@@ -817,6 +822,11 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
         <Function Name="SP_HouseScanifyDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Appid" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_HouseScanifyWithPartner" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fdate" Type="date" Mode="In" />
+          <Parameter Name="tdate" Type="date" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_IdelTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
           <Parameter Name="fdate" Type="date" Mode="In" />
@@ -1163,6 +1173,11 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySet Name="QrEmployeeMasters" EntityType="DevSwachhBharatNagpurModel.QrEmployeeMaster" />
           <EntitySet Name="HSTeamDetails" EntityType="DevSwachhBharatNagpurModel.HSTeamDetail" />
           <FunctionImport Name="GetHSTeamDetails" ReturnType="Collection(DevSwachhBharatNagpurModel.GetHSTeamDetails_Result)" />
+          <FunctionImport Name="SP_HouseScanifyWithPartner" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_HouseScanifyWithPartner_Result)">
+            <Parameter Name="fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -1346,6 +1361,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="startNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="endNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="batteryStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="partnerId" Type="Int32" />
         </EntityType>
         <ComplexType Name="GetAttendenceDetailsTotal_Result">
           <Property Type="DateTime" Name="day" Nullable="true" />
@@ -2138,6 +2154,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Property_Type_Id" Type="Int32" />
           <Property Name="BinaryHouseImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="partnerId" Type="Int32" />
         </EntityType>
         <EntityType Name="DumpYardDetail">
           <Key>
@@ -2164,6 +2181,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
           <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="BinaryDumpImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="partnerId" Type="Int32" />
         </EntityType>
         <EntityType Name="LiquidWasteDetail">
           <Key>
@@ -2189,6 +2207,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
           <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="BinaryLiquidImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="partnerId" Type="Int32" />
         </EntityType>
         <EntityType Name="StreetSweepingDetail">
           <Key>
@@ -2214,6 +2233,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
           <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="BinaryStreetImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="partnerId" Type="Int32" />
         </EntityType>
         <EntityType Name="PartnerDetail">
           <Key>
@@ -2276,6 +2296,19 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Type="Int32" Name="Sid" Nullable="false" />
           <Property Type="Int32" Name="Pid" Nullable="false" />
           <Property Type="Int32" Name="Cid" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_HouseScanifyWithPartner_Result">
+          <Property Type="DateTime" Name="startDate" Nullable="true" />
+          <Property Type="String" Name="SEmpCode" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ScannerName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="PEmpCode" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="PartnerName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="SMobileNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PMobileNo" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="HouseCount" Nullable="true" />
+          <Property Type="Int32" Name="LiquidCount" Nullable="true" />
+          <Property Type="Int32" Name="StreetCount" Nullable="true" />
+          <Property Type="Int32" Name="DumpCount" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2497,6 +2530,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="Qr_Employee_Daily_Attendance">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.Qr_Employee_Daily_Attendance">
               <MappingFragment StoreEntitySet="Qr_Employee_Daily_Attendance">
+                <ScalarProperty Name="partnerId" ColumnName="partnerId" />
                 <ScalarProperty Name="batteryStatus" ColumnName="batteryStatus" />
                 <ScalarProperty Name="endNote" ColumnName="endNote" />
                 <ScalarProperty Name="startNote" ColumnName="startNote" />
@@ -3411,6 +3445,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="HouseMasters">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.HouseMaster">
               <MappingFragment StoreEntitySet="HouseMaster">
+                <ScalarProperty Name="partnerId" ColumnName="partnerId" />
                 <ScalarProperty Name="BinaryHouseImage" ColumnName="BinaryHouseImage" />
                 <ScalarProperty Name="Property_Type_Id" ColumnName="Property_Type_Id" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
@@ -3446,6 +3481,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="DumpYardDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.DumpYardDetail">
               <MappingFragment StoreEntitySet="DumpYardDetails">
+                <ScalarProperty Name="partnerId" ColumnName="partnerId" />
                 <ScalarProperty Name="BinaryDumpImage" ColumnName="BinaryDumpImage" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
@@ -3473,6 +3509,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="LiquidWasteDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.LiquidWasteDetail">
               <MappingFragment StoreEntitySet="LiquidWasteDetails">
+                <ScalarProperty Name="partnerId" ColumnName="partnerId" />
                 <ScalarProperty Name="BinaryLiquidImage" ColumnName="BinaryLiquidImage" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
@@ -3499,6 +3536,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySetMapping Name="StreetSweepingDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.StreetSweepingDetail">
               <MappingFragment StoreEntitySet="StreetSweepingDetails">
+                <ScalarProperty Name="partnerId" ColumnName="partnerId" />
                 <ScalarProperty Name="BinaryStreetImage" ColumnName="BinaryStreetImage" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
@@ -3588,6 +3626,23 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
                 <ScalarProperty Name="Sid" ColumnName="Sid" />
                 <ScalarProperty Name="Pid" ColumnName="Pid" />
                 <ScalarProperty Name="Cid" ColumnName="Cid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_HouseScanifyWithPartner" FunctionName="DevSwachhBharatNagpurModel.Store.SP_HouseScanifyWithPartner">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DevSwachhBharatNagpurModel.SP_HouseScanifyWithPartner_Result">
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="SEmpCode" ColumnName="SEmpCode" />
+                <ScalarProperty Name="ScannerName" ColumnName="ScannerName" />
+                <ScalarProperty Name="PEmpCode" ColumnName="PEmpCode" />
+                <ScalarProperty Name="PartnerName" ColumnName="PartnerName" />
+                <ScalarProperty Name="SMobileNo" ColumnName="SMobileNo" />
+                <ScalarProperty Name="PMobileNo" ColumnName="PMobileNo" />
+                <ScalarProperty Name="HouseCount" ColumnName="HouseCount" />
+                <ScalarProperty Name="LiquidCount" ColumnName="LiquidCount" />
+                <ScalarProperty Name="StreetCount" ColumnName="StreetCount" />
+                <ScalarProperty Name="DumpCount" ColumnName="DumpCount" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

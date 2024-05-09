@@ -43,5 +43,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public string Remark { get; set; }
         public Nullable<int> Property_Type_Id { get; set; }
         public byte[] BinaryHouseImage { get; set; }
+        public Nullable<int> partnerId { get; set; }
     }
 }

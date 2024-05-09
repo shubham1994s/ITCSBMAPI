@@ -219,6 +219,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         List<AssignPartnerDetails> GetAssignPartnerDetailsList(int AppId, int TeamId);
         IEnumerable<HouseScanifyDetailsGridRow> GetHouseScanifyDetails(int qrEmpId, DateTime FromDate, DateTime Todate, int appId);
+        IEnumerable<ScannerPartner> GetScannerPartnerData(int qrEmpId, DateTime FromDate, DateTime Todate, int appId);
 
         IEnumerable<HSAttendanceGrid> GetAttendanceDetails(int userid, DateTime FromDate, DateTime Todate, int appId);
 

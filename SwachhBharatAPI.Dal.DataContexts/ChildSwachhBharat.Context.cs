@@ -656,5 +656,22 @@ namespace SwachhBharatAPI.Dal.DataContexts
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetHSTeamDetails_Result>("GetHSTeamDetails");
         }
+    
+        public virtual ObjectResult<SP_HouseScanifyWithPartner_Result> SP_HouseScanifyWithPartner(Nullable<System.DateTime> fdate, Nullable<System.DateTime> tdate, Nullable<int> userid)
+        {
+            var fdateParameter = fdate.HasValue ?
+                new ObjectParameter("fdate", fdate) :
+                new ObjectParameter("fdate", typeof(System.DateTime));
+    
+            var tdateParameter = tdate.HasValue ?
+                new ObjectParameter("tdate", tdate) :
+                new ObjectParameter("tdate", typeof(System.DateTime));
+    
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_HouseScanifyWithPartner_Result>("SP_HouseScanifyWithPartner", fdateParameter, tdateParameter, useridParameter);
+        }
     }
 }

@@ -27,5 +27,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public string startNote { get; set; }
         public string endNote { get; set; }
         public string batteryStatus { get; set; }
+        public Nullable<int> partnerId { get; set; }
     }
 }

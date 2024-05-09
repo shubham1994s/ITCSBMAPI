@@ -34,5 +34,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<System.DateTime> DataEntryDate { get; set; }
         public string Remark { get; set; }
         public byte[] BinaryStreetImage { get; set; }
+        public Nullable<int> partnerId { get; set; }
     }
 }

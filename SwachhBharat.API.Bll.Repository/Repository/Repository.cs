@@ -15675,6 +15675,41 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             }
         }
 
+        public IEnumerable<ScannerPartner> GetScannerPartnerData(int qrEmpId, DateTime FromDate, DateTime Todate, int appId)
+        {
+            using (var db = new DevSwachhBharatNagpurEntities(appId))
+            {
+                List<ScannerPartner> obj = new List<ScannerPartner>();
+                try
+                {
+                    var data = db.SP_HouseScanifyWithPartner(FromDate, Todate, qrEmpId).ToList();
+                    foreach (var x in data)
+                    {
+                        obj.Add(new ScannerPartner()
+                        {
+                            startDate = Convert.ToDateTime(x.startDate).ToString("dd/MM/yyyy"),
+                            scannerName = x.ScannerName,
+                            scannerEmpCode = x.SEmpCode,
+                            scannerMob = x.SMobileNo,
+                            partnerName = x.PartnerName,
+                            partnerEmpCode = x.PEmpCode,
+                            partnerMob = x.PMobileNo,
+                            houseCount = x.HouseCount,
+                            dumpCount = x.DumpCount,
+                            liquidCount = x.LiquidCount,
+                            streetCount = x.StreetCount,
+                        }); ;
+                    }
+                    return obj.OrderByDescending(c => c.liquidCount).OrderByDescending(c => c.houseCount).OrderByDescending(c => c.streetCount);
+                }
+                catch(Exception ex)
+                {
+                    return obj;
+                }
+
+            }
+        }
+
         public IEnumerable<HSAttendanceGrid> GetAttendanceDetails(int userId, DateTime FromDate, DateTime Todate, int appId)
         {
             List<HSAttendanceGrid> obj = new List<HSAttendanceGrid>();
