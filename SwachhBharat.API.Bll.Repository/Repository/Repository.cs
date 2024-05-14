@@ -15394,6 +15394,12 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             var data = db.QrEmployeeMasters.Where(c => c.qrEmpId == QrEmpID).ToList();
                             foreach (var x in data)
                             {
+                                var empId = dbMain.HSEmpCodeDatails.Where(c => c.UserID == x.qrEmpId && c.AppId == appId).Select(c => c.UCode).FirstOrDefault();
+                                if (empId == null)
+                                {
+                                    empId = null;
+                                }
+
                                 obj.Add(new HouseScanifyEmployeeDetails()
                                 {
                                     qrEmpId = x.qrEmpId,
@@ -15410,6 +15416,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                     isPartner = x.IsPartner != true ? false : true,
                                     target = x.target,
                                     lastModifyDate = x.lastModifyDate,
+                                    empCode= empId,
                                 });
                             }
                         }
@@ -15418,6 +15425,13 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             var data = db.QrEmployeeMasters.Where(c => c.isActive == status).ToList();
                             foreach (var x in data)
                             {
+
+                                var empId = dbMain.HSEmpCodeDatails.Where(c => c.UserID == x.qrEmpId && c.AppId == appId).Select(c => c.UCode).FirstOrDefault();
+                                if (empId == null)
+                                {
+                                    empId = null;
+                                }
+
                                 obj.Add(new HouseScanifyEmployeeDetails()
                                 {
                                     qrEmpId = x.qrEmpId,
@@ -15434,6 +15448,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                     isPartner = x.IsPartner != true ? false : true,
                                     target = x.target,
                                     lastModifyDate = x.lastModifyDate,
+                                    empCode = empId,
                                 });
                             }
                         }

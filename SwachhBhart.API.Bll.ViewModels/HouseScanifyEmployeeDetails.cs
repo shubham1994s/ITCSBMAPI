@@ -27,5 +27,6 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string LoginId { get; set; }
         public string Password { get; set; }
         public Nullable<bool> isPartner { get; set; }
+        public string empCode { get; set; }
     }
 }
