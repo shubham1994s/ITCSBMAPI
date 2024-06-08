@@ -522,6 +522,7 @@ namespace SwachhBharatAPI.Controllers
                     gcDetail.imoNo = item.imoNo;
                     gcDetail.isActive = item.isActive;
                     gcDetail.isPartner = item.isPartner;
+                    gcDetail.userEmployeeNo = item.userEmployeeNo;
 
 
 

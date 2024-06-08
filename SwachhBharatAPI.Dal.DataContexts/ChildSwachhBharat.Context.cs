@@ -67,6 +67,7 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<PartnerDetail> PartnerDetails { get; set; }
         public virtual DbSet<QrEmployeeMaster> QrEmployeeMasters { get; set; }
         public virtual DbSet<HSTeamDetail> HSTeamDetails { get; set; }
+        public virtual DbSet<QREmployeeCreator> QREmployeeCreators { get; set; }
     
         public virtual ObjectResult<sp_area_Result> sp_area()
         {

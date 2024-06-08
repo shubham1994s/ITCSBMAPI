@@ -271,6 +271,9 @@
     <Compile Include="PropertyScanCount_Result.cs">
       <DependentUpon>MainSwachhBharat.tt</DependentUpon>
     </Compile>
+    <Compile Include="QREmployeeCreator.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
     <Compile Include="QrEmployeeMaster.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>

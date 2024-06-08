@@ -348,6 +348,17 @@
           <Property Name="ReferanceID" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="QREmployeeCreator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateId" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="QrEmployeeMaster">
           <Key>
             <PropertyRef Name="qrEmpId" />
@@ -689,6 +700,18 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="EmployeeType" Type="varchar" MaxLength="10" />
           <Property Name="imoNo2" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK__QREmploye__EmpId__2C1E8537">
+          <End Role="QrEmployeeMaster" Type="Self.QrEmployeeMaster" Multiplicity="0..1" />
+          <End Role="QREmployeeCreator" Type="Self.QREmployeeCreator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QrEmployeeMaster">
+              <PropertyRef Name="qrEmpId" />
+            </Principal>
+            <Dependent Role="QREmployeeCreator">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="BunchListAutoupdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="int" Mode="In" />
           <Parameter Name="RefferanceID" Type="nvarchar" Mode="In" />
@@ -879,6 +902,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySet Name="PartnerDetails" EntityType="Self.PartnerDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qr_Employee_Daily_Attendance" EntityType="Self.Qr_Employee_Daily_Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Qr_Location" EntityType="Self.Qr_Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QREmployeeCreator" EntityType="Self.QREmployeeCreator" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QrEmployeeMaster" EntityType="Self.QrEmployeeMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StreetSweepingBeat" EntityType="Self.StreetSweepingBeat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StreetSweepingDetails" EntityType="Self.StreetSweepingDetails" Schema="dbo" store:Type="Tables" />
@@ -958,6 +982,10 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
     [Vw_MsgNotification].[imoNo2] AS [imoNo2]
     FROM [dbo].[Vw_MsgNotification] AS [Vw_MsgNotification]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__QREmploye__EmpId__2C1E8537" Association="Self.FK__QREmploye__EmpId__2C1E8537">
+            <End Role="QrEmployeeMaster" EntitySet="QrEmployeeMaster" />
+            <End Role="QREmployeeCreator" EntitySet="QREmployeeCreator" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -1178,6 +1206,11 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             <Parameter Name="tdate" Mode="In" Type="DateTime" />
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="QREmployeeCreators" EntityType="DevSwachhBharatNagpurModel.QREmployeeCreator" />
+          <AssociationSet Name="FK__QREmploye__EmpId__2C1E8537" Association="DevSwachhBharatNagpurModel.FK__QREmploye__EmpId__2C1E8537">
+            <End Role="QrEmployeeMaster" EntitySet="QrEmployeeMasters" />
+            <End Role="QREmployeeCreator" EntitySet="QREmployeeCreators" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -2272,6 +2305,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="target" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="lastModifyDate" Type="DateTime" Precision="3" />
           <Property Name="IsPartner" Type="Boolean" />
+          <NavigationProperty Name="QREmployeeCreators" Relationship="DevSwachhBharatNagpurModel.FK__QREmploye__EmpId__2C1E8537" FromRole="QrEmployeeMaster" ToRole="QREmployeeCreator" />
         </EntityType>
         <EntityType Name="HSTeamDetail">
           <Key>
@@ -2310,6 +2344,30 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Type="Int32" Name="StreetCount" Nullable="true" />
           <Property Type="Int32" Name="DumpCount" Nullable="true" />
         </ComplexType>
+        <EntityType Name="QREmployeeCreator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateId" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="QrEmployeeMaster" Relationship="DevSwachhBharatNagpurModel.FK__QREmploye__EmpId__2C1E8537" FromRole="QREmployeeCreator" ToRole="QrEmployeeMaster" />
+        </EntityType>
+        <Association Name="FK__QREmploye__EmpId__2C1E8537">
+          <End Type="DevSwachhBharatNagpurModel.QrEmployeeMaster" Role="QrEmployeeMaster" Multiplicity="0..1" />
+          <End Type="DevSwachhBharatNagpurModel.QREmployeeCreator" Role="QREmployeeCreator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QrEmployeeMaster">
+              <PropertyRef Name="qrEmpId" />
+            </Principal>
+            <Dependent Role="QREmployeeCreator">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3646,6 +3704,18 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="QREmployeeCreators">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.QREmployeeCreator">
+              <MappingFragment StoreEntitySet="QREmployeeCreator">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateId" ColumnName="UpdateId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

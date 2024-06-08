@@ -14,6 +14,12 @@ namespace SwachhBharatAPI.Dal.DataContexts
     
     public partial class QrEmployeeMaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public QrEmployeeMaster()
+        {
+            this.QREmployeeCreators = new HashSet<QREmployeeCreator>();
+        }
+    
         public int qrEmpId { get; set; }
         public Nullable<int> appId { get; set; }
         public string qrEmpName { get; set; }
@@ -31,5 +37,8 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public string target { get; set; }
         public Nullable<System.DateTime> lastModifyDate { get; set; }
         public Nullable<bool> IsPartner { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QREmployeeCreator> QREmployeeCreators { get; set; }
     }
 }
