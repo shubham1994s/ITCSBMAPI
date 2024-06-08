@@ -16105,22 +16105,36 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         if (model != null)
                         {
 
-                            var FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == obj.qrEmpId).Select(c => c.UCode).FirstOrDefault();
-                            if (FECode == null)
+                            // firtly check Duty ON/OFF then change the Scanner To Partner
+                            var DutyON= db.Qr_Employee_Daily_Attendance.Where(c => c.qrEmpId == obj.qrEmpId & c.endTime == "" & c.startDate == EntityFunctions.TruncateTime(DateTime.Now) && c.partnerId!=1).FirstOrDefault();
+                            if (DutyON != null && obj.isPartner==true)
                             {
-                                //var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('QrEmployeeMaster')").FirstOrDefault();
-                                //var nextIdInt = (int)nextId;
-                                objHs.UserID = obj.qrEmpId;
-                                objHs.AppId = AppId;
-                                objHs.CId = UserId;
-                                objHs.CreateDate = DateTime.Now;
-                                dbMain.HSEmpCodeDatails.Add(objHs);
-                                int i = dbMain.SaveChanges();
-                                if (i > 0)
-                                {
-                                    FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == obj.qrEmpId).Select(c => c.UCode).FirstOrDefault();
-                                }
+                                result.message = "Firstly Off Duty,After Switch Scanners to the Partner. ";
+                                result.messageMar = "सर्वप्रथम ड्युटी बंद करा ,नंतर स्कॅनर पार्टनरला स्विच करा.";
+                                result.status = "error";
+                                return result;
                             }
+                            //
+
+
+                            //// FE Code Generate Start
+                            //var FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == obj.qrEmpId).Select(c => c.UCode).FirstOrDefault();
+                            //if (FECode == null)
+                            //{
+                            //    //var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('QrEmployeeMaster')").FirstOrDefault();
+                            //    //var nextIdInt = (int)nextId;
+                            //    objHs.UserID = obj.qrEmpId;
+                            //    objHs.AppId = AppId;
+                            //    objHs.CId = UserId;
+                            //    objHs.CreateDate = DateTime.Now;
+                            //    dbMain.HSEmpCodeDatails.Add(objHs);
+                            //    int i = dbMain.SaveChanges();
+                            //    if (i > 0)
+                            //    {
+                            //        FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == obj.qrEmpId).Select(c => c.UCode).FirstOrDefault();
+                            //    }
+                            //}
+                            //// FE Code Generate End
 
                             model.qrEmpId = obj.qrEmpId;
                             model.qrEmpName = obj.qrEmpName;
@@ -16135,7 +16149,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             model.isActive = obj.isActive;
                             model.IsPartner = obj.isPartner;
 
-                            model.userEmployeeNo = FECode;
+                          //  model.userEmployeeNo = FECode;
 
                             db.SaveChanges();
                             result.status = "success";
@@ -16172,19 +16186,19 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                 else
                                 {
 
-                                    var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('QrEmployeeMaster') + IDENT_INCR ('QrEmployeeMaster')").FirstOrDefault();
-                                    var nextIdInt = (int)nextId;
-                                    objHs.UserID = nextIdInt;
-                                    objHs.AppId = AppId;
-                                    objHs.CId = UserId;
-                                    objHs.CreateDate = DateTime.Now;
-                                    dbMain.HSEmpCodeDatails.Add(objHs);
-                                    int i = dbMain.SaveChanges();
-                                    if (i > 0)
-                                    {
-                                        var FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == nextIdInt).Select(c => c.UCode).FirstOrDefault();
-                                        if (FECode != null)
-                                        {
+                                    //var nextId = db.Database.SqlQuery<decimal>("SELECT IDENT_CURRENT('QrEmployeeMaster') + IDENT_INCR ('QrEmployeeMaster')").FirstOrDefault();
+                                    //var nextIdInt = (int)nextId;
+                                    //objHs.UserID = nextIdInt;
+                                    //objHs.AppId = AppId;
+                                    //objHs.CId = UserId;
+                                    //objHs.CreateDate = DateTime.Now;
+                                    //dbMain.HSEmpCodeDatails.Add(objHs);
+                                    //int i = dbMain.SaveChanges();
+                                    //if (i > 0)
+                                    //{
+                                        //var FECode = dbMain.HSEmpCodeDatails.Where(c => c.AppId == AppId && c.UserID == nextIdInt).Select(c => c.UCode).FirstOrDefault();
+                                        //if (FECode != null)
+                                        //{
                                             objdata.qrEmpName = obj.qrEmpName;
                                             objdata.qrEmpLoginId = obj.qrEmpLoginId.Trim();
                                             objdata.qrEmpPassword = obj.qrEmpPassword.Trim();
@@ -16197,7 +16211,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                             objdata.bloodGroup = "0";
                                             objdata.isActive = obj.isActive;
                                             objdata.IsPartner = obj.isPartner;
-                                            objdata.userEmployeeNo = FECode;
+
+                                            //objdata.userEmployeeNo = FECode;
 
                                             db.QrEmployeeMasters.Add(objdata);
                                             db.SaveChanges();
@@ -16205,9 +16220,9 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                             result.message = "Employee Details Added successfully";
                                             result.messageMar = "कर्मचारी तपशील यशस्वीरित्या जोडले";
                                             return result;
-                                        }
+                                       // }
 
-                                    }
+                                   // }
 
 
                                 }
@@ -16382,8 +16397,20 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     else
                     {
-                        var IdExists = db.HSTeamDetails.Where(x => x.Sid == obj.scannerId && x.Pid == obj.partnerId && obj.isActive==true ).FirstOrDefault();
-                        if (IdExists == null)
+                        var IdExists = db.HSTeamDetails.Where(x => x.Sid == obj.scannerId && x.Pid == obj.partnerId && x.IsActive == true).FirstOrDefault();
+                        var IdExistsInActive = db.HSTeamDetails.Where(x => x.Sid == obj.scannerId && x.Pid == obj.partnerId && x.IsActive == false).FirstOrDefault();
+                        if (IdExistsInActive != null)
+                        {
+                            IdExistsInActive.Cid = UserId;
+                            IdExistsInActive.IsActive = true;
+                            IdExistsInActive.UpdateDate = DateTime.Now;
+                            db.SaveChanges();
+                            result.status = "success";
+                            result.message = "Employee Team Assign Successfully";
+                            result.messageMar = "कर्मचारी संघ यशस्वीरित्या नियुक्त केले";
+                            return result;
+                        }
+                        else if (IdExists == null)
                         {
                             if (obj.scannerId == null || obj.partnerId == null)
                             {
